@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UI Effects Lab — UI Mockup</title>
+
+<!--
+  THROWAWAY UI-CONFIRMATION MOCKUP. Not the real build.
+  Real product ships as Vite + React + TS per docs/PRD.md.
+
+  DIRECTION — "Precision effects workbench"
+  THESIS: an instrument panel for SVG filters, not a gallery of cards. The
+          effect under test is the only thing that lights up; chrome recedes.
+  OWN-WORLD: neutral graphite console (warm-paper in light), single amber
+          signal accent, mono numeric readouts, hairline dividers.
+  STORY: pick an effect → tweak sliders → compare before/after → copy code.
+  FIRST VIEWPORT: 3-column console — catalog · live stage · controls+code.
+  MODE: Operate. Scanability and precise readouts over expression.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --bg: #0b0d11;
+  --panel: #12151b;
+  --panel-2: #171b22;
+  --stage: #0e1116;
+  --border: #232833;
+  --border-soft: #1b1f27;
+  --text: #e8eaef;
+  --text-dim: #9298a3;
+  --text-faint: #666c77;
+  --accent: #ffb020;
+  --accent-ink: #0b0d11;
+  --accent-soft: rgba(255, 176, 32, 0.12);
+  --accent-line: rgba(255, 176, 32, 0.35);
+  --good: #6fd08c;
+  --code-tag: #ffb877;
+  --code-attr: #8fb8ff;
+  --code-str: #9ad4a0;
+  --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+  --radius: 13px;
+}
+
+[data-theme="light"] {
+  --bg: #e9e5db;
+  --panel: #f6f4ee;
+  --panel-2: #efece3;
+  --stage: #f1eee6;
+  --border: #d7d1c4;
+  --border-soft: #e1dccf;
+  --text: #23201a;
+  --text-dim: #6c675c;
+  --text-faint: #979082;
+  --accent: #c47d00;
+  --accent-ink: #fffdf7;
+  --accent-soft: rgba(196, 125, 0, 0.13);
+  --accent-line: rgba(196, 125, 0, 0.4);
+  --good: #2e8b57;
+  --code-tag: #a15b00;
+  --code-attr: #2f5fa8;
+  --code-str: #3d7a4a;
+  --shadow: 0 10px 30px -14px rgba(80, 70, 50, 0.35);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Archivo", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+::selection { background: var(--accent-soft); }
+
+/* ---------- App shell ---------- */
+.app {
+  display: grid;
+  grid-template-rows: 53px 1fr 52px;
+  grid-template-columns: minmax(0, 1fr);
+  height: 100vh;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand-mark {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: var(--accent);
+  display: grid; place-items: center;
+  color: var(--accent-ink);
+  box-shadow: 0 0 0 1px var(--accent-line);
+}
+.brand-name {
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+.brand-name span { color: var(--accent); }
+.brand-tag {
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 7px;
+}
+.topbar-spacer { flex: 1; }
+.icon-btn {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  color: var(--text-dim);
+  border: 1px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.icon-btn:hover { background: var(--panel-2); color: var(--text); border-color: var(--border); }
+
+/* ---------- Main columns ---------- */
+.main {
+  display: grid;
+  grid-template-columns: 266px minmax(0, 1fr) 344px;
+  min-height: 0;
+  min-width: 0;
+}
+.col { min-height: 0; min-width: 0; display: flex; flex-direction: column; }
+.col-left { border-right: 1px solid var(--border); background: var(--panel); }
+.col-right { border-left: 1px solid var(--border); background: var(--panel); }
+.col-center { background: var(--bg); }
+
+/* ---------- Left: catalog ---------- */
+.search-wrap { padding: 14px 14px 10px; }
+.search {
+  position: relative;
+}
+.search input {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 9px 12px 9px 34px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search input:focus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.search input::placeholder { color: var(--text-faint); }
+.search svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-faint); }
+
+.catalog { flex: 1; overflow-y: auto; padding: 4px 10px 16px; }
+.cat-group { margin-top: 12px; }
+.cat-label {
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 6px 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.cat-label::after { content: ""; flex: 1; height: 1px; background: var(--border-soft); }
+
+.effect-item {
+  display: flex; align-items: center; gap: 11px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 9px;
+  text-align: left;
+  color: var(--text-dim);
+  border: 1px solid transparent;
+  transition: background 0.13s, color 0.13s;
+}
+.effect-item:hover { background: var(--panel-2); color: var(--text); }
+.effect-item.active { background: var(--accent-soft); color: var(--text); border-color: var(--accent-line); }
+.effect-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--text-faint); flex-shrink: 0;
+  transition: background 0.13s, box-shadow 0.13s;
+}
+.effect-item.active .effect-dot { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.effect-meta { min-width: 0; flex: 1; }
+.effect-name { font-weight: 600; font-size: 13px; }
+.effect-sub { font-size: 11px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.effect-item.active .effect-sub { color: var(--text-dim); }
+.catalog-empty { padding: 24px 12px; color: var(--text-faint); font-size: 12.5px; text-align: center; }
+
+/* ---------- Center: stage ---------- */
+.stage-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.seg {
+  display: inline-flex;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 3px;
+  gap: 2px;
+}
+.seg button {
+  padding: 6px 13px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: background 0.13s, color 0.13s;
+}
+.seg button:hover { color: var(--text); }
+.seg button.on { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.seg-label {
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-faint); margin-right: -4px;
+}
+.stage-bar-spacer { flex: 1; }
+.compare-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-dim);
+  font-size: 12.5px; font-weight: 500;
+  transition: color 0.13s, border-color 0.13s;
+}
+.compare-toggle:hover { color: var(--text); }
+.compare-toggle.on { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); }
+.compare-toggle .sw { width: 30px; height: 17px; border-radius: 20px; background: var(--border); position: relative; transition: background 0.15s; }
+.compare-toggle.on .sw { background: var(--accent); }
+.compare-toggle .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
+.compare-toggle.on .sw::after { transform: translateX(13px); }
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 40px;
+  background:
+    radial-gradient(120% 120% at 50% 0%, transparent 55%, rgba(0,0,0,0.22) 100%),
+    var(--stage);
+  overflow: auto;
+}
+[data-theme="light"] .stage {
+  background: radial-gradient(120% 120% at 50% 0%, transparent 55%, rgba(120,105,75,0.1) 100%), var(--stage);
+}
+
+.stage-grid { display: flex; gap: 34px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.compare-cell { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.compare-cap {
+  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-faint); font-weight: 600;
+}
+.compare-cap.after { color: var(--accent); }
+
+.stage-hint {
+  position: absolute; bottom: 14px; left: 0; right: 0;
+  text-align: center; font-size: 11.5px; color: var(--text-faint);
+}
+
+/* ---------- Preview targets ---------- */
+.pv { transition: none; }
+
+.pv-card {
+  width: 300px;
+  background: linear-gradient(160deg, #fbf6ec, #f0e6d2);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  color: #2a2318;
+  text-align: left;
+}
+.pv-card .banner {
+  height: 128px;
+  background: linear-gradient(135deg, #ff8a3d, #ff5d73 55%, #c0417a);
+  position: relative;
+}
+.pv-card .banner b {
+  position: absolute; left: 18px; bottom: 14px;
+  font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.02em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.pv-card .body { padding: 16px 18px 20px; }
+.pv-card .ktag {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #b5642a; font-weight: 700;
+}
+.pv-card h3 { font-size: 19px; margin: 6px 0 6px; letter-spacing: -0.01em; }
+.pv-card p { font-size: 12.5px; color: #6a5f4c; line-height: 1.55; }
+.pv-card .row { display: flex; align-items: center; justify-content: space-between; margin-top: 15px; }
+.pv-card .price { font-size: 22px; font-weight: 800; }
+.pv-card .cta { background: #24201a; color: #fff; font-size: 12px; font-weight: 600; padding: 9px 16px; border-radius: 8px; }
+
+.pv-text {
+  font-weight: 800;
+  font-size: 92px;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  text-align: center;
+  color: var(--text);
+  max-width: 5.5em;
+  text-transform: uppercase;
+}
+[data-theme="dark"] .pv-text { color: #f4f5f8; }
+
+.pv-image {
+  width: 340px; height: 240px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow);
+  background:
+    radial-gradient(60% 80% at 20% 15%, #ffd36e, transparent 60%),
+    radial-gradient(70% 90% at 85% 25%, #ff6a9c, transparent 55%),
+    radial-gradient(90% 90% at 60% 100%, #5b7bff, transparent 60%),
+    linear-gradient(160deg, #241a3a, #101a33);
+}
+.pv-image .grain-lines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(115deg, rgba(255,255,255,0.14) 0 2px, transparent 2px 13px);
+  mix-blend-mode: overlay;
+}
+.pv-image .tag {
+  position: absolute; left: 18px; top: 16px;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.85); font-weight: 700;
+}
+.pv-image .big {
+  position: absolute; left: 18px; bottom: 14px;
+  font-size: 40px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1;
+}
+.pv-image .sub { position: absolute; left: 20px; bottom: 6px; font-size: 11px; color: rgba(255,255,255,0.75); }
+
+/* ---------- Right: controls + code ---------- */
+.right-scroll { flex: 1; overflow-y: auto; min-width: 0; }
+.panel-head {
+  padding: 14px 16px 10px;
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.panel-head h2 {
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); font-weight: 700;
+}
+.panel-head .desc-link { font-size: 11px; color: var(--text-faint); }
+
+.effect-headline { padding: 0 16px 8px; }
+.effect-headline .t { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.effect-headline .d { font-size: 12px; color: var(--text-dim); margin-top: 3px; line-height: 1.5; }
+.effect-headline .tags { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
+.chip { font-size: 10px; letter-spacing: 0.05em; color: var(--text-dim); background: var(--panel-2); border: 1px solid var(--border); border-radius: 5px; padding: 3px 7px; }
+.chip.mono { letter-spacing: 0; }
+
+.controls { padding: 6px 16px 4px; }
+.control { padding: 12px 0; border-top: 1px solid var(--border-soft); }
+.control:first-child { border-top: none; }
+.ctrl-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+.ctrl-name { font-size: 12.5px; font-weight: 500; color: var(--text); }
+.ctrl-val {
+  font-size: 12px; color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 6px; padding: 2px 8px; min-width: 54px; text-align: center;
+}
+.ctrl-row { display: flex; align-items: center; gap: 10px; }
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  flex: 1; height: 4px; border-radius: 4px;
+  background: var(--border);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--panel);
+  box-shadow: 0 0 0 1px var(--accent-line);
+  cursor: pointer; transition: transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--panel);
+  background: var(--accent); box-shadow: 0 0 0 1px var(--accent-line); cursor: pointer;
+}
+input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.dice-btn {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--border); background: var(--panel-2); color: var(--text-dim);
+  transition: color 0.13s, border-color 0.13s;
+}
+.dice-btn:hover { color: var(--accent); border-color: var(--accent-line); }
+
+.ctrl-toggle { display: flex; align-items: center; justify-content: space-between; }
+.mini-sw { width: 38px; height: 21px; border-radius: 20px; background: var(--border); position: relative; transition: background 0.15s; flex-shrink: 0; }
+.mini-sw.on { background: var(--accent); }
+.mini-sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
+.mini-sw.on::after { transform: translateX(17px); }
+.reduced-note { font-size: 11px; color: var(--text-faint); margin-top: 6px; display: none; }
+.reduced-note.show { display: block; }
+
+/* ---------- Code viewer ---------- */
+.code-block { border-top: 1px solid var(--border); margin-top: 6px; }
+.code-tabs { display: flex; align-items: center; padding: 10px 16px 0; gap: 4px; }
+.code-tab {
+  font-size: 12px; font-weight: 500; color: var(--text-dim);
+  padding: 7px 12px; border-radius: 8px 8px 0 0;
+  border: 1px solid transparent; border-bottom: none;
+}
+.code-tab:hover { color: var(--text); }
+.code-tab.on { color: var(--text); background: var(--stage); border-color: var(--border-soft); }
+.code-copy { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-dim); padding: 6px 10px; border-radius: 7px; border: 1px solid var(--border); }
+.code-copy:hover { color: var(--text); border-color: var(--accent-line); }
+.code-copy.done { color: var(--good); border-color: var(--good); }
+.code-pre {
+  margin: 0 16px 16px;
+  background: var(--stage);
+  border: 1px solid var(--border-soft);
+  border-radius: 0 9px 9px 9px;
+  padding: 13px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px; line-height: 1.65;
+  color: var(--text-dim);
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+.tk-tag { color: var(--code-tag); }
+.tk-attr { color: var(--code-attr); }
+.tk-str { color: var(--code-str); }
+.tk-punct { color: var(--text-faint); }
+
+/* ---------- Bottom bar ---------- */
+.bottombar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 18px;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+.bar-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 15px; border-radius: 9px;
+  font-size: 12.5px; font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--panel-2); color: var(--text-dim);
+  transition: color 0.13s, border-color 0.13s, background 0.13s;
+}
+.bar-btn:hover { color: var(--text); border-color: var(--accent-line); }
+.bar-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.bar-btn.primary:hover { filter: brightness(1.06); }
+.bar-spacer { flex: 1; }
+.bar-status { font-size: 11.5px; color: var(--text-faint); }
+.bar-status b { color: var(--text-dim); font-weight: 600; }
+
+svg.i { width: 17px; height: 17px; stroke: currentColor; stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg.i-sm { width: 14px; height: 14px; }
+
+/* scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-faint); background-clip: padding-box; }
+
+@media (max-width: 1080px) {
+  .main { grid-template-columns: 220px 1fr 300px; }
+}
+@media (max-width: 900px) {
+  html, body { overflow-x: hidden; }
+  body { overflow-y: auto; }
+  .app { height: auto; grid-template-rows: 53px auto auto; }
+  .main { grid-template-columns: 1fr; }
+  .col-left, .col-right { border: none; border-top: 1px solid var(--border); }
+  .stage-bar { flex-wrap: wrap; row-gap: 10px; }
+  .stage-bar-spacer { flex-basis: 100%; height: 0; }
+  .stage { min-height: 360px; padding: 28px 16px; }
+  .pv-text { font-size: 56px; }
+  .bottombar { position: sticky; bottom: 0; z-index: 5; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg class="i i-sm" viewBox="0 0 24 24"><path d="M4 16c2-6 4-9 8-9s6 3 8 9"/><path d="M4 8c2 3 4 4 8 4s6-1 8-4"/></svg>
+      </span>
+      <span class="brand-name">UI Effects <span>Lab</span></span>
+    </div>
+    <span class="brand-tag">Mockup</span>
+    <div class="topbar-spacer"></div>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme"></button>
+    <button class="icon-btn" title="GitHub" aria-label="GitHub repository">
+      <svg class="i" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+    </button>
+  </header>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Left: catalog -->
+    <aside class="col col-left">
+      <div class="search-wrap">
+        <div class="search">
+          <svg class="i i-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="search" type="text" placeholder="Search effects, tags, tech…" />
+        </div>
+      </div>
+      <nav class="catalog" id="catalog"></nav>
+    </aside>
+
+    <!-- Center: stage -->
+    <main class="col col-center">
+      <div class="stage-bar">
+        <span class="seg-label">Preview</span>
+        <div class="seg" id="previewSeg">
+          <button data-pv="card" class="on">Card</button>
+          <button data-pv="text">Text</button>
+          <button data-pv="image">Image</button>
+        </div>
+        <div class="stage-bar-spacer"></div>
+        <button class="compare-toggle" id="compareBtn">
+          <span class="sw"></span> Before / After
+        </button>
+      </div>
+      <div class="stage">
+        <div class="stage-grid" id="stageGrid"></div>
+        <div class="stage-hint" id="stageHint"></div>
+      </div>
+    </main>
+
+    <!-- Right: controls + code -->
+    <aside class="col col-right">
+      <div class="right-scroll">
+        <div class="effect-headline" id="effectHeadline"></div>
+
+        <div class="panel-head"><h2>Controls</h2></div>
+        <div class="controls" id="controls"></div>
+
+        <div class="code-block">
+          <div class="code-tabs">
+            <button class="code-tab on" data-code="svg">SVG</button>
+            <button class="code-tab" data-code="css">CSS</button>
+            <button class="code-copy" id="copyBtn">
+              <svg class="i i-sm" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre class="code-pre mono" id="codePre"></pre>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Bottom bar -->
+  <footer class="bottombar">
+    <button class="bar-btn primary" id="randomizeBtn">
+      <svg class="i i-sm" viewBox="0 0 24 24"><path d="M18 3h3v3"/><path d="M21 3 3 21"/><path d="M3 3l6 6"/><path d="M15 15l6 6"/><path d="M18 21h3v-3"/></svg>
+      Randomize
+    </button>
+    <button class="bar-btn" id="resetBtn">
+      <svg class="i i-sm" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      Reset
+    </button>
+    <div class="bar-spacer"></div>
+    <span class="bar-status" id="barStatus"></span>
+    <button class="bar-btn" id="copyBtn2">
+      <svg class="i i-sm" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      Copy code
+    </button>
+  </footer>
+</div>
+
+<!-- Live filter host -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs id="filterDefs"></defs>
+</svg>
+
+<script>
+"use strict";
+
+/* ---------------- Effect registry (data-driven, per PRD §15) ---------------- */
+const dec = (v, d) => Number(v).toFixed(d);
+
+const EFFECTS = [
+  {
+    id: "rough-edge",
+    name: "Rough Edge",
+    sub: "feTurbulence + feDisplacementMap",
+    category: "SVG Filters",
+    tags: ["noise", "displacement", "sticker"],
+    tech: ["feTurbulence", "feDisplacementMap"],
+    description: "Uses a fractal-noise map to displace an element's edges, giving a hand-drawn, torn-paper look.",
+    controls: [
+      { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.005, max: 0.1, step: 0.001, def: 0.04, dec: 3, rnd: [0.01, 0.07] },
+      { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 5, step: 1, def: 3, dec: 0, rnd: [1, 4] },
+      { id: "seed", label: "Seed", type: "seed", min: 0, max: 100, step: 1, def: 4, dec: 0, rnd: [0, 100] },
+      { id: "scale", label: "Displacement Scale", type: "range", min: 0, max: 40, step: 1, def: 9, dec: 0, rnd: [4, 22] }
+    ],
+    inner: (p) =>
+`<feTurbulence type="fractalNoise" baseFrequency="${dec(p.baseFrequency,3)}"
+  numOctaves="${p.numOctaves}" seed="${p.seed}" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="${p.scale}"
+  xChannelSelector="R" yChannelSelector="G"/>`
+  },
+  {
+    id: "paper-grain",
+    name: "Paper Grain",
+    sub: "feTurbulence + feBlend",
+    category: "SVG Filters",
+    tags: ["noise", "texture", "vintage"],
+    tech: ["feTurbulence", "feColorMatrix", "feBlend"],
+    description: "High-frequency fractal noise multiplied over the source for a fine paper / film-grain texture.",
+    controls: [
+      { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.2, max: 1, step: 0.01, def: 0.65, dec: 2, rnd: [0.4, 0.9] },
+      { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 4, step: 1, def: 3, dec: 0, rnd: [2, 4] },
+      { id: "seed", label: "Seed", type: "seed", min: 0, max: 100, step: 1, def: 8, dec: 0, rnd: [0, 100] },
+      { id: "intensity", label: "Grain Intensity", type: "range", min: 0, max: 1, step: 0.05, def: 0.55, dec: 2, rnd: [0.3, 0.8] }
+    ],
+    inner: (p) => {
+      const i = Number(p.intensity);
+      return `<feTurbulence type="fractalNoise" baseFrequency="${dec(p.baseFrequency,2)}"
+  numOctaves="${p.numOctaves}" seed="${p.seed}" stitchTiles="stitch" result="noise"/>
+<feColorMatrix in="noise" type="matrix" result="grain"
+  values="0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          ${dec(i*0.33,3)} ${dec(i*0.33,3)} ${dec(i*0.34,3)} 0 0"/>
+<feComposite in="grain" in2="SourceGraphic" operator="in" result="clip"/>
+<feBlend in="SourceGraphic" in2="clip" mode="multiply"/>`;
+    }
+  },
+  {
+    id: "water",
+    name: "Water Distortion",
+    sub: "directional turbulence",
+    category: "SVG Filters",
+    tags: ["water", "animation", "displacement"],
+    tech: ["feTurbulence", "feDisplacementMap"],
+    description: "Directional turbulence (X ≠ Y frequency) drives a displacement map to ripple the surface like water.",
+    animatable: true,
+    controls: [
+      { id: "freqX", label: "Frequency X", type: "range", min: 0.004, max: 0.06, step: 0.001, def: 0.012, dec: 3, rnd: [0.006, 0.03] },
+      { id: "freqY", label: "Frequency Y", type: "range", min: 0.004, max: 0.06, step: 0.001, def: 0.04, dec: 3, rnd: [0.02, 0.055] },
+      { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 4, step: 1, def: 2, dec: 0, rnd: [1, 3] },
+      { id: "seed", label: "Seed", type: "seed", min: 0, max: 100, step: 1, def: 3, dec: 0, rnd: [0, 100] },
+      { id: "scale", label: "Displacement Scale", type: "range", min: 0, max: 50, step: 1, def: 20, dec: 0, rnd: [10, 36] },
+      { id: "speed", label: "Animation Speed", type: "range", min: 1, max: 10, step: 0.5, def: 4, dec: 1, unit: "×", anim: true }
+    ],
+    inner: (p, anim) => {
+      const bf = `${dec(p.freqX,3)} ${dec(p.freqY,3)}`;
+      const bf2 = `${dec(p.freqX,3)} ${dec(p.freqY*1.7,3)}`;
+      const dur = dec(13 / Number(p.speed), 1);
+      const animEl = anim
+        ? `\n  <animate attributeName="baseFrequency" dur="${dur}s"
+    values="${bf};${bf2};${bf}" repeatCount="indefinite"/>` : "";
+      return `<feTurbulence type="turbulence" baseFrequency="${bf}"
+  numOctaves="${p.numOctaves}" seed="${p.seed}" result="noise">${animEl}
+</feTurbulence>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="${p.scale}"
+  xChannelSelector="R" yChannelSelector="G"/>`;
+    }
+  },
+  {
+    id: "heat-haze",
+    name: "Heat Haze",
+    sub: "animated low-freq turbulence",
+    category: "SVG Filters",
+    tags: ["heat", "animation", "shimmer"],
+    tech: ["feTurbulence", "feDisplacementMap"],
+    description: "Low-frequency animated turbulence gently warps the surface like hot air rising off a road.",
+    animatable: true,
+    controls: [
+      { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.004, max: 0.03, step: 0.001, def: 0.011, dec: 3, rnd: [0.006, 0.02] },
+      { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 3, step: 1, def: 2, dec: 0, rnd: [1, 3] },
+      { id: "seed", label: "Seed", type: "seed", min: 0, max: 100, step: 1, def: 17, dec: 0, rnd: [0, 100] },
+      { id: "scale", label: "Displacement Scale", type: "range", min: 0, max: 30, step: 1, def: 10, dec: 0, rnd: [5, 18] },
+      { id: "speed", label: "Animation Speed", type: "range", min: 1, max: 10, step: 0.5, def: 3, dec: 1, unit: "×", anim: true }
+    ],
+    inner: (p, anim) => {
+      const bf = dec(p.baseFrequency, 3);
+      const bf2 = dec(p.baseFrequency * 1.5, 3);
+      const dur = dec(16 / Number(p.speed), 1);
+      const animEl = anim
+        ? `\n  <animate attributeName="baseFrequency" dur="${dur}s"
+    values="${bf};${bf2};${bf}" repeatCount="indefinite"/>` : "";
+      return `<feTurbulence type="turbulence" baseFrequency="${bf}"
+  numOctaves="${p.numOctaves}" seed="${p.seed}" result="noise">${animEl}
+</feTurbulence>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="${p.scale}"
+  xChannelSelector="R" yChannelSelector="G"/>`;
+    }
+  }
+];
+
+/* placeholder catalog entries shown but not yet wired (mockup) */
+const PLACEHOLDERS = {
+  "CSS Effects": ["Frosted Glass", "Holographic Card"],
+  "Retro": ["Glitch", "CRT / Analog"]
+};
+
+/* ---------------- State ---------------- */
+const LIVE_ID = "fx-live";
+const state = {
+  effectId: localStorage.getItem("uifx.effect") || "rough-edge",
+  previewType: "card",
+  compare: false,
+  animate: true,
+  codeTab: "svg",
+  params: {},
+  search: ""
+};
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reducedMotion) state.animate = false;
+
+function currentEffect() { return EFFECTS.find(e => e.id === state.effectId) || EFFECTS[0]; }
+function animOn() { return state.animate && !reducedMotion && !!currentEffect().animatable; }
+
+function loadDefaults(effect) {
+  const p = {};
+  effect.controls.forEach(c => { p[c.id] = c.def; });
+  state.params = p;
+}
+
+/* ---------------- Rendering ---------------- */
+const $ = (id) => document.getElementById(id);
+
+function renderCatalog() {
+  const term = state.search.trim().toLowerCase();
+  const match = (name, tags, tech) =>
+    !term || (name + " " + tags.join(" ") + " " + tech.join(" ")).toLowerCase().includes(term);
+
+  const groups = {};
+  EFFECTS.forEach(e => {
+    if (!match(e.name, e.tags, e.tech)) return;
+    (groups[e.category] = groups[e.category] || []).push(e);
+  });
+
+  let html = "";
+  Object.keys(groups).forEach(cat => {
+    html += `<div class="cat-group"><div class="cat-label">${cat}</div>`;
+    groups[cat].forEach(e => {
+      html += `<button class="effect-item ${e.id === state.effectId ? "active" : ""}" data-effect="${e.id}">
+        <span class="effect-dot"></span>
+        <span class="effect-meta">
+          <div class="effect-name">${e.name}</div>
+          <div class="effect-sub">${e.sub}</div>
+        </span>
+      </button>`;
+    });
+    html += `</div>`;
+  });
+
+  // placeholder groups
+  Object.keys(PLACEHOLDERS).forEach(cat => {
+    const items = PLACEHOLDERS[cat].filter(n => !term || n.toLowerCase().includes(term));
+    if (!items.length) return;
+    html += `<div class="cat-group"><div class="cat-label">${cat}</div>`;
+    items.forEach(n => {
+      html += `<button class="effect-item" style="opacity:.5;cursor:not-allowed" disabled>
+        <span class="effect-dot"></span>
+        <span class="effect-meta"><div class="effect-name">${n}</div><div class="effect-sub">Coming soon</div></span>
+      </button>`;
+    });
+    html += `</div>`;
+  });
+
+  if (!html) html = `<div class="catalog-empty">No effects match “${term}”.</div>`;
+  $("catalog").innerHTML = html;
+  $("catalog").querySelectorAll("[data-effect]").forEach(btn => {
+    btn.addEventListener("click", () => selectEffect(btn.dataset.effect));
+  });
+}
+
+function renderHeadline() {
+  const e = currentEffect();
+  $("effectHeadline").innerHTML = `
+    <div class="t">${e.name}</div>
+    <div class="d">${e.description}</div>
+    <div class="tags">${e.tech.map(t => `<span class="chip mono">${t}</span>`).join("")}</div>`;
+}
+
+function renderControls() {
+  const e = currentEffect();
+  let html = "";
+  e.controls.forEach(c => {
+    if (c.type === "seed") {
+      html += `<div class="control">
+        <div class="ctrl-top"><span class="ctrl-name">${c.label}</span>
+          <span class="ctrl-val mono" data-val="${c.id}">${dec(state.params[c.id], c.dec)}</span></div>
+        <div class="ctrl-row">
+          <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${state.params[c.id]}" data-ctrl="${c.id}" aria-label="${c.label}" />
+          <button class="dice-btn" data-dice="${c.id}" title="Random seed" aria-label="Random seed">
+            <svg class="i i-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </button>
+        </div>
+      </div>`;
+    } else {
+      html += `<div class="control">
+        <div class="ctrl-top"><span class="ctrl-name">${c.label}</span>
+          <span class="ctrl-val mono" data-val="${c.id}">${dec(state.params[c.id], c.dec)}${c.unit || ""}</span></div>
+        <div class="ctrl-row">
+          <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${state.params[c.id]}" data-ctrl="${c.id}" aria-label="${c.label}" />
+        </div>
+      </div>`;
+    }
+  });
+
+  if (e.animatable) {
+    html += `<div class="control">
+      <div class="ctrl-toggle">
+        <span class="ctrl-name">Animate</span>
+        <button class="mini-sw ${animOn() ? "on" : ""}" id="animSw" role="switch" aria-checked="${animOn()}" aria-label="Animate" ${reducedMotion ? "disabled style=opacity:.5" : ""}></button>
+      </div>
+      <div class="reduced-note ${reducedMotion ? "show" : ""}">Reduced-motion is on — animation is paused to respect your system setting.</div>
+    </div>`;
+  }
+
+  $("controls").innerHTML = html;
+
+  $("controls").querySelectorAll("[data-ctrl]").forEach(inp => {
+    inp.addEventListener("input", () => {
+      const id = inp.dataset.ctrl;
+      state.params[id] = parseFloat(inp.value);
+      const c = e.controls.find(x => x.id === id);
+      $("controls").querySelector(`[data-val="${id}"]`).textContent = dec(state.params[id], c.dec) + (c.unit || "");
+      applyFilter(); renderCode();
+    });
+  });
+  $("controls").querySelectorAll("[data-dice]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.dice;
+      const c = e.controls.find(x => x.id === id);
+      state.params[id] = Math.round(c.min + Math.random() * (c.max - c.min));
+      renderControls(); applyFilter(); renderCode(); flash("Seed randomized");
+    });
+  });
+  const sw = $("animSw");
+  if (sw && !reducedMotion) sw.addEventListener("click", () => {
+    state.animate = !state.animate;
+    renderControls(); applyFilter(); renderCode();
+  });
+}
+
+/* preview target markup */
+function previewMarkup(withFilter) {
+  const style = withFilter ? `style="filter:url(#${LIVE_ID})"` : "";
+  if (state.previewType === "card") {
+    return `<div class="pv pv-card" ${style}>
+      <div class="banner"><b>50% OFF</b></div>
+      <div class="body">
+        <div class="ktag">Local Advertisement</div>
+        <h3>Harbor Roastery</h3>
+        <p>Small-batch coffee, roasted on the pier every morning. Sample copy for layout only.</p>
+        <div class="row"><span class="price">$12</span><span class="cta">Order now</span></div>
+      </div>
+    </div>`;
+  }
+  if (state.previewType === "text") {
+    return `<div class="pv pv-text" ${style}>Turbulence</div>`;
+  }
+  return `<div class="pv pv-image" ${style}>
+    <div class="grain-lines"></div>
+    <div class="tag">Cover / Poster</div>
+    <div class="big">Nightfall</div>
+    <div class="sub">Sample artwork · displacement target</div>
+  </div>`;
+}
+
+function renderStage() {
+  const grid = $("stageGrid");
+  if (state.compare) {
+    grid.innerHTML = `
+      <div class="compare-cell"><span class="compare-cap">Before</span>${previewMarkup(false)}</div>
+      <div class="compare-cell"><span class="compare-cap after">After</span>${previewMarkup(true)}</div>`;
+  } else {
+    grid.innerHTML = previewMarkup(true);
+  }
+  const e = currentEffect();
+  $("stageHint").textContent = e.animatable
+    ? (animOn() ? "Animating — toggle in Controls" : "Static — enable Animate in Controls")
+    : "Drag the sliders to tune the effect in real time";
+}
+
+/* apply live filter to the DOM */
+function applyFilter() {
+  const e = currentEffect();
+  const inner = e.inner(state.params, animOn());
+  $("filterDefs").innerHTML =
+    `<filter id="${LIVE_ID}" x="-25%" y="-25%" width="150%" height="150%">${inner}</filter>`;
+}
+
+/* ---------------- Code generation + highlight ---------------- */
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+// Single-pass tokenizer: scans the escaped source left-to-right so inserted
+// markup is never re-matched (avoids highlighter self-matching).
+function highlight(code) {
+  const src = esc(code);
+  const re = /(&lt;\/?)([a-zA-Z][\w-]*)|([a-zA-Z][\w-]*)=|("[^"]*")|(\/?&gt;)/g;
+  return src.replace(re, (m, open, tag, attr, str, close) => {
+    if (tag) return `<span class="tk-punct">${open}</span><span class="tk-tag">${tag}</span>`;
+    if (attr) return `<span class="tk-attr">${attr}</span><span class="tk-punct">=</span>`;
+    if (str) return `<span class="tk-str">${str}</span>`;
+    return `<span class="tk-punct">${close}</span>`;
+  });
+}
+
+function svgCode() {
+  const e = currentEffect();
+  const inner = e.inner(state.params, animOn()).split("\n").map(l => "    " + l).join("\n");
+  return `<svg width="0" height="0" aria-hidden="true">
+  <filter id="${e.id}">
+${inner}
+  </filter>
+</svg>`;
+}
+function cssCode() {
+  const e = currentEffect();
+  return `.effect {
+  filter: url(#${e.id});
+}`;
+}
+function renderCode() {
+  const code = state.codeTab === "svg" ? svgCode() : cssCode();
+  $("codePre").innerHTML = highlight(code);
+}
+
+/* ---------------- Actions ---------------- */
+function selectEffect(id) {
+  state.effectId = id;
+  localStorage.setItem("uifx.effect", id);
+  loadDefaults(currentEffect());
+  if (!currentEffect().animatable) {} // keep animate flag
+  renderAll();
+  flash(currentEffect().name + " loaded");
+}
+
+function randomizeAll() {
+  const e = currentEffect();
+  e.controls.forEach(c => {
+    const [lo, hi] = c.rnd;
+    let v = lo + Math.random() * (hi - lo);
+    v = c.dec === 0 ? Math.round(v) : parseFloat(v.toFixed(c.dec));
+    state.params[c.id] = v;
+  });
+  renderControls(); applyFilter(); renderCode();
+  flash("Randomized");
+}
+function resetAll() {
+  loadDefaults(currentEffect());
+  renderControls(); applyFilter(); renderCode();
+  flash("Reset to defaults");
+}
+async function copyCode(btn) {
+  const code = state.codeTab === "svg" ? svgCode() : cssCode();
+  try {
+    await navigator.clipboard.writeText(code);
+    flash("Copied " + state.codeTab.toUpperCase() + " to clipboard");
+    if (btn) { btn.classList.add("done"); setTimeout(() => btn.classList.remove("done"), 1200); }
+  } catch (err) { flash("Copy blocked by browser"); }
+}
+
+let flashTimer;
+function flash(msg) {
+  const el = $("barStatus");
+  el.innerHTML = `<b>${msg}</b>`;
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => { el.textContent = idleStatus(); }, 1800);
+}
+function idleStatus() {
+  const e = currentEffect();
+  return e.controls.length + " parameters · " + e.tech.length + " primitives";
+}
+
+/* ---------------- Theme ---------------- */
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  localStorage.setItem("uifx.theme", t);
+  $("themeBtn").innerHTML = t === "dark"
+    ? `<svg class="i" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>`
+    : `<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
+}
+
+/* ---------------- Full render ---------------- */
+function renderAll() {
+  renderCatalog();
+  renderHeadline();
+  renderControls();
+  applyFilter();
+  renderStage();
+  renderCode();
+  $("barStatus").textContent = idleStatus();
+}
+
+/* ---------------- Wire up ---------------- */
+setTheme(localStorage.getItem("uifx.theme") || "dark");
+loadDefaults(currentEffect());
+renderAll();
+
+$("themeBtn").addEventListener("click", () =>
+  setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"));
+
+$("search").addEventListener("input", (e) => { state.search = e.target.value; renderCatalog(); });
+
+$("previewSeg").querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.previewType = btn.dataset.pv;
+    $("previewSeg").querySelectorAll("button").forEach(b => b.classList.toggle("on", b === btn));
+    renderStage();
+  });
+});
+
+$("compareBtn").addEventListener("click", () => {
+  state.compare = !state.compare;
+  $("compareBtn").classList.toggle("on", state.compare);
+  renderStage();
+});
+
+document.querySelectorAll(".code-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    state.codeTab = tab.dataset.code;
+    document.querySelectorAll(".code-tab").forEach(t => t.classList.toggle("on", t === tab));
+    renderCode();
+  });
+});
+
+$("copyBtn").addEventListener("click", () => copyCode($("copyBtn")));
+$("copyBtn2").addEventListener("click", () => copyCode($("copyBtn2")));
+$("randomizeBtn").addEventListener("click", randomizeAll);
+$("resetBtn").addEventListener("click", resetAll);
+</script>
+</body>
+</html>
