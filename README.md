@@ -20,11 +20,12 @@ npm run build   # type-check and build for production
 > On Windows, run npm through a shell where `node` is on the PATH (e.g. the
 > standard PowerShell/CMD prompt) so native postinstall scripts (esbuild) run.
 
-## MVP effects
+## Effects
 
-Rough Edge, Paper Grain, Water Distortion, Heat Haze — all built on the
-`feTurbulence` + `feDisplacementMap` pattern. See `docs/PRD.md` for the full
-product spec and `docs/superpowers/plans/` for the implementation plan.
+Rough Edge, Paper Grain, Noise Texture, Water Distortion, Liquid, Heat Haze,
+and Cloud / Fog — all built on the `feTurbulence` family documented in
+`docs/effects/feTurbulence.md`. See `docs/PRD.md` for the full product spec and
+`docs/superpowers/plans/` for the implementation plan.
 
 ## Project layout
 

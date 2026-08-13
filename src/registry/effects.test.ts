@@ -22,9 +22,10 @@ test("groupByCategory groups and preserves label", () => {
   expect(groups).toEqual([{ label: "SVG Filters", effects: [fixture] }]);
 });
 
-test("registry ships the four MVP effects in order", () => {
+test("registry ships all SVG-filter effects in order", () => {
   expect(EFFECTS.map((e) => e.id)).toEqual([
-    "rough-edge", "paper-grain", "water", "heat-haze",
+    "rough-edge", "paper-grain", "noise", "water", "liquid", "heat-haze", "cloud",
   ]);
   expect(getEffect("water")?.name).toBe("Water Distortion");
+  expect(getEffect("cloud")?.name).toBe("Cloud / Fog");
 });

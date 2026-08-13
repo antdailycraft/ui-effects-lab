@@ -8,3 +8,4 @@ mockup/_shot_*.png
 mockup/_v*.html
 
 *.tsbuildinfo
+dev-server.log

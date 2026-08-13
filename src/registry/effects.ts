@@ -1,10 +1,21 @@
 import type { EffectDefinition, Params } from "../types/effects";
 import { roughEdge } from "../effects/svg/rough-edge/definition";
 import { paperGrain } from "../effects/svg/paper-grain/definition";
+import { noise } from "../effects/svg/noise/definition";
 import { water } from "../effects/svg/water-distortion/definition";
+import { liquid } from "../effects/svg/liquid/definition";
 import { heatHaze } from "../effects/svg/heat-haze/definition";
+import { cloud } from "../effects/svg/cloud/definition";
 
-export const EFFECTS: EffectDefinition[] = [roughEdge, paperGrain, water, heatHaze];
+export const EFFECTS: EffectDefinition[] = [
+  roughEdge,
+  paperGrain,
+  noise,
+  water,
+  liquid,
+  heatHaze,
+  cloud,
+];
 
 export function getEffect(id: string): EffectDefinition | undefined {
   return EFFECTS.find((e) => e.id === id);
