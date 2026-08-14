@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
-import { generateSvg, generateCss } from "../../lib/codegen";
+import { generateCode, resolveTab } from "../../lib/codegen";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 export function BottomBar() {
@@ -12,8 +12,7 @@ export function BottomBar() {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    const code =
-      state.codeTab === "svg" ? generateSvg(effect, state.params, animate) : generateCss(effect);
+    const code = generateCode(effect, state.params, animate, resolveTab(effect, state.codeTab));
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);

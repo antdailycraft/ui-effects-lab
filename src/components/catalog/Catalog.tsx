@@ -3,10 +3,9 @@ import { EFFECTS, groupByCategory } from "../../registry/effects";
 import { SearchBox } from "./SearchBox";
 import { EffectItem } from "./EffectItem";
 
-const PLACEHOLDERS: Record<string, string[]> = {
-  "CSS Effects": ["Frosted Glass", "Holographic Card"],
-  Retro: ["Glitch", "CRT / Analog"],
-};
+// Effects not yet implemented, shown as disabled "Coming soon" rows.
+// All previously-listed placeholders are now real effects in the registry.
+const PLACEHOLDERS: Record<string, string[]> = {};
 
 export function Catalog() {
   const { state } = usePlayground();

@@ -6,6 +6,10 @@ import { water } from "../effects/svg/water-distortion/definition";
 import { liquid } from "../effects/svg/liquid/definition";
 import { heatHaze } from "../effects/svg/heat-haze/definition";
 import { cloud } from "../effects/svg/cloud/definition";
+import { frostedGlass } from "../effects/css/frosted-glass/definition";
+import { holographic } from "../effects/css/holographic/definition";
+import { glitch } from "../effects/retro/glitch/definition";
+import { crt } from "../effects/retro/crt/definition";
 
 export const EFFECTS: EffectDefinition[] = [
   roughEdge,
@@ -15,6 +19,10 @@ export const EFFECTS: EffectDefinition[] = [
   liquid,
   heatHaze,
   cloud,
+  frostedGlass,
+  holographic,
+  glitch,
+  crt,
 ];
 
 export function getEffect(id: string): EffectDefinition | undefined {

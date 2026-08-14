@@ -1,6 +1,8 @@
-export function CardPreview({ filterId }: { filterId?: string }) {
+import type { CSSProperties } from "react";
+
+export function CardPreview({ className, style }: { className?: string; style?: CSSProperties }) {
   return (
-    <div className="pv pv-card" style={{ filter: filterId ? `url(#${filterId})` : undefined }}>
+    <div className={"pv pv-card" + (className ? " " + className : "")} style={style}>
       <div className="banner">
         <b>50% OFF</b>
       </div>

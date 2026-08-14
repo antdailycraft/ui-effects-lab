@@ -1,4 +1,5 @@
-import type { PreviewType } from "../../types/effects";
+import type { CSSProperties } from "react";
+import type { EffectDefinition, Params, PreviewType } from "../../types/effects";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
@@ -7,7 +8,9 @@ import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
 import { ImagePreview } from "./ImagePreview";
 
-const TARGETS: Record<PreviewType, (props: { filterId?: string }) => JSX.Element> = {
+type TargetProps = { className?: string; style?: CSSProperties };
+
+const TARGETS: Record<PreviewType, (props: TargetProps) => JSX.Element> = {
   card: CardPreview,
   text: TextPreview,
   image: ImagePreview,
@@ -19,12 +22,24 @@ const PV_OPTIONS: { id: PreviewType; label: string }[] = [
   { id: "image", label: "Image" },
 ];
 
+/** How the current effect is applied to a preview target. */
+function appliedProps(effect: EffectDefinition, params: Params, animate: boolean): TargetProps {
+  if (effect.kind === "css" && effect.buildStyle) {
+    return {
+      className: `${effect.cssClass ?? ""}${animate ? " fx-anim" : ""}`.trim(),
+      style: effect.buildStyle(params, animate) as unknown as CSSProperties,
+    };
+  }
+  return { style: { filter: `url(#${LIVE_FILTER_ID})` } };
+}
+
 export function PreviewCanvas() {
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
   const Target = TARGETS[state.previewType];
+  const applied = appliedProps(effect, state.params, animate);
 
   return (
     <main className="col col-center">
@@ -60,11 +75,11 @@ export function PreviewCanvas() {
               </div>
               <div className="compare-cell">
                 <span className="compare-cap after">After</span>
-                <Target filterId={LIVE_FILTER_ID} />
+                <Target className={applied.className} style={applied.style} />
               </div>
             </>
           ) : (
-            <Target filterId={LIVE_FILTER_ID} />
+            <Target className={applied.className} style={applied.style} />
           )}
         </div>
         <div className="stage-hint">

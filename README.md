@@ -22,9 +22,17 @@ npm run build   # type-check and build for production
 
 ## Effects
 
-Rough Edge, Paper Grain, Noise Texture, Water Distortion, Liquid, Heat Haze,
-and Cloud / Fog — all built on the `feTurbulence` family documented in
-`docs/effects/feTurbulence.md`. See `docs/PRD.md` for the full product spec and
+- **SVG Filters** — Rough Edge, Paper Grain, Noise Texture, Water Distortion,
+  Liquid, Heat Haze, Cloud / Fog (the `feTurbulence` family, see
+  `docs/effects/feTurbulence.md`).
+- **CSS Effects** — Frosted Glass (`backdrop-filter`), Holographic Card
+  (iridescent gradient + `mix-blend-mode`).
+- **Retro** — Glitch (RGB channel split via SVG filter), CRT / Analog
+  (scanlines + vignette).
+
+Effects declare a `kind` of `"svg"` (applied via `filter: url(#id)`) or `"css"`
+(a class + CSS custom properties); the code viewer shows the SVG+CSS or CSS-only
+tabs accordingly. See `docs/PRD.md` for the full product spec and
 `docs/superpowers/plans/` for the implementation plan.
 
 ## Project layout

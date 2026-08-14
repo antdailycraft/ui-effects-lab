@@ -4,6 +4,9 @@ export type ControlType = "range" | "seed" | "toggle";
 export type ParamValue = number | boolean;
 export type Params = Record<string, ParamValue>;
 
+/** How an effect is applied to the preview element. */
+export type EffectKind = "svg" | "css";
+
 export interface ControlDefinition {
   id: string;
   label: string;
@@ -30,6 +33,17 @@ export interface EffectDefinition {
   animatable?: boolean;
   previewTypes: PreviewType[];
   controls: ControlDefinition[];
-  /** Builds the inner markup of the <filter> given params + whether animation is active. */
-  buildFilterInner: (params: Params, animate: boolean) => string;
+
+  /** Defaults to "svg" when omitted. */
+  kind?: EffectKind;
+
+  /** SVG kind: inner markup of the <filter>, applied via `filter: url(#id)`. */
+  buildFilterInner?: (params: Params, animate: boolean) => string;
+
+  /** CSS kind: the class toggled on the preview element (styles live in index.css). */
+  cssClass?: string;
+  /** CSS kind: CSS custom properties (and any inline props) derived from params. */
+  buildStyle?: (params: Params, animate: boolean) => Record<string, string>;
+  /** CSS kind: the resolved CSS rule shown in the code viewer. */
+  buildCss?: (params: Params, animate: boolean) => string;
 }

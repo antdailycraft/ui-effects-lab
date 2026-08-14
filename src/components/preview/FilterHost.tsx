@@ -9,6 +9,7 @@ export function FilterHost() {
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
+  if (effect.kind === "css" || !effect.buildFilterInner) return null;
   const inner = effect.buildFilterInner(state.params, animate);
   return (
     <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
