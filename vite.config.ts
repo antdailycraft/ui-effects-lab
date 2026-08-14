@@ -7,14 +7,14 @@ export default defineConfig({
   server: {
     // Expose the dev server on all network interfaces (external access).
     host: true,
-    port: 5174,
+    port: 5180,
     strictPort: true,
     // Vite blocks unknown Host headers; permit access via http://atlas:5174.
     allowedHosts: ["atlas"],
   },
   preview: {
     host: true,
-    port: 5174,
+    port: 5180,
     strictPort: true,
     allowedHosts: ["atlas"],
   },
