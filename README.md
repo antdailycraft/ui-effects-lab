@@ -42,3 +42,18 @@ src/
 
 Roadmap (not yet built): local presets, comparison drag-slider, fullscreen,
 React JSX export, URL sharing.
+
+## Related tools & inspiration
+
+Surfaced in the app's top-bar **Resources** menu (`src/data/resources.ts`).
+
+**Tools**
+- [MagicPattern — CSS Backgrounds](https://www.magicpattern.design/tools/css-backgrounds) — CSS background pattern generator.
+- [Variant](https://variant.com/) — AI design generation; Style Dropper lifts a look onto other variants.
+
+**Inspiration**
+- [SEESAW](https://www.seesaw.website/) — curated website & font directory, updated daily.
+- [Refero](https://refero.design/) — real product web/iOS UI library; search by pattern, Figma plugin + [MCP](https://refero.design/mcp).
+- [Recent](https://recent.design/websites) — daily gallery of recently shipped web & app design.
+- [Awwwards — Nominees](https://www.awwwards.com/websites/nominees/) — award nominees, high interaction & motion craft.
+- [Land-book — Landing Pages](https://land-book.com/design/landing-page) — landing-page gallery with fine-grained filters.

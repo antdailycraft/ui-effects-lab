@@ -19,3 +19,12 @@ test("theme toggle flips the theme", async () => {
   await userEvent.click(screen.getByLabelText(/toggle theme/i));
   expect(screen.getByTestId("theme").textContent).not.toBe(before);
 });
+
+test("exposes a Resources menu trigger", () => {
+  render(
+    <PlaygroundProvider>
+      <TopBar />
+    </PlaygroundProvider>
+  );
+  expect(screen.getByRole("button", { name: /resources/i })).toBeInTheDocument();
+});

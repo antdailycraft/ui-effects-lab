@@ -1,4 +1,5 @@
 import { usePlayground } from "../../state/PlaygroundContext";
+import { ResourcesMenu } from "./ResourcesMenu";
 
 function MoonIcon() {
   return (
@@ -34,6 +35,7 @@ export function TopBar() {
       </div>
       <span className="brand-tag">MVP</span>
       <div className="topbar-spacer" />
+      <ResourcesMenu />
       <button
         className="icon-btn"
         aria-label="Toggle theme"
