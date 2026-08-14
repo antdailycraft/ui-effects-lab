@@ -24,11 +24,17 @@ npm run build   # type-check and build for production
 
 - **SVG Filters** — Rough Edge, Paper Grain, Noise Texture, Water Distortion,
   Liquid, Heat Haze, Cloud / Fog (the `feTurbulence` family, see
-  `docs/effects/feTurbulence.md`).
+  `docs/effects/feTurbulence.md`), plus Sticker (`feMorphology`), Gooey
+  (`feColorMatrix` metaballs), Drop Shadow (`feDropShadow`), and Posterize
+  (`feComponentTransfer`).
 - **CSS Effects** — Frosted Glass (`backdrop-filter`), Holographic Card
-  (iridescent gradient + `mix-blend-mode`).
+  (iridescent gradient + `mix-blend-mode`), Conic Spin (`@property` +
+  `conic-gradient`).
 - **Retro** — Glitch (RGB channel split via SVG filter), CRT / Analog
   (scanlines + vignette).
+
+Library/tech research behind these additions lives in
+`docs/research/2026-08-14-css-effects-libraries.md`.
 
 Effects declare a `kind` of `"svg"` (applied via `filter: url(#id)`) or `"css"`
 (a class + CSS custom properties); the code viewer shows the SVG+CSS or CSS-only

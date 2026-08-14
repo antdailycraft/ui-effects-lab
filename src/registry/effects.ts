@@ -6,8 +6,13 @@ import { water } from "../effects/svg/water-distortion/definition";
 import { liquid } from "../effects/svg/liquid/definition";
 import { heatHaze } from "../effects/svg/heat-haze/definition";
 import { cloud } from "../effects/svg/cloud/definition";
+import { sticker } from "../effects/svg/sticker/definition";
+import { gooey } from "../effects/svg/gooey/definition";
+import { dropShadow } from "../effects/svg/drop-shadow/definition";
+import { posterize } from "../effects/svg/posterize/definition";
 import { frostedGlass } from "../effects/css/frosted-glass/definition";
 import { holographic } from "../effects/css/holographic/definition";
+import { conicSpin } from "../effects/css/conic-spin/definition";
 import { glitch } from "../effects/retro/glitch/definition";
 import { crt } from "../effects/retro/crt/definition";
 
@@ -19,8 +24,13 @@ export const EFFECTS: EffectDefinition[] = [
   liquid,
   heatHaze,
   cloud,
+  sticker,
+  gooey,
+  dropShadow,
+  posterize,
   frostedGlass,
   holographic,
+  conicSpin,
   glitch,
   crt,
 ];

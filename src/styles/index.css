@@ -540,9 +540,37 @@ input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
   50% { opacity: 0.9; }
 }
 
+/* Conic Spin — registered @property angle so the conic gradient can rotate */
+@property --fx-spin {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.fx-conic { position: relative; }
+.fx-conic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--fx-spin, 0deg),
+    #ff2e97, #ffd93b, #3bffd1, #4b6bff, #b14bff, #ff2e97
+  );
+  opacity: var(--fx-strength, 0.6);
+  mix-blend-mode: overlay;
+}
+.fx-conic.fx-anim::before {
+  animation: fx-conic-spin var(--fx-dur, 4s) linear infinite;
+}
+@keyframes fx-conic-spin {
+  to { --fx-spin: 360deg; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fx-holo.fx-anim::before,
-  .fx-crt.fx-anim::after { animation: none; }
+  .fx-crt.fx-anim::after,
+  .fx-conic.fx-anim::before { animation: none; }
 }
 
 /* ---------- Bottom bar ---------- */
