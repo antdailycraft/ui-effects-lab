@@ -28,9 +28,10 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 - **Fullscreen preview** — a fullscreen button expands the preview stage to fill
   the viewport for an immersive look at any effect or generator; Escape or the
   button exits. Preview-type and compare controls stay reachable while immersed.
-- **Deployment** — a GitHub Actions workflow (`.github/workflows/deploy.yml`)
-  builds and publishes to GitHub Pages on every push to `main`, and a
-  `vercel.json` makes the repo one-click importable on Vercel. Vite's `base` is
+- **Deployment** — a `vercel.json` makes the repo one-click importable on Vercel
+  (the recommended path; works while private), plus a manual GitHub Actions
+  workflow (`.github/workflows/deploy.yml`) that publishes to GitHub Pages once
+  the repo is public or on a plan that includes private Pages. Vite's `base` is
   now deploy-aware (`/ui-effects-lab/` for Pages, `/` everywhere else). See
   `docs/DEPLOY.md`.
 - **Built-in presets** — every WebGL generator now ships its library's curated
