@@ -22,7 +22,9 @@ test("switching to the CSS tab shows the css rule", async () => {
     </PlaygroundProvider>
   );
   await userEvent.click(screen.getByRole("button", { name: /^css$/i }));
-  expect(screen.getByText(/url\(#rough-edge\)/)).toBeInTheDocument();
+  // the rule is syntax-highlighted into multiple spans, so assert on the <pre> text
+  const pre = document.querySelector(".code-pre")!;
+  expect(pre.textContent).toContain("url(#rough-edge)");
 });
 
 test("Expand opens a modal with the full code, its own Copy, and closes", async () => {

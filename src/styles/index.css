@@ -16,6 +16,7 @@
   --code-tag: #ffb877;
   --code-attr: #8fb8ff;
   --code-str: #9ad4a0;
+  --code-num: #cba6ff;
   --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
   --radius: 13px;
 }
@@ -38,6 +39,7 @@
   --code-tag: #a15b00;
   --code-attr: #2f5fa8;
   --code-str: #3d7a4a;
+  --code-num: #7c3aed;
   --shadow: 0 10px 30px -14px rgba(80, 70, 50, 0.35);
 }
 
@@ -607,7 +609,9 @@ input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
 .tk-tag { color: var(--code-tag); }
 .tk-attr { color: var(--code-attr); }
 .tk-str { color: var(--code-str); }
+.tk-num { color: var(--code-num); }
 .tk-punct { color: var(--text-faint); }
+.tk-comment { color: var(--text-faint); font-style: italic; }
 
 /* ---------- CSS-kind effects (applied to preview targets) ---------- */
 .fx-frosted {

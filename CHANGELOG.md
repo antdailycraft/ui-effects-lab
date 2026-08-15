@@ -12,6 +12,9 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Fixed
 
+- **CSS syntax highlighting** — the CSS code tab (and the full-code modal) was
+  shown as plain text; it now has a dedicated tokenizer coloring selectors,
+  properties, functions, numbers, hex colors, strings, and comments.
 - **Before/After compare on the Text preview** — the large single-word headline
   overflowed its box and the two copies overlapped side-by-side. Text compare
   now stacks vertically (Card/Image still compare side-by-side).

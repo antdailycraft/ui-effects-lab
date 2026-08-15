@@ -2,7 +2,7 @@ import { useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { availableTabs, generateCode, resolveTab } from "../../lib/codegen";
-import { highlightSvg, escapeHtml } from "../../lib/highlight";
+import { highlightSvg, highlightCss } from "../../lib/highlight";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { CopyButton } from "./CopyButton";
 import { CodeModal } from "./CodeModal";
@@ -17,8 +17,8 @@ export function CodeViewer() {
   const tabs = availableTabs(effect);
   const tab = resolveTab(effect, state.codeTab);
   const code = generateCode(effect, state.params, animate, tab);
-  // SVG and React (JSX) are markup-ish → syntax highlight; CSS is shown escaped.
-  const html = tab === "css" ? escapeHtml(code) : highlightSvg(code);
+  // CSS has its own tokenizer; SVG and React (JSX) are markup-ish.
+  const html = tab === "css" ? highlightCss(code) : highlightSvg(code);
 
   return (
     <div className="code-block">
