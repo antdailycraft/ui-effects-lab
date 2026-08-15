@@ -34,6 +34,14 @@ import { swirl } from "../effects/experimental/swirl/definition";
 import { dotOrbit } from "../effects/experimental/dot-orbit/definition";
 import { godRays } from "../effects/experimental/god-rays/definition";
 import { liquidMetal } from "../effects/experimental/liquid-metal/definition";
+import { dithering } from "../effects/experimental/dithering/definition";
+import { water as waterShader } from "../effects/experimental/water/definition";
+import { neuroNoise } from "../effects/experimental/neuro-noise/definition";
+import { smokeRing } from "../effects/experimental/smoke-ring/definition";
+import { spiral } from "../effects/experimental/spiral/definition";
+import { perlinNoise } from "../effects/experimental/perlin-noise/definition";
+import { pulsingBorder } from "../effects/experimental/pulsing-border/definition";
+import { colorPanels } from "../effects/experimental/color-panels/definition";
 
 export const EFFECTS: EffectDefinition[] = [
   roughEdge,
@@ -71,6 +79,14 @@ export const EFFECTS: EffectDefinition[] = [
   dotOrbit,
   godRays,
   liquidMetal,
+  dithering,
+  waterShader,
+  neuroNoise,
+  smokeRing,
+  spiral,
+  perlinNoise,
+  pulsingBorder,
+  colorPanels,
 ];
 
 export function getEffect(id: string): EffectDefinition | undefined {

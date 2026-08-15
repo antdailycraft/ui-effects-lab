@@ -31,6 +31,8 @@ test("registry ships every effect in order across categories", () => {
     "glitch", "crt",
     "mesh-gradient", "warp-shader", "voronoi",
     "grain-gradient", "metaballs", "swirl", "dot-orbit", "god-rays", "liquid-metal",
+    "dithering", "water-shader", "neuro-noise", "smoke-ring", "spiral",
+    "perlin-noise", "pulsing-border", "color-panels",
   ]);
   expect(getEffect("water")?.name).toBe("Water Distortion");
   expect(getEffect("cloud")?.name).toBe("Cloud / Fog");

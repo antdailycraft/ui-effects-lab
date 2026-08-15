@@ -34,9 +34,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   the preview (a self-contained component), plus a `react` code tab. Generators
   are GPU shaders from `@paper-design/shaders-react` (Apache-2.0, the first
   runtime dependency); their per-effect license badge reads Apache-2.0 rather
-  than MIT. Ships nine: Mesh Gradient, Warp, Voronoi, Grain Gradient, Metaballs,
-  Swirl, Dot Orbit, God Rays, and Liquid Metal (added via a small
-  `shaderGenerator` factory that spreads each shader's own preset defaults).
+  than MIT. Ships seventeen: Mesh Gradient, Warp, Voronoi, Grain Gradient,
+  Metaballs, Swirl, Dot Orbit, God Rays, Liquid Metal, Dithering, Water,
+  Neuro Noise, Smoke Ring, Spiral, Perlin Noise, Pulsing Border, and Color
+  Panels (added via a small `shaderGenerator` factory that spreads each
+  shader's own preset defaults).
 
 ## [0.0.1] - 2026-08-15
 
