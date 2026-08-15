@@ -56,6 +56,32 @@ test("generator effects are library-derived and declare their license + React co
   expect(mesh.buildReact!(defaultParams(mesh), true)).toContain("<MeshGradient");
 });
 
+test("every generator ships built-in presets keyed to its own controls", () => {
+  const generators = EFFECTS.filter((e) => e.kind === "generator");
+  expect(generators.length).toBeGreaterThan(20);
+  for (const g of generators) {
+    expect(g.builtInPresets && g.builtInPresets.length).toBeGreaterThan(0);
+    const ids = new Set(g.controls.map((c) => c.id));
+    for (const preset of g.builtInPresets!) {
+      expect(preset.name).toBeTruthy();
+      // preset only touches real controls, and numeric values stay in range
+      for (const [key, value] of Object.entries(preset.params)) {
+        expect(ids.has(key)).toBe(true);
+        const ctrl = g.controls.find((c) => c.id === key)!;
+        if (typeof value === "number") {
+          if (ctrl.min !== undefined) expect(value).toBeGreaterThanOrEqual(ctrl.min);
+          if (ctrl.max !== undefined) expect(value).toBeLessThanOrEqual(ctrl.max);
+        }
+      }
+    }
+  }
+});
+
+test("built-in preset names come straight from the library preset list", () => {
+  const swirl = getEffect("swirl")!;
+  expect(swirl.builtInPresets!.map((p) => p.name)).toContain("Default");
+});
+
 test("image-based generators declare usesImage and show an image prop", () => {
   const imgDither = getEffect("image-dithering")!;
   expect(imgDither.usesImage).toBe(true);

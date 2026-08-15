@@ -8,7 +8,7 @@ export const spiral = shaderGenerator({
   description:
     "A hypnotic rotating spiral of tapered strokes rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: Spiral,
-  base: spiralPresets[0].params as Record<string, unknown>,
+  presets: spiralPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["spiral", "hypnotic", "shader", "webgl", "animation"],
   props: ["speed", "density", "distortion", "strokeWidth"],
   controls: [

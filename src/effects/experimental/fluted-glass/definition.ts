@@ -8,7 +8,7 @@ export const flutedGlass = shaderGenerator({
   description:
     "Vertical fluted / ribbed glass refracting the color beneath it. From @paper-design/shaders (Apache-2.0).",
   component: FlutedGlass,
-  base: flutedGlassPresets[0].params as Record<string, unknown>,
+  presets: flutedGlassPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["glass", "fluted", "refraction", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "distortion", "size", "highlights"],

@@ -8,7 +8,7 @@ export const metaballs = shaderGenerator({
   description:
     "Merging organic blobs (metaballs) rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: Metaballs,
-  base: metaballsPresets[0].params as Record<string, unknown>,
+  presets: metaballsPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["metaballs", "blob", "shader", "webgl", "animation"],
   props: ["speed", "count", "size", "scale"],
   controls: [

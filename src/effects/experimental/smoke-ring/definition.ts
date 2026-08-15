@@ -8,7 +8,7 @@ export const smokeRing = shaderGenerator({
   description:
     "A soft ring of turbulent smoke curling around a center. From @paper-design/shaders (Apache-2.0).",
   component: SmokeRing,
-  base: smokeRingPresets[0].params as Record<string, unknown>,
+  presets: smokeRingPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["smoke", "ring", "shader", "webgl", "animation"],
   props: ["speed", "radius", "thickness", "noiseScale"],
   controls: [

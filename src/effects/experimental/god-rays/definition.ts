@@ -8,7 +8,7 @@ export const godRays = shaderGenerator({
   description:
     "Volumetric light rays beaming from a center point on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: GodRays,
-  base: godRaysPresets[0].params as Record<string, unknown>,
+  presets: godRaysPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["light", "rays", "shader", "webgl", "animation"],
   props: ["speed", "density", "intensity", "bloom"],
   controls: [

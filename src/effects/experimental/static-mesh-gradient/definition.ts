@@ -8,7 +8,7 @@ export const staticMeshGradient = shaderGenerator({
   description:
     "A smooth multi-point mesh gradient with wave shaping on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: StaticMeshGradient,
-  base: staticMeshGradientPresets[0].params as Record<string, unknown>,
+  presets: staticMeshGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["gradient", "mesh", "shader", "webgl", "animation"],
   props: ["speed", "positions", "waveX", "waveY"],
   controls: [

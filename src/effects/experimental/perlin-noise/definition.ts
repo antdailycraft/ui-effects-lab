@@ -8,7 +8,7 @@ export const perlinNoise = shaderGenerator({
   description:
     "Classic fractal Perlin noise clouds with adjustable octaves. From @paper-design/shaders (Apache-2.0).",
   component: PerlinNoise,
-  base: perlinNoisePresets[0].params as Record<string, unknown>,
+  presets: perlinNoisePresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["noise", "perlin", "clouds", "shader", "webgl", "animation"],
   props: ["speed", "proportion", "softness", "octaveCount"],
   controls: [

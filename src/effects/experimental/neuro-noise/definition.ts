@@ -8,7 +8,7 @@ export const neuroNoise = shaderGenerator({
   description:
     "Organic neural-network-like noise filaments rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: NeuroNoise,
-  base: neuroNoisePresets[0].params as Record<string, unknown>,
+  presets: neuroNoisePresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["noise", "neural", "shader", "webgl", "animation"],
   props: ["speed", "brightness", "contrast", "scale"],
   controls: [

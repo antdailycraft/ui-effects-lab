@@ -8,7 +8,7 @@ export const heatmap = shaderGenerator({
   description:
     "Turns a source image into flowing thermal-camera contours on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: Heatmap,
-  base: heatmapPresets[0].params as Record<string, unknown>,
+  presets: heatmapPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["heatmap", "thermal", "image", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "contour", "noise", "innerGlow"],

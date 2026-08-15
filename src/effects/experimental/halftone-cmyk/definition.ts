@@ -8,7 +8,7 @@ export const halftoneCmyk = shaderGenerator({
   description:
     "A CMYK four-plate halftone print simulation on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: HalftoneCmyk,
-  base: halftoneCmykPresets[0].params as Record<string, unknown>,
+  presets: halftoneCmykPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["halftone", "cmyk", "print", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "size", "contrast", "softness"],

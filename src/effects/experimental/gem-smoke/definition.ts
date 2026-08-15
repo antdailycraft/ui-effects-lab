@@ -8,7 +8,7 @@ export const gemSmoke = shaderGenerator({
   description:
     "Glowing gem-like smoke with inner and outer light on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: GemSmoke,
-  base: gemSmokePresets[0].params as Record<string, unknown>,
+  presets: gemSmokePresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["smoke", "gem", "glow", "shader", "webgl", "animation"],
   props: ["speed", "outerGlow", "innerGlow", "innerDistortion"],
   controls: [

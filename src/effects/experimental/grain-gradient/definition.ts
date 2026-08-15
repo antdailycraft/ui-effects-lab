@@ -8,7 +8,7 @@ export const grainGradient = shaderGenerator({
   description:
     "A grainy animated gradient rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: GrainGradient,
-  base: grainGradientPresets[0].params as Record<string, unknown>,
+  presets: grainGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["gradient", "grain", "shader", "webgl", "animation"],
   props: ["speed", "intensity", "softness", "scale"],
   controls: [

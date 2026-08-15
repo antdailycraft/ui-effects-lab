@@ -8,7 +8,7 @@ export const dithering = shaderGenerator({
   description:
     "An animated ordered-dither shader for a retro 1-bit / print look. From @paper-design/shaders (Apache-2.0).",
   component: Dithering,
-  base: ditheringPresets[0].params as Record<string, unknown>,
+  presets: ditheringPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["dither", "retro", "shader", "webgl", "animation"],
   props: ["speed", "size", "scale"],
   controls: [

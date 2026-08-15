@@ -8,7 +8,7 @@ export const simplexNoise = shaderGenerator({
   description:
     "Banded simplex noise with stepped colors on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: SimplexNoise,
-  base: simplexNoisePresets[0].params as Record<string, unknown>,
+  presets: simplexNoisePresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["noise", "simplex", "shader", "webgl", "animation"],
   props: ["speed", "stepsPerColor", "softness", "scale"],
   controls: [

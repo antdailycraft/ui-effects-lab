@@ -8,7 +8,7 @@ export const colorPanels = shaderGenerator({
   description:
     "Translucent colored panels drifting and layering in 3-D. From @paper-design/shaders (Apache-2.0).",
   component: ColorPanels,
-  base: colorPanelsPresets[0].params as Record<string, unknown>,
+  presets: colorPanelsPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["panels", "layers", "shader", "webgl", "animation"],
   props: ["speed", "length", "blur", "scale"],
   controls: [

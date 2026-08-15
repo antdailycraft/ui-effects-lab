@@ -2,8 +2,9 @@ import type { ControlDefinition, EffectDefinition, Params } from "../../types/ef
 
 /**
  * Builds a generator EffectDefinition wrapping a @paper-design/shaders component.
- * The component's own preset `base` params are spread first (colors etc.), then
+ * The library preset params (`presets[0]`) are spread first (colors etc.), then
  * the exposed control `props` override them. `speed` is zeroed when not animating.
+ * Every library preset is surfaced as a read-only built-in preset.
  */
 export function shaderGenerator(config: {
   id: string;
@@ -11,7 +12,8 @@ export function shaderGenerator(config: {
   componentName: string;
   description: string;
   component: unknown;
-  base: Record<string, unknown>;
+  /** the library's own preset list; presets[0] provides the base props (colors etc.) */
+  presets: { name: string; params: Record<string, unknown> }[];
   tags?: string[];
   controls: ControlDefinition[];
   /** param ids forwarded to the component as props (include "speed" for animation) */
@@ -24,6 +26,30 @@ export function shaderGenerator(config: {
   colorProps?: { id: string; label: string; def: string }[];
 }): EffectDefinition {
   const colorProps = config.colorProps ?? [];
+  const base = config.presets[0].params;
+  const ctrlById = new Map(config.controls.map((c) => [c.id, c] as const));
+
+  const builtInPresets = config.presets.map((pr) => {
+    const params: Params = {};
+    for (const key of config.props) {
+      const v = pr.params[key];
+      if (typeof v === "number") {
+        const c = ctrlById.get(key);
+        let n = v;
+        if (c?.min !== undefined) n = Math.max(c.min, n);
+        if (c?.max !== undefined) n = Math.min(c.max, n);
+        params[key] = n;
+      } else if (typeof v === "boolean" || typeof v === "string") {
+        params[key] = v;
+      }
+    }
+    const cols = pr.params.colors;
+    colorProps.forEach((c, i) => {
+      if (Array.isArray(cols) && typeof cols[i] === "string") params[c.id] = cols[i] as string;
+    });
+    return { name: pr.name, params };
+  });
+
   const forward = (p: Params, animate: boolean): Record<string, unknown> => {
     const out: Record<string, unknown> = {};
     for (const key of config.props) {
@@ -46,6 +72,7 @@ export function shaderGenerator(config: {
     kind: "generator",
     animatable: config.animatable ?? true,
     usesImage: config.usesImage ?? false,
+    builtInPresets,
     previewTypes: ["card"],
     controls: [
       ...config.controls,
@@ -55,7 +82,7 @@ export function shaderGenerator(config: {
     ],
     component: config.component as EffectDefinition["component"],
     buildProps: (p, animate) => ({
-      ...config.base,
+      ...base,
       style: { width: "100%", height: "100%" },
       ...forward(p, animate),
     }),

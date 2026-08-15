@@ -8,7 +8,7 @@ export const water = shaderGenerator({
   description:
     "Animated water caustics with rippling highlights and edges. From @paper-design/shaders (Apache-2.0).",
   component: Water,
-  base: waterPresets[0].params as Record<string, unknown>,
+  presets: waterPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["water", "caustics", "shader", "webgl", "animation"],
   props: ["speed", "highlights", "edges", "waves"],
   controls: [

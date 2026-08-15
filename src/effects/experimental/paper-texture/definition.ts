@@ -8,7 +8,7 @@ export const paperTexture = shaderGenerator({
   description:
     "Procedural paper fibre, roughness and crumples on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: PaperTexture,
-  base: paperTexturePresets[0].params as Record<string, unknown>,
+  presets: paperTexturePresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["paper", "texture", "fibre", "shader", "webgl", "animation"],
   props: ["speed", "contrast", "roughness", "crumples"],
   controls: [

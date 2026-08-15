@@ -38,3 +38,16 @@ test("LOAD_PRESET switches effect and applies the preset's params together", () 
   expect(s.effectId).toBe("water");
   expect(s.params.scale).toBe(30);
 });
+
+test("LOAD_PRESET fills missing params from the effect's defaults (partial presets are safe)", () => {
+  const swirl = getEffect("swirl")!;
+  const s = reducer(initialState, {
+    type: "LOAD_PRESET",
+    effectId: "swirl",
+    params: { twist: 0.5 },
+  });
+  expect(s.params.twist).toBe(0.5);
+  // untouched controls fall back to their defaults, never undefined
+  expect(s.params.bandCount).toBe(defaultParams(swirl).bandCount);
+  for (const c of swirl.controls) expect(s.params[c.id]).not.toBeUndefined();
+});

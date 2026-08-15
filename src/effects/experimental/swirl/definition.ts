@@ -8,7 +8,7 @@ export const swirl = shaderGenerator({
   description:
     "Concentric color bands twisted into a hypnotic swirl on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: Swirl,
-  base: swirlPresets[0].params as Record<string, unknown>,
+  presets: swirlPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["swirl", "spiral", "shader", "webgl", "animation"],
   props: ["speed", "bandCount", "twist", "softness"],
   controls: [

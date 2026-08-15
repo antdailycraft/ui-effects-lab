@@ -8,7 +8,7 @@ export const waves = shaderGenerator({
   description:
     "A crisp repeating wave / zig-zag line pattern on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: Waves,
-  base: wavesPresets[0].params as Record<string, unknown>,
+  presets: wavesPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["waves", "lines", "pattern", "shader", "webgl"],
   animatable: false,
   props: ["shape", "frequency", "amplitude", "spacing"],

@@ -10,6 +10,7 @@ export function PresetsPanel() {
   const [name, setName] = useState("");
   const effect = getEffect(state.effectId)!;
   const list = presetsForEffect(presets, state.effectId);
+  const builtIn = effect.builtInPresets ?? [];
 
   const save = () => {
     const trimmed = name.trim();
@@ -23,6 +24,25 @@ export function PresetsPanel() {
         <h2>Presets</h2>
       </div>
       <div className="presets">
+        {builtIn.length > 0 && (
+          <div className="preset-builtin">
+            <div className="preset-builtin-label">Built-in</div>
+            <div className="preset-chips">
+              {builtIn.map((p) => (
+                <button
+                  key={p.name}
+                  className="preset-chip"
+                  onClick={() =>
+                    dispatch({ type: "LOAD_PRESET", effectId: state.effectId, params: p.params })
+                  }
+                >
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="preset-save">
           <input
             type="text"

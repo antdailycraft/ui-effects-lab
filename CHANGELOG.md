@@ -21,6 +21,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Built-in presets** — every WebGL generator now ships its library's curated
+  presets (e.g. Swirl → Default / 007 / Opening / Candy) as one-click chips in a
+  new "Built-in" section of the Presets panel. Loading one merges over the
+  effect's defaults, so partial presets never leave a control undefined, and the
+  code viewer updates in sync. The three hand-written generators (Mesh Gradient,
+  Warp, Voronoi) were folded into the shared shader factory to gain them too.
 - **Color controls** — a new `color` control type (swatch + hex). Duotone and
   Neon Glow now pick real colors instead of hues, and Grain Gradient exposes its
   full palette so shader generators can be recolored. `ParamValue` now includes

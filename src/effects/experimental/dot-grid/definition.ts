@@ -8,7 +8,7 @@ export const dotGrid = shaderGenerator({
   description:
     "A crisp configurable grid of dots rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: DotGrid,
-  base: dotGridPresets[0].params as Record<string, unknown>,
+  presets: dotGridPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["dots", "grid", "shader", "webgl"],
   animatable: false,
   props: ["size", "gapX", "gapY", "strokeWidth"],

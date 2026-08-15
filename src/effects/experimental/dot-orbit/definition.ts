@@ -8,7 +8,7 @@ export const dotOrbit = shaderGenerator({
   description:
     "A grid of colored dots orbiting their cells on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: DotOrbit,
-  base: dotOrbitPresets[0].params as Record<string, unknown>,
+  presets: dotOrbitPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["dots", "orbit", "shader", "webgl", "animation"],
   props: ["speed", "size", "spreading", "scale"],
   controls: [

@@ -8,7 +8,7 @@ export const lensDistortion = shaderGenerator({
   description:
     "Bends a source image through a prismatic lens with chromatic spread on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: LensDistortion,
-  base: lensDistortionPresets[0].params as Record<string, unknown>,
+  presets: lensDistortionPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["lens", "distortion", "image", "chromatic", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "spread", "bias", "perspective", "count"],

@@ -35,6 +35,8 @@ export interface EffectDefinition {
   animatable?: boolean;
   /** SPDX license id of the generated code. Omitted → MIT (our own implementation on open web standards). */
   license?: string;
+  /** Curated read-only presets shipped with the effect (merged over defaults on load). */
+  builtInPresets?: { name: string; params: Params }[];
   previewTypes: PreviewType[];
   controls: ControlDefinition[];
 

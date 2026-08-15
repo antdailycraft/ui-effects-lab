@@ -77,7 +77,11 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
     case "LOAD_PRESET": {
       const effect = getEffect(action.effectId);
       if (!effect) return state;
-      return { ...state, effectId: action.effectId, params: { ...action.params } };
+      return {
+        ...state,
+        effectId: action.effectId,
+        params: { ...defaultParams(effect), ...action.params },
+      };
     }
     default:
       return state;

@@ -8,7 +8,7 @@ export const pulsingBorder = shaderGenerator({
   description:
     "A glowing, pulsing border of colored light around the frame. From @paper-design/shaders (Apache-2.0).",
   component: PulsingBorder,
-  base: pulsingBorderPresets[0].params as Record<string, unknown>,
+  presets: pulsingBorderPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["border", "glow", "pulse", "shader", "webgl", "animation"],
   props: ["speed", "thickness", "intensity", "bloom"],
   controls: [

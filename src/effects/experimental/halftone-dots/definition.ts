@@ -8,7 +8,7 @@ export const halftoneDots = shaderGenerator({
   description:
     "A single-plate halftone dot screen over a gradient on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: HalftoneDots,
-  base: halftoneDotsPresets[0].params as Record<string, unknown>,
+  presets: halftoneDotsPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["halftone", "dots", "print", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "size", "radius", "contrast"],

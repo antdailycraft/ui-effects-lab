@@ -8,7 +8,7 @@ export const imageDithering = shaderGenerator({
   description:
     "Ordered-dithers a source image into a retro low-color screen on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: ImageDithering,
-  base: imageDitheringPresets[0].params as Record<string, unknown>,
+  presets: imageDitheringPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["dither", "image", "retro", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "size", "colorSteps"],

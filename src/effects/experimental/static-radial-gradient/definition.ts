@@ -8,7 +8,7 @@ export const staticRadialGradient = shaderGenerator({
   description:
     "A soft radial gradient with adjustable focal point and falloff on the GPU. From @paper-design/shaders (Apache-2.0).",
   component: StaticRadialGradient,
-  base: staticRadialGradientPresets[0].params as Record<string, unknown>,
+  presets: staticRadialGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
   tags: ["gradient", "radial", "shader", "webgl", "animation"],
   props: ["speed", "radius", "focalDistance", "falloff"],
   controls: [
