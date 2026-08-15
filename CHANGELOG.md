@@ -21,6 +21,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Image-based generators** — generators can now take a source `image`. A
+  Source picker (three built-in canvas-generated samples + a URL field) appears
+  for image shaders. This revives Heatmap, Image Dithering, and Lens Distortion
+  (which need an image) and gives the overlay shaders — Fluted Glass, Halftone
+  CMYK, Halftone Dots — real content to work on. Generators now total 30.
 - **Full-code modal** — an Expand button on the code viewer opens a large
   popup showing the whole generated code (no clipping), with its own Copy
   button; closes on the ✕, the backdrop, or Escape.

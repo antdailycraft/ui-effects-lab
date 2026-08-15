@@ -52,6 +52,9 @@ import { simplexNoise } from "../effects/experimental/simplex-noise/definition";
 import { staticMeshGradient } from "../effects/experimental/static-mesh-gradient/definition";
 import { staticRadialGradient } from "../effects/experimental/static-radial-gradient/definition";
 import { waves } from "../effects/experimental/waves/definition";
+import { heatmap } from "../effects/experimental/heatmap/definition";
+import { imageDithering } from "../effects/experimental/image-dithering/definition";
+import { lensDistortion } from "../effects/experimental/lens-distortion/definition";
 
 export const EFFECTS: EffectDefinition[] = [
   roughEdge,
@@ -107,6 +110,9 @@ export const EFFECTS: EffectDefinition[] = [
   staticMeshGradient,
   staticRadialGradient,
   waves,
+  heatmap,
+  imageDithering,
+  lensDistortion,
 ];
 
 export function getEffect(id: string): EffectDefinition | undefined {

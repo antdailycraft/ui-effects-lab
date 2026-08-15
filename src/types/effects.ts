@@ -57,4 +57,6 @@ export interface EffectDefinition {
   buildProps?: (params: Params, animate: boolean) => Record<string, unknown>;
   /** Generator kind: the React usage snippet shown in the code viewer. */
   buildReact?: (params: Params, animate: boolean) => string;
+  /** Generator kind: accepts a source image (an `image` URL prop is injected). */
+  usesImage?: boolean;
 }

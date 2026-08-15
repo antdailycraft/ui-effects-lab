@@ -36,6 +36,7 @@ test("registry ships every effect in order across categories", () => {
     "dot-grid", "fluted-glass", "gem-smoke", "halftone-cmyk", "halftone-dots",
     "paper-texture", "simplex-noise", "static-mesh-gradient",
     "static-radial-gradient", "waves",
+    "heatmap", "image-dithering", "lens-distortion",
   ]);
   expect(getEffect("water")?.name).toBe("Water Distortion");
   expect(getEffect("cloud")?.name).toBe("Cloud / Fog");
@@ -53,4 +54,15 @@ test("generator effects are library-derived and declare their license + React co
   expect(mesh.license).toBe("Apache-2.0");
   expect(mesh.component).toBeDefined(); // a React component (function or forwardRef/memo object)
   expect(mesh.buildReact!(defaultParams(mesh), true)).toContain("<MeshGradient");
+});
+
+test("image-based generators declare usesImage and show an image prop", () => {
+  const imgDither = getEffect("image-dithering")!;
+  expect(imgDither.usesImage).toBe(true);
+  expect(imgDither.buildReact!(defaultParams(imgDither), false)).toContain('image="/your-image.jpg"');
+  expect(getEffect("heatmap")?.usesImage).toBe(true);
+  expect(getEffect("lens-distortion")?.usesImage).toBe(true);
+  expect(getEffect("fluted-glass")?.usesImage).toBe(true);
+  // standalone generators are not image-based
+  expect(getEffect("mesh-gradient")?.usesImage).toBeFalsy();
 });

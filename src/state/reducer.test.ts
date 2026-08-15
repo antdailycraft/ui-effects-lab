@@ -23,6 +23,12 @@ test("TOGGLE_COMPARE flips the flag", () => {
   expect(reducer(initialState, { type: "TOGGLE_COMPARE" }).compare).toBe(true);
 });
 
+test("SET_IMAGE updates the source image for image generators", () => {
+  expect(reducer(initialState, { type: "SET_IMAGE", url: "https://x/y.png" }).imageUrl).toBe(
+    "https://x/y.png"
+  );
+});
+
 test("LOAD_PRESET switches effect and applies the preset's params together", () => {
   const s = reducer(initialState, {
     type: "LOAD_PRESET",

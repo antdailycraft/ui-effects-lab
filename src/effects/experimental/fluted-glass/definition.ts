@@ -10,6 +10,7 @@ export const flutedGlass = shaderGenerator({
   component: FlutedGlass,
   base: flutedGlassPresets[0].params as Record<string, unknown>,
   tags: ["glass", "fluted", "refraction", "shader", "webgl", "animation"],
+  usesImage: true,
   props: ["speed", "distortion", "size", "highlights"],
   controls: [
     { id: "speed", label: "Speed", type: "range", min: 0, max: 3, step: 0.1, def: 0.5, decimals: 1, unit: "×", isAnimationControl: true },

@@ -3,6 +3,7 @@ import type { Params, ParamValue, PreviewType } from "../types/effects";
 import { defaultParams, getEffect, EFFECTS } from "../registry/effects";
 import { randomizeParams } from "../lib/randomize";
 import { loadTheme, loadLastEffectId } from "../lib/storage";
+import { DEFAULT_IMAGE } from "../lib/sampleImage";
 
 export interface PlaygroundState {
   effectId: string;
@@ -13,6 +14,8 @@ export interface PlaygroundState {
   theme: "dark" | "light";
   search: string;
   params: Params;
+  /** Source image (URL / data URI) for image-based generators. */
+  imageUrl: string;
 }
 
 export type Action =
@@ -26,7 +29,8 @@ export type Action =
   | { type: "SET_SEARCH"; value: string }
   | { type: "SET_CODE_TAB"; tab: "svg" | "css" | "react" }
   | { type: "SET_THEME"; theme: "dark" | "light" }
-  | { type: "LOAD_PRESET"; effectId: string; params: Params };
+  | { type: "LOAD_PRESET"; effectId: string; params: Params }
+  | { type: "SET_IMAGE"; url: string };
 
 const savedId = loadLastEffectId();
 const firstId = savedId && getEffect(savedId) ? savedId : EFFECTS[0].id;
@@ -40,6 +44,7 @@ export const initialState: PlaygroundState = {
   theme: loadTheme(),
   search: "",
   params: defaultParams(getEffect(firstId)!),
+  imageUrl: DEFAULT_IMAGE,
 };
 
 export function reducer(state: PlaygroundState, action: Action): PlaygroundState {
@@ -65,6 +70,8 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
       return { ...state, search: action.value };
     case "SET_CODE_TAB":
       return { ...state, codeTab: action.tab };
+    case "SET_IMAGE":
+      return { ...state, imageUrl: action.url };
     case "SET_THEME":
       return { ...state, theme: action.theme };
     case "LOAD_PRESET": {

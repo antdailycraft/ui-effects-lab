@@ -18,6 +18,8 @@ export function shaderGenerator(config: {
   props: string[];
   /** defaults to true; set false for shaders with no time/speed uniform */
   animatable?: boolean;
+  /** true when the shader takes a source `image` (injected by the preview) */
+  usesImage?: boolean;
 }): EffectDefinition {
   const forward = (p: Params, animate: boolean): Record<string, unknown> => {
     const out: Record<string, unknown> = {};
@@ -39,6 +41,7 @@ export function shaderGenerator(config: {
     license: "Apache-2.0",
     kind: "generator",
     animatable: config.animatable ?? true,
+    usesImage: config.usesImage ?? false,
     previewTypes: ["card"],
     controls: config.controls,
     component: config.component as EffectDefinition["component"],
@@ -52,6 +55,7 @@ export function shaderGenerator(config: {
         const v = key === "speed" ? (animate ? (p.speed as number) : 0) : p[key];
         return `  ${key}={${v}}`;
       });
+      if (config.usesImage) lines.unshift(`  image="/your-image.jpg"`);
       return `import { ${config.componentName} } from "@paper-design/shaders-react";
 
 <${config.componentName}

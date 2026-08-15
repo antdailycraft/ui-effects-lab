@@ -10,6 +10,7 @@ export const halftoneCmyk = shaderGenerator({
   component: HalftoneCmyk,
   base: halftoneCmykPresets[0].params as Record<string, unknown>,
   tags: ["halftone", "cmyk", "print", "shader", "webgl", "animation"],
+  usesImage: true,
   props: ["speed", "size", "contrast", "softness"],
   controls: [
     { id: "speed", label: "Speed", type: "range", min: 0, max: 3, step: 0.1, def: 0.5, decimals: 1, unit: "×", isAnimationControl: true },

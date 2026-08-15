@@ -7,6 +7,7 @@ import { FilterHost, LIVE_FILTER_ID } from "./FilterHost";
 import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
 import { ImagePreview } from "./ImagePreview";
+import { ImagePicker } from "./ImagePicker";
 
 type TargetProps = { className?: string; style?: CSSProperties };
 
@@ -44,10 +45,12 @@ export function PreviewCanvas() {
   if (effect.kind === "generator" && effect.component) {
     const Generator = effect.component;
     const props = effect.buildProps ? effect.buildProps(state.params, animate) : {};
+    if (effect.usesImage) props.image = state.imageUrl;
     return (
       <main className="col col-center">
         <div className="stage-bar">
           <span className="seg-label">Generator</span>
+          {effect.usesImage && <ImagePicker />}
           <div className="stage-bar-spacer" />
         </div>
         <div className="stage">
