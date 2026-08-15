@@ -292,22 +292,57 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .img-url:focus { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
 .img-url::placeholder { color: var(--text-faint); }
-.compare-toggle {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 7px 12px;
-  border-radius: 9px;
-  border: 1px solid var(--border);
-  background: var(--panel);
+.fs-btn {
+  display: inline-grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 9px;
+  border: 1px solid var(--border); background: var(--panel);
   color: var(--text-dim);
-  font-size: 12.5px; font-weight: 500;
-  transition: color 0.13s, border-color 0.13s;
+  transition: color 0.13s, border-color 0.13s, background 0.13s;
 }
-.compare-toggle:hover { color: var(--text); }
-.compare-toggle.on { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); }
-.compare-toggle .sw { width: 30px; height: 17px; border-radius: 20px; background: var(--border); position: relative; transition: background 0.15s; }
-.compare-toggle.on .sw { background: var(--accent); }
-.compare-toggle .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
-.compare-toggle.on .sw::after { transform: translateX(13px); }
+.fs-btn:hover { color: var(--text); border-color: var(--accent-line); }
+.fs-btn.on { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); }
+.fs-btn svg {
+  width: 17px; height: 17px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Immersive fullscreen preview overlay */
+.pv-fullscreen {
+  position: fixed; inset: 0; z-index: 60;
+  background: var(--bg);
+}
+
+/* Before/After drag slider */
+.compare-slider {
+  position: relative; display: inline-block; line-height: 0;
+  touch-action: none; cursor: ew-resize; user-select: none;
+}
+.cs-layer { position: relative; }
+.cs-layer.cs-clip { position: absolute; inset: 0; }
+.cs-layer > * { pointer-events: none; }
+.cs-divider {
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: var(--accent); transform: translateX(-1px);
+  cursor: ew-resize; outline: none;
+}
+.cs-divider:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
+.cs-handle {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; box-shadow: var(--shadow);
+}
+.cs-handle svg {
+  width: 18px; height: 18px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.cs-cap-l, .cs-cap-r {
+  position: absolute; top: 10px; z-index: 2; line-height: 1.4;
+  padding: 3px 8px; border-radius: 999px;
+  background: rgba(10, 12, 16, 0.55); backdrop-filter: blur(4px); color: #fff;
+}
+.cs-cap-l { left: 12px; }
+.cs-cap-r { right: 12px; }
 
 .stage {
   flex: 1;

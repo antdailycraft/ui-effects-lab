@@ -21,6 +21,13 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Compare drag slider** — a new "Slider" compare mode overlays the original
+  and the effect with a draggable divider (pointer drag or focus + ← / →), on
+  top of the existing "Split" side-by-side view. The compare toggle is now a
+  three-way Off / Split / Slider control.
+- **Fullscreen preview** — a fullscreen button expands the preview stage to fill
+  the viewport for an immersive look at any effect or generator; Escape or the
+  button exits. Preview-type and compare controls stay reachable while immersed.
 - **Deployment** — a GitHub Actions workflow (`.github/workflows/deploy.yml`)
   builds and publishes to GitHub Pages on every push to `main`, and a
   `vercel.json` makes the repo one-click importable on Vercel. Vite's `base` is

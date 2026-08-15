@@ -19,8 +19,16 @@ test("RESET restores defaults after edits", () => {
   expect(reset.params).toEqual(defaultParams(getEffect(initialState.effectId)!));
 });
 
-test("TOGGLE_COMPARE flips the flag", () => {
-  expect(reducer(initialState, { type: "TOGGLE_COMPARE" }).compare).toBe(true);
+test("SET_COMPARE_MODE selects a compare mode", () => {
+  expect(reducer(initialState, { type: "SET_COMPARE_MODE", mode: "slider" }).compareMode).toBe(
+    "slider"
+  );
+});
+
+test("TOGGLE_FULLSCREEN flips the flag; SET_FULLSCREEN sets it", () => {
+  expect(reducer(initialState, { type: "TOGGLE_FULLSCREEN" }).fullscreen).toBe(true);
+  const on = reducer(initialState, { type: "SET_FULLSCREEN", value: true });
+  expect(reducer(on, { type: "SET_FULLSCREEN", value: false }).fullscreen).toBe(false);
 });
 
 test("SET_IMAGE updates the source image for image generators", () => {

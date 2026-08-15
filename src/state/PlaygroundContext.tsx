@@ -5,10 +5,13 @@ import { randomizeParams } from "../lib/randomize";
 import { loadTheme, loadLastEffectId } from "../lib/storage";
 import { DEFAULT_IMAGE } from "../lib/sampleImage";
 
+export type CompareMode = "off" | "side-by-side" | "slider";
+
 export interface PlaygroundState {
   effectId: string;
   previewType: PreviewType;
-  compare: boolean;
+  compareMode: CompareMode;
+  fullscreen: boolean;
   animate: boolean;
   codeTab: "svg" | "css" | "react";
   theme: "dark" | "light";
@@ -22,7 +25,9 @@ export type Action =
   | { type: "SELECT_EFFECT"; id: string }
   | { type: "SET_PARAM"; id: string; value: ParamValue }
   | { type: "SET_PREVIEW"; preview: PreviewType }
-  | { type: "TOGGLE_COMPARE" }
+  | { type: "SET_COMPARE_MODE"; mode: CompareMode }
+  | { type: "TOGGLE_FULLSCREEN" }
+  | { type: "SET_FULLSCREEN"; value: boolean }
   | { type: "SET_ANIMATE"; value: boolean }
   | { type: "RESET" }
   | { type: "RANDOMIZE" }
@@ -38,7 +43,8 @@ const firstId = savedId && getEffect(savedId) ? savedId : EFFECTS[0].id;
 export const initialState: PlaygroundState = {
   effectId: firstId,
   previewType: "card",
-  compare: false,
+  compareMode: "off",
+  fullscreen: false,
   animate: true,
   codeTab: "svg",
   theme: loadTheme(),
@@ -58,8 +64,12 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
       return { ...state, params: { ...state.params, [action.id]: action.value } };
     case "SET_PREVIEW":
       return { ...state, previewType: action.preview };
-    case "TOGGLE_COMPARE":
-      return { ...state, compare: !state.compare };
+    case "SET_COMPARE_MODE":
+      return { ...state, compareMode: action.mode };
+    case "TOGGLE_FULLSCREEN":
+      return { ...state, fullscreen: !state.fullscreen };
+    case "SET_FULLSCREEN":
+      return { ...state, fullscreen: action.value };
     case "SET_ANIMATE":
       return { ...state, animate: action.value };
     case "RESET":

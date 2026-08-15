@@ -1,6 +1,7 @@
-import type { CSSProperties } from "react";
+import { useEffect, type CSSProperties } from "react";
 import type { EffectDefinition, Params, PreviewType } from "../../types/effects";
 import { usePlayground } from "../../state/PlaygroundContext";
+import type { CompareMode } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { FilterHost, LIVE_FILTER_ID } from "./FilterHost";
@@ -8,6 +9,7 @@ import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
 import { ImagePreview } from "./ImagePreview";
 import { ImagePicker } from "./ImagePicker";
+import { CompareSlider } from "./CompareSlider";
 
 type TargetProps = { className?: string; style?: CSSProperties };
 
@@ -23,6 +25,12 @@ const PV_OPTIONS: { id: PreviewType; label: string }[] = [
   { id: "image", label: "Image" },
 ];
 
+const COMPARE_OPTIONS: { id: CompareMode; label: string }[] = [
+  { id: "off", label: "Off" },
+  { id: "side-by-side", label: "Split" },
+  { id: "slider", label: "Slider" },
+];
+
 /** How the current effect is applied to a preview target. */
 function appliedProps(effect: EffectDefinition, params: Params, animate: boolean): TargetProps {
   if (effect.kind === "css" && effect.buildStyle) {
@@ -34,11 +42,46 @@ function appliedProps(effect: EffectDefinition, params: Params, animate: boolean
   return { style: { filter: `url(#${LIVE_FILTER_ID})` } };
 }
 
+/** A button that enters/exits the immersive fullscreen preview. */
+function FullscreenButton() {
+  const { state, dispatch } = usePlayground();
+  const on = state.fullscreen;
+  return (
+    <button
+      className={"fs-btn" + (on ? " on" : "")}
+      onClick={() => dispatch({ type: "TOGGLE_FULLSCREEN" })}
+      aria-label={on ? "Exit fullscreen" : "Enter fullscreen"}
+      title={on ? "Exit fullscreen (Esc)" : "Fullscreen"}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        {on ? (
+          <path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" />
+        ) : (
+          <path d="M4 9V4h5M20 9V4h-5M15 20h5v-5M9 20H4v-5" />
+        )}
+      </svg>
+    </button>
+  );
+}
+
 export function PreviewCanvas() {
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
+  const fullscreen = state.fullscreen;
+
+  // Escape leaves fullscreen.
+  useEffect(() => {
+    if (!fullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") dispatch({ type: "SET_FULLSCREEN", value: false });
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [fullscreen, dispatch]);
+
+  const mainClass = "col col-center" + (fullscreen ? " pv-fullscreen" : "");
 
   // Generator kind: the effect IS the preview (a self-contained component),
   // so preview targets and before/after compare don't apply.
@@ -47,11 +90,12 @@ export function PreviewCanvas() {
     const props = effect.buildProps ? effect.buildProps(state.params, animate) : {};
     if (effect.usesImage) props.image = state.imageUrl;
     return (
-      <main className="col col-center">
+      <main className={mainClass}>
         <div className="stage-bar">
           <span className="seg-label">Generator</span>
           {effect.usesImage && <ImagePicker />}
           <div className="stage-bar-spacer" />
+          <FullscreenButton />
         </div>
         <div className="stage">
           <div className="pv-generator">
@@ -71,9 +115,10 @@ export function PreviewCanvas() {
 
   const Target = TARGETS[state.previewType];
   const applied = appliedProps(effect, state.params, animate);
+  const mode = state.compareMode;
 
   return (
-    <main className="col col-center">
+    <main className={mainClass}>
       <FilterHost />
       <div className="stage-bar">
         <span className="seg-label">Preview</span>
@@ -89,34 +134,48 @@ export function PreviewCanvas() {
           ))}
         </div>
         <div className="stage-bar-spacer" />
-        <button
-          className={"compare-toggle" + (state.compare ? " on" : "")}
-          onClick={() => dispatch({ type: "TOGGLE_COMPARE" })}
-        >
-          <span className="sw" /> Before / After
-        </button>
+        <span className="seg-label">Compare</span>
+        <div className="seg">
+          {COMPARE_OPTIONS.map((o) => (
+            <button
+              key={o.id}
+              className={mode === o.id ? "on" : ""}
+              onClick={() => dispatch({ type: "SET_COMPARE_MODE", mode: o.id })}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+        <FullscreenButton />
       </div>
       <div className="stage">
-        <div
-          className={
-            "stage-grid" + (state.compare && state.previewType === "text" ? " stack" : "")
-          }
-        >
-          {state.compare ? (
-            <>
-              <div className="compare-cell">
-                <span className="compare-cap">Before</span>
-                <Target />
-              </div>
-              <div className="compare-cell">
-                <span className="compare-cap after">After</span>
-                <Target className={applied.className} style={applied.style} />
-              </div>
-            </>
-          ) : (
-            <Target className={applied.className} style={applied.style} />
-          )}
-        </div>
+        {mode === "slider" ? (
+          <CompareSlider
+            before={<Target />}
+            after={<Target className={applied.className} style={applied.style} />}
+          />
+        ) : (
+          <div
+            className={
+              "stage-grid" + (mode === "side-by-side" && state.previewType === "text" ? " stack" : "")
+            }
+          >
+            {mode === "side-by-side" ? (
+              <>
+                <div className="compare-cell">
+                  <span className="compare-cap">Before</span>
+                  <Target />
+                </div>
+                <div className="compare-cell">
+                  <span className="compare-cap after">After</span>
+                  <Target className={applied.className} style={applied.style} />
+                </div>
+              </>
+            ) : (
+              <Target className={applied.className} style={applied.style} />
+            )}
+          </div>
+        )}
         <div className="stage-hint">
           {effect.animatable
             ? animate
