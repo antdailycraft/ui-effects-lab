@@ -21,6 +21,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Deployment** — a GitHub Actions workflow (`.github/workflows/deploy.yml`)
+  builds and publishes to GitHub Pages on every push to `main`, and a
+  `vercel.json` makes the repo one-click importable on Vercel. Vite's `base` is
+  now deploy-aware (`/ui-effects-lab/` for Pages, `/` everywhere else). See
+  `docs/DEPLOY.md`.
 - **Built-in presets** — every WebGL generator now ships its library's curated
   presets (e.g. Swirl → Default / 007 / Opening / Candy) as one-click chips in a
   new "Built-in" section of the Presets panel. Loading one merges over the
