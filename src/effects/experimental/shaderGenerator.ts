@@ -16,6 +16,8 @@ export function shaderGenerator(config: {
   controls: ControlDefinition[];
   /** param ids forwarded to the component as props (include "speed" for animation) */
   props: string[];
+  /** defaults to true; set false for shaders with no time/speed uniform */
+  animatable?: boolean;
 }): EffectDefinition {
   const forward = (p: Params, animate: boolean): Record<string, unknown> => {
     const out: Record<string, unknown> = {};
@@ -36,7 +38,7 @@ export function shaderGenerator(config: {
     description: config.description,
     license: "Apache-2.0",
     kind: "generator",
-    animatable: true,
+    animatable: config.animatable ?? true,
     previewTypes: ["card"],
     controls: config.controls,
     component: config.component as EffectDefinition["component"],

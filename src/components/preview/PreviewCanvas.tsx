@@ -55,7 +55,11 @@ export function PreviewCanvas() {
             <Generator {...props} />
           </div>
           <div className="stage-hint">
-            {animate ? "Animating — WebGL shader" : "Static — enable Animate in Controls"}
+            {!effect.animatable
+              ? "WebGL generator — tune the parameters"
+              : animate
+                ? "Animating — WebGL shader"
+                : "Static — enable Animate in Controls"}
           </div>
         </div>
       </main>

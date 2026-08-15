@@ -42,6 +42,16 @@ import { spiral } from "../effects/experimental/spiral/definition";
 import { perlinNoise } from "../effects/experimental/perlin-noise/definition";
 import { pulsingBorder } from "../effects/experimental/pulsing-border/definition";
 import { colorPanels } from "../effects/experimental/color-panels/definition";
+import { dotGrid } from "../effects/experimental/dot-grid/definition";
+import { flutedGlass } from "../effects/experimental/fluted-glass/definition";
+import { gemSmoke } from "../effects/experimental/gem-smoke/definition";
+import { halftoneCmyk } from "../effects/experimental/halftone-cmyk/definition";
+import { halftoneDots } from "../effects/experimental/halftone-dots/definition";
+import { paperTexture } from "../effects/experimental/paper-texture/definition";
+import { simplexNoise } from "../effects/experimental/simplex-noise/definition";
+import { staticMeshGradient } from "../effects/experimental/static-mesh-gradient/definition";
+import { staticRadialGradient } from "../effects/experimental/static-radial-gradient/definition";
+import { waves } from "../effects/experimental/waves/definition";
 
 export const EFFECTS: EffectDefinition[] = [
   roughEdge,
@@ -87,6 +97,16 @@ export const EFFECTS: EffectDefinition[] = [
   perlinNoise,
   pulsingBorder,
   colorPanels,
+  dotGrid,
+  flutedGlass,
+  gemSmoke,
+  halftoneCmyk,
+  halftoneDots,
+  paperTexture,
+  simplexNoise,
+  staticMeshGradient,
+  staticRadialGradient,
+  waves,
 ];
 
 export function getEffect(id: string): EffectDefinition | undefined {
