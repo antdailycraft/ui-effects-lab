@@ -28,6 +28,12 @@ import { crt } from "../effects/retro/crt/definition";
 import { meshGradient } from "../effects/experimental/mesh-gradient/definition";
 import { warp } from "../effects/experimental/warp/definition";
 import { voronoi } from "../effects/experimental/voronoi/definition";
+import { grainGradient } from "../effects/experimental/grain-gradient/definition";
+import { metaballs } from "../effects/experimental/metaballs/definition";
+import { swirl } from "../effects/experimental/swirl/definition";
+import { dotOrbit } from "../effects/experimental/dot-orbit/definition";
+import { godRays } from "../effects/experimental/god-rays/definition";
+import { liquidMetal } from "../effects/experimental/liquid-metal/definition";
 
 export const EFFECTS: EffectDefinition[] = [
   roughEdge,
@@ -59,6 +65,12 @@ export const EFFECTS: EffectDefinition[] = [
   meshGradient,
   warp,
   voronoi,
+  grainGradient,
+  metaballs,
+  swirl,
+  dotOrbit,
+  godRays,
+  liquidMetal,
 ];
 
 export function getEffect(id: string): EffectDefinition | undefined {

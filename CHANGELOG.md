@@ -31,10 +31,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   `feMorphology` glow, and CSS `mask-composite`), plus an `hslToRgb`/`hslToHex`
   color helper. No new dependencies.
 - **Generators category** — a new effect `kind: "generator"` whose effect *is*
-  the preview (a self-contained component), plus a `react` code tab. First
-  three generators — Mesh Gradient, Warp, Voronoi — are GPU shaders from
-  `@paper-design/shaders-react` (Apache-2.0, the first runtime dependency); their
-  per-effect license badge reads Apache-2.0 rather than MIT.
+  the preview (a self-contained component), plus a `react` code tab. Generators
+  are GPU shaders from `@paper-design/shaders-react` (Apache-2.0, the first
+  runtime dependency); their per-effect license badge reads Apache-2.0 rather
+  than MIT. Ships nine: Mesh Gradient, Warp, Voronoi, Grain Gradient, Metaballs,
+  Swirl, Dot Orbit, God Rays, and Liquid Metal (added via a small
+  `shaderGenerator` factory that spreads each shader's own preset defaults).
 
 ## [0.0.1] - 2026-08-15
 
