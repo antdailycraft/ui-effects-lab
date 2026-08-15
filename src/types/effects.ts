@@ -2,8 +2,8 @@ import type { ComponentType } from "react";
 
 export type EffectCategory = "svg-filter" | "css" | "retro" | "experimental";
 export type PreviewType = "card" | "text" | "image";
-export type ControlType = "range" | "seed" | "toggle";
-export type ParamValue = number | boolean;
+export type ControlType = "range" | "seed" | "toggle" | "color";
+export type ParamValue = number | boolean | string;
 export type Params = Record<string, ParamValue>;
 
 /** How an effect is applied to the preview element. */

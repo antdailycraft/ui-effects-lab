@@ -17,4 +17,10 @@ export const grainGradient = shaderGenerator({
     { id: "softness", label: "Softness", type: "range", min: 0, max: 1, step: 0.05, def: 0.5, decimals: 2, random: [0.2, 0.9] },
     { id: "scale", label: "Scale", type: "range", min: 0.5, max: 2, step: 0.05, def: 1, decimals: 2, random: [0.7, 1.6] },
   ],
+  colorProps: [
+    { id: "color1", label: "Color 1", def: "#7300ff" },
+    { id: "color2", label: "Color 2", def: "#eba8ff" },
+    { id: "color3", label: "Color 3", def: "#00bfff" },
+    { id: "color4", label: "Color 4", def: "#2a00ff" },
+  ],
 });

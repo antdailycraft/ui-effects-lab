@@ -3,6 +3,7 @@ import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { RangeControl } from "./RangeControl";
 import { SeedControl } from "./SeedControl";
+import { ColorControl } from "./ColorControl";
 import { ToggleControl } from "./ToggleControl";
 import { LicenseBadge } from "./LicenseBadge";
 import { PresetsPanel } from "../presets/PresetsPanel";
@@ -38,6 +39,8 @@ export function ControlsPanel() {
           {effect.controls.map((c) =>
             c.type === "seed" ? (
               <SeedControl control={c} key={c.id} />
+            ) : c.type === "color" ? (
+              <ColorControl control={c} key={c.id} />
             ) : (
               <RangeControl control={c} key={c.id} />
             )

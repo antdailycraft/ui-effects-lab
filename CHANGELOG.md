@@ -21,6 +21,10 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Color controls** — a new `color` control type (swatch + hex). Duotone and
+  Neon Glow now pick real colors instead of hues, and Grain Gradient exposes its
+  full palette so shader generators can be recolored. `ParamValue` now includes
+  strings; Randomize picks pleasant random colors.
 - **Image-based generators** — generators can now take a source `image`. A
   Source picker (three built-in canvas-generated samples + a URL field) appears
   for image shaders. This revives Heatmap, Image Dithering, and Lens Distortion

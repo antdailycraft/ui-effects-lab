@@ -21,3 +21,15 @@ export function hslToHex(h: number, s: number, l: number): string {
   const [r, g, b] = hslToRgb(h, s, l);
   return `#${to(r)}${to(g)}${to(b)}`;
 }
+
+/** "#rgb" or "#rrggbb" → RGB channels in 0..1 (falls back to black on bad input). */
+export function hexToRgb(hex: string): [number, number, number] {
+  let h = hex.replace("#", "").trim();
+  if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  if (!/^[0-9a-fA-F]{6}$/.test(h)) return [0, 0, 0];
+  return [
+    parseInt(h.slice(0, 2), 16) / 255,
+    parseInt(h.slice(2, 4), 16) / 255,
+    parseInt(h.slice(4, 6), 16) / 255,
+  ];
+}

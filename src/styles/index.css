@@ -489,6 +489,16 @@ input[type="range"]::-moz-range-thumb {
 }
 input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
 
+.color-input {
+  width: 34px; height: 30px; flex-shrink: 0;
+  padding: 0; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--panel-2); cursor: pointer;
+}
+.color-input::-webkit-color-swatch-wrapper { padding: 3px; }
+.color-input::-webkit-color-swatch { border: none; border-radius: 5px; }
+.color-input::-moz-color-swatch { border: none; border-radius: 5px; }
+.color-bar { flex: 1; height: 10px; border-radius: 5px; border: 1px solid var(--border-soft); }
+
 .dice-btn {
   width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
   display: grid; place-items: center;

@@ -1,6 +1,6 @@
 import type { EffectDefinition } from "../../../types/effects";
 import { dec } from "../../../lib/format";
-import { hslToRgb } from "../../../lib/color";
+import { hexToRgb } from "../../../lib/color";
 
 export const duotone: EffectDefinition = {
   id: "duotone",
@@ -11,15 +11,15 @@ export const duotone: EffectDefinition = {
   tags: ["duotone", "color", "print", "native"],
   tech: ["feColorMatrix", "feComponentTransfer"],
   description:
-    "Desaturates the source, then maps shadows and highlights onto two hues for a duotone print look. Browser-native.",
+    "Desaturates the source, then maps shadows and highlights onto two colors for a duotone print look. Browser-native.",
   previewTypes: ["card", "text", "image"],
   controls: [
-    { id: "shadowHue", label: "Shadow Hue", type: "range", min: 0, max: 360, step: 1, def: 240, decimals: 0, unit: "°", random: [0, 360] },
-    { id: "highlightHue", label: "Highlight Hue", type: "range", min: 0, max: 360, step: 1, def: 40, decimals: 0, unit: "°", random: [0, 360] },
+    { id: "shadowColor", label: "Shadow Color", type: "color", def: "#241d9a" },
+    { id: "highlightColor", label: "Highlight Color", type: "color", def: "#ffd36e" },
   ],
   buildFilterInner: (p) => {
-    const s = hslToRgb(p.shadowHue as number, 0.65, 0.25);
-    const h = hslToRgb(p.highlightHue as number, 0.7, 0.82);
+    const s = hexToRgb(p.shadowColor as string);
+    const h = hexToRgb(p.highlightColor as string);
     const f = (n: number) => dec(n, 3);
     return `<feColorMatrix type="matrix" result="gray"
   values="0.33 0.33 0.34 0 0

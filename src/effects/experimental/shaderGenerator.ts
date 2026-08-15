@@ -20,12 +20,16 @@ export function shaderGenerator(config: {
   animatable?: boolean;
   /** true when the shader takes a source `image` (injected by the preview) */
   usesImage?: boolean;
+  /** color controls whose values form the shader's `colors` array */
+  colorProps?: { id: string; label: string; def: string }[];
 }): EffectDefinition {
+  const colorProps = config.colorProps ?? [];
   const forward = (p: Params, animate: boolean): Record<string, unknown> => {
     const out: Record<string, unknown> = {};
     for (const key of config.props) {
       out[key] = key === "speed" ? (animate ? (p.speed as number) : 0) : p[key];
     }
+    if (colorProps.length) out.colors = colorProps.map((c) => p[c.id]);
     return out;
   };
 
@@ -43,7 +47,12 @@ export function shaderGenerator(config: {
     animatable: config.animatable ?? true,
     usesImage: config.usesImage ?? false,
     previewTypes: ["card"],
-    controls: config.controls,
+    controls: [
+      ...config.controls,
+      ...colorProps.map(
+        (c): ControlDefinition => ({ id: c.id, label: c.label, type: "color", def: c.def })
+      ),
+    ],
     component: config.component as EffectDefinition["component"],
     buildProps: (p, animate) => ({
       ...config.base,
@@ -55,6 +64,10 @@ export function shaderGenerator(config: {
         const v = key === "speed" ? (animate ? (p.speed as number) : 0) : p[key];
         return `  ${key}={${v}}`;
       });
+      if (colorProps.length) {
+        const cols = colorProps.map((c) => `"${p[c.id]}"`).join(", ");
+        lines.push(`  colors={[${cols}]}`);
+      }
       if (config.usesImage) lines.unshift(`  image="/your-image.jpg"`);
       return `import { ${config.componentName} } from "@paper-design/shaders-react";
 
