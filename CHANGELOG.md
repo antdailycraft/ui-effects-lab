@@ -10,7 +10,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Presets** — save the current effect's parameters to LocalStorage under a
+  name, then reload or delete them. Presets are scoped to their effect and
+  surfaced in a Presets section of the Controls panel. Loading a preset restores
+  its effect and parameters together (`LOAD_PRESET`).
 
 ## [0.0.1] - 2026-08-15
 

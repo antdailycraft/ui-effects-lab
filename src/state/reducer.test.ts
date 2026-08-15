@@ -22,3 +22,13 @@ test("RESET restores defaults after edits", () => {
 test("TOGGLE_COMPARE flips the flag", () => {
   expect(reducer(initialState, { type: "TOGGLE_COMPARE" }).compare).toBe(true);
 });
+
+test("LOAD_PRESET switches effect and applies the preset's params together", () => {
+  const s = reducer(initialState, {
+    type: "LOAD_PRESET",
+    effectId: "water",
+    params: { freqX: 0.02, freqY: 0.05, numOctaves: 3, seed: 9, scale: 30, speed: 6 },
+  });
+  expect(s.effectId).toBe("water");
+  expect(s.params.scale).toBe(30);
+});

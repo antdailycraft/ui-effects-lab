@@ -25,7 +25,8 @@ export type Action =
   | { type: "RANDOMIZE" }
   | { type: "SET_SEARCH"; value: string }
   | { type: "SET_CODE_TAB"; tab: "svg" | "css" }
-  | { type: "SET_THEME"; theme: "dark" | "light" };
+  | { type: "SET_THEME"; theme: "dark" | "light" }
+  | { type: "LOAD_PRESET"; effectId: string; params: Params };
 
 const savedId = loadLastEffectId();
 const firstId = savedId && getEffect(savedId) ? savedId : EFFECTS[0].id;
@@ -66,6 +67,11 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
       return { ...state, codeTab: action.tab };
     case "SET_THEME":
       return { ...state, theme: action.theme };
+    case "LOAD_PRESET": {
+      const effect = getEffect(action.effectId);
+      if (!effect) return state;
+      return { ...state, effectId: action.effectId, params: { ...action.params } };
+    }
     default:
       return state;
   }
