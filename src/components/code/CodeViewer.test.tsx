@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { PlaygroundProvider } from "../../state/PlaygroundContext";
 import { CodeViewer } from "./CodeViewer";
@@ -23,4 +23,21 @@ test("switching to the CSS tab shows the css rule", async () => {
   );
   await userEvent.click(screen.getByRole("button", { name: /^css$/i }));
   expect(screen.getByText(/url\(#rough-edge\)/)).toBeInTheDocument();
+});
+
+test("Expand opens a modal with the full code, its own Copy, and closes", async () => {
+  render(
+    <PlaygroundProvider>
+      <CodeViewer />
+    </PlaygroundProvider>
+  );
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole("button", { name: /expand code/i }));
+  const dialog = screen.getByRole("dialog");
+  expect(within(dialog).getByText(/rough-edge/)).toBeInTheDocument();
+  expect(within(dialog).getByRole("button", { name: /copy/i })).toBeInTheDocument();
+
+  await userEvent.click(within(dialog).getByRole("button", { name: /close/i }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
