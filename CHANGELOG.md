@@ -52,5 +52,5 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://example.com/compare/v0.0.1...HEAD
-[0.0.1]: https://example.com/releases/tag/v0.0.1
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/antdailycraft/ui-effects-lab/releases/tag/v0.0.1
