@@ -90,7 +90,11 @@ export function PreviewCanvas() {
         </button>
       </div>
       <div className="stage">
-        <div className="stage-grid">
+        <div
+          className={
+            "stage-grid" + (state.compare && state.previewType === "text" ? " stack" : "")
+          }
+        >
           {state.compare ? (
             <>
               <div className="compare-cell">

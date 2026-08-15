@@ -10,6 +10,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+### Fixed
+
+- **Before/After compare on the Text preview** — the large single-word headline
+  overflowed its box and the two copies overlapped side-by-side. Text compare
+  now stacks vertically (Card/Image still compare side-by-side).
+
 ### Added
 
 - **Presets** — save the current effect's parameters to LocalStorage under a
