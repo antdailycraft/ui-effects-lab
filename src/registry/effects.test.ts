@@ -25,7 +25,7 @@ test("groupByCategory groups and preserves label", () => {
 test("registry ships every effect in order across categories", () => {
   expect(EFFECTS.map((e) => e.id)).toEqual([
     "rough-edge", "paper-grain", "noise", "water", "liquid", "heat-haze", "cloud",
-    "sticker", "gooey", "drop-shadow", "posterize",
+    "sticker", "gooey", "drop-shadow", "posterize", "emboss", "sharpen", "bevel",
     "frosted-glass", "holographic", "conic-spin",
     "glitch", "crt",
   ]);

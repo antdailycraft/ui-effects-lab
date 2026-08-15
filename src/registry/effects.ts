@@ -10,6 +10,9 @@ import { sticker } from "../effects/svg/sticker/definition";
 import { gooey } from "../effects/svg/gooey/definition";
 import { dropShadow } from "../effects/svg/drop-shadow/definition";
 import { posterize } from "../effects/svg/posterize/definition";
+import { emboss } from "../effects/svg/emboss/definition";
+import { sharpen } from "../effects/svg/sharpen/definition";
+import { bevel } from "../effects/svg/bevel/definition";
 import { frostedGlass } from "../effects/css/frosted-glass/definition";
 import { holographic } from "../effects/css/holographic/definition";
 import { conicSpin } from "../effects/css/conic-spin/definition";
@@ -28,6 +31,9 @@ export const EFFECTS: EffectDefinition[] = [
   gooey,
   dropShadow,
   posterize,
+  emboss,
+  sharpen,
+  bevel,
   frostedGlass,
   holographic,
   conicSpin,

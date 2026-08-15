@@ -16,6 +16,9 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   name, then reload or delete them. Presets are scoped to their effect and
   surfaced in a Presets section of the Controls panel. Loading a preset restores
   its effect and parameters together (`LOAD_PRESET`).
+- **Emboss, Sharpen, Bevel effects** — three browser-native SVG-filter effects
+  (`feConvolveMatrix`, `feSpecularLighting` + `fePointLight`) drawn from the
+  license-free web-platform tech in the research report. No new dependencies.
 
 ## [0.0.1] - 2026-08-15
 
