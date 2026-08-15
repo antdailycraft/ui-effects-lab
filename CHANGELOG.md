@@ -1,0 +1,56 @@
+# Changelog
+
+All notable changes to this project are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
+**Fixed**, **Security**.
+
+## [Unreleased]
+
+_Nothing yet._
+
+## [0.0.1] - 2026-08-15
+
+Initial working build of the UI Effects Lab playground.
+
+### Added
+
+- **Playground core** — three-column console (catalog · live stage · controls +
+  code), light/dark theme with LocalStorage persistence, and
+  `prefers-reduced-motion` support.
+- **Data-driven effect registry** — effects are `EffectDefinition` objects
+  (controls, defaults, renderer, code generators) aggregated in
+  `registry/effects.ts`; catalog, controls, preview, and code viewer all render
+  generically. Supports `kind: "svg"` (applied via `filter: url(#id)`) and
+  `kind: "css"` (class + CSS custom properties).
+- **16 effects** across three categories:
+  - _SVG Filters_ — Rough Edge, Paper Grain, Noise Texture, Water Distortion,
+    Liquid, Heat Haze, Cloud / Fog, Sticker (`feMorphology`), Gooey
+    (`feColorMatrix`), Drop Shadow (`feDropShadow`), Posterize
+    (`feComponentTransfer`).
+  - _CSS Effects_ — Frosted Glass (`backdrop-filter`), Holographic Card
+    (gradient + `mix-blend-mode`), Conic Spin (`@property` + `conic-gradient`).
+  - _Retro_ — Glitch (RGB channel split), CRT / Analog (scanlines + vignette).
+- **Catalog** — search over name/tags/tech, category grouping, selection.
+- **Live preview** — Card / Text / Image targets, Before/After side-by-side
+  compare.
+- **Controls** — data-driven range / seed (+ dice) / animate toggle.
+- **Code viewer** — SVG and CSS tabs (CSS-only for CSS effects) with a
+  single-pass syntax highlighter and copy-to-clipboard.
+- **Randomize / Reset** — randomize stays within safe per-control ranges.
+- **Resources menu** — top-bar dropdown with 7 curated external design tools
+  (MagicPattern, Variant, SEESAW, Refero, Recent, Awwwards, Land-book).
+- **Per-effect license badge** — SPDX badge in the effect header (defaults to
+  MIT); repo carries an MIT `LICENSE`.
+- **Dev/preview server** — external access (`host: true`), fixed port 5180
+  (`strictPort`), and `allowedHosts: ["atlas"]`.
+- **Tooling & docs** — Vite + React + TypeScript scaffold, Vitest test suite
+  (50 tests); `docs/PRD.md`, `docs/effects/feTurbulence.md`, the UI mockup, the
+  implementation plan, and the library/web-tech research report
+  (`docs/research/2026-08-14-css-effects-libraries.md`).
+
+[Unreleased]: https://example.com/compare/v0.0.1...HEAD
+[0.0.1]: https://example.com/releases/tag/v0.0.1

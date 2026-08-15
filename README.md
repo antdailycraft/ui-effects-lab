@@ -57,6 +57,30 @@ src/
 Roadmap (not yet built): local presets, comparison drag-slider, fullscreen,
 React JSX export, URL sharing.
 
+## Changelog & releases
+
+Notable changes are tracked in [`CHANGELOG.md`](./CHANGELOG.md), following
+[Keep a Changelog](https://keepachangelog.com/) and [SemVer](https://semver.org/).
+
+**Workflow**
+
+1. As you land changes, add bullets under the `## [Unreleased]` section,
+   grouped by category (Added / Changed / Fixed / …).
+2. To cut a release, move the `[Unreleased]` bullets under a new
+   `## [x.y.z] - YYYY-MM-DD` heading, then bump the package version so the two
+   stay in sync:
+   ```bash
+   npm version patch --no-git-tag-version   # or minor / major
+   ```
+3. Commit (`chore(release): vX.Y.Z`) and tag it:
+   ```bash
+   git tag -a vX.Y.Z -m "vX.Y.Z"
+   ```
+   The tag message can reuse that version's changelog entry as the release note.
+
+Pre-1.0.0 (`0.y.z`): breaking changes bump the **minor**, everything else the
+**patch**.
+
 ## Related tools & inspiration
 
 Surfaced in the app's top-bar **Resources** menu (`src/data/resources.ts`).
