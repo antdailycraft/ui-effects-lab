@@ -26,7 +26,8 @@ test("registry ships every effect in order across categories", () => {
   expect(EFFECTS.map((e) => e.id)).toEqual([
     "rough-edge", "paper-grain", "noise", "water", "liquid", "heat-haze", "cloud",
     "sticker", "gooey", "drop-shadow", "posterize", "emboss", "sharpen", "bevel",
-    "frosted-glass", "holographic", "conic-spin",
+    "color-grade", "duotone", "invert", "edge-detect", "motion-blur", "neon-glow",
+    "frosted-glass", "holographic", "conic-spin", "gradient-border",
     "glitch", "crt",
   ]);
   expect(getEffect("water")?.name).toBe("Water Distortion");

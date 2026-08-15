@@ -13,9 +13,16 @@ import { posterize } from "../effects/svg/posterize/definition";
 import { emboss } from "../effects/svg/emboss/definition";
 import { sharpen } from "../effects/svg/sharpen/definition";
 import { bevel } from "../effects/svg/bevel/definition";
+import { colorGrade } from "../effects/svg/color-grade/definition";
+import { duotone } from "../effects/svg/duotone/definition";
+import { invert } from "../effects/svg/invert/definition";
+import { edgeDetect } from "../effects/svg/edge-detect/definition";
+import { motionBlur } from "../effects/svg/motion-blur/definition";
+import { neonGlow } from "../effects/svg/neon-glow/definition";
 import { frostedGlass } from "../effects/css/frosted-glass/definition";
 import { holographic } from "../effects/css/holographic/definition";
 import { conicSpin } from "../effects/css/conic-spin/definition";
+import { gradientBorder } from "../effects/css/gradient-border/definition";
 import { glitch } from "../effects/retro/glitch/definition";
 import { crt } from "../effects/retro/crt/definition";
 
@@ -34,9 +41,16 @@ export const EFFECTS: EffectDefinition[] = [
   emboss,
   sharpen,
   bevel,
+  colorGrade,
+  duotone,
+  invert,
+  edgeDetect,
+  motionBlur,
+  neonGlow,
   frostedGlass,
   holographic,
   conicSpin,
+  gradientBorder,
   glitch,
   crt,
 ];

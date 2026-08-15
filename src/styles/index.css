@@ -636,6 +636,24 @@ input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
   to { --fx-spin: 360deg; }
 }
 
+.fx-gradborder { position: relative; }
+.fx-gradborder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  padding: var(--fx-width, 4px);
+  background: linear-gradient(
+    var(--fx-angle, 120deg),
+    #ff2e97, #4b6bff, #3bffd1, #ffd93b, #ff2e97
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fx-holo.fx-anim::before,
   .fx-crt.fx-anim::after,

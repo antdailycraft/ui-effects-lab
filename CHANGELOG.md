@@ -19,6 +19,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 - **Emboss, Sharpen, Bevel effects** — three browser-native SVG-filter effects
   (`feConvolveMatrix`, `feSpecularLighting` + `fePointLight`) drawn from the
   license-free web-platform tech in the research report. No new dependencies.
+- **Color Grade, Duotone, Invert, Edge Detect, Motion Blur, Neon Glow, Gradient
+  Border** — seven more browser-native effects (`feColorMatrix`,
+  `feComponentTransfer`, `feConvolveMatrix`, directional `feGaussianBlur`,
+  `feMorphology` glow, and CSS `mask-composite`), plus an `hslToRgb`/`hslToHex`
+  color helper. No new dependencies.
 
 ## [0.0.1] - 2026-08-15
 
