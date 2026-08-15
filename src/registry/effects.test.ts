@@ -29,13 +29,22 @@ test("registry ships every effect in order across categories", () => {
     "color-grade", "duotone", "invert", "edge-detect", "motion-blur", "neon-glow",
     "frosted-glass", "holographic", "conic-spin", "gradient-border",
     "glitch", "crt",
+    "mesh-gradient", "warp-shader", "voronoi",
   ]);
   expect(getEffect("water")?.name).toBe("Water Distortion");
   expect(getEffect("cloud")?.name).toBe("Cloud / Fog");
 });
 
-test("groups span SVG Filters, CSS Effects, and Retro", () => {
+test("groups span SVG Filters, CSS Effects, Retro, and Generators", () => {
   expect(groupByCategory(EFFECTS).map((g) => g.label)).toEqual([
-    "SVG Filters", "CSS Effects", "Retro",
+    "SVG Filters", "CSS Effects", "Retro", "Generators",
   ]);
+});
+
+test("generator effects are library-derived and declare their license + React code", () => {
+  const mesh = getEffect("mesh-gradient")!;
+  expect(mesh.kind).toBe("generator");
+  expect(mesh.license).toBe("Apache-2.0");
+  expect(mesh.component).toBeDefined(); // a React component (function or forwardRef/memo object)
+  expect(mesh.buildReact!(defaultParams(mesh), true)).toContain("<MeshGradient");
 });

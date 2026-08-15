@@ -24,6 +24,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   `feComponentTransfer`, `feConvolveMatrix`, directional `feGaussianBlur`,
   `feMorphology` glow, and CSS `mask-composite`), plus an `hslToRgb`/`hslToHex`
   color helper. No new dependencies.
+- **Generators category** — a new effect `kind: "generator"` whose effect *is*
+  the preview (a self-contained component), plus a `react` code tab. First
+  three generators — Mesh Gradient, Warp, Voronoi — are GPU shaders from
+  `@paper-design/shaders-react` (Apache-2.0, the first runtime dependency); their
+  per-effect license badge reads Apache-2.0 rather than MIT.
 
 ## [0.0.1] - 2026-08-15
 

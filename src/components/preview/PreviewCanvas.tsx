@@ -38,6 +38,30 @@ export function PreviewCanvas() {
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
+
+  // Generator kind: the effect IS the preview (a self-contained component),
+  // so preview targets and before/after compare don't apply.
+  if (effect.kind === "generator" && effect.component) {
+    const Generator = effect.component;
+    const props = effect.buildProps ? effect.buildProps(state.params, animate) : {};
+    return (
+      <main className="col col-center">
+        <div className="stage-bar">
+          <span className="seg-label">Generator</span>
+          <div className="stage-bar-spacer" />
+        </div>
+        <div className="stage">
+          <div className="pv-generator">
+            <Generator {...props} />
+          </div>
+          <div className="stage-hint">
+            {animate ? "Animating — WebGL shader" : "Static — enable Animate in Controls"}
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const Target = TARGETS[state.previewType];
   const applied = appliedProps(effect, state.params, animate);
 

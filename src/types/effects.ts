@@ -1,3 +1,5 @@
+import type { ComponentType } from "react";
+
 export type EffectCategory = "svg-filter" | "css" | "retro" | "experimental";
 export type PreviewType = "card" | "text" | "image";
 export type ControlType = "range" | "seed" | "toggle";
@@ -5,7 +7,7 @@ export type ParamValue = number | boolean;
 export type Params = Record<string, ParamValue>;
 
 /** How an effect is applied to the preview element. */
-export type EffectKind = "svg" | "css";
+export type EffectKind = "svg" | "css" | "generator";
 
 export interface ControlDefinition {
   id: string;
@@ -48,4 +50,11 @@ export interface EffectDefinition {
   buildStyle?: (params: Params, animate: boolean) => Record<string, string>;
   /** CSS kind: the resolved CSS rule shown in the code viewer. */
   buildCss?: (params: Params, animate: boolean) => string;
+
+  /** Generator kind: a self-contained component (e.g. a WebGL shader) that IS the preview. */
+  component?: ComponentType<Record<string, unknown>>;
+  /** Generator kind: props passed to the component, derived from params. */
+  buildProps?: (params: Params, animate: boolean) => Record<string, unknown>;
+  /** Generator kind: the React usage snippet shown in the code viewer. */
+  buildReact?: (params: Params, animate: boolean) => string;
 }

@@ -25,6 +25,9 @@ import { conicSpin } from "../effects/css/conic-spin/definition";
 import { gradientBorder } from "../effects/css/gradient-border/definition";
 import { glitch } from "../effects/retro/glitch/definition";
 import { crt } from "../effects/retro/crt/definition";
+import { meshGradient } from "../effects/experimental/mesh-gradient/definition";
+import { warp } from "../effects/experimental/warp/definition";
+import { voronoi } from "../effects/experimental/voronoi/definition";
 
 export const EFFECTS: EffectDefinition[] = [
   roughEdge,
@@ -53,6 +56,9 @@ export const EFFECTS: EffectDefinition[] = [
   gradientBorder,
   glitch,
   crt,
+  meshGradient,
+  warp,
+  voronoi,
 ];
 
 export function getEffect(id: string): EffectDefinition | undefined {

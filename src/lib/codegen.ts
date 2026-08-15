@@ -1,6 +1,10 @@
 import type { EffectDefinition, Params } from "../types/effects";
 
-export type CodeLang = "svg" | "css";
+export type CodeLang = "svg" | "css" | "react";
+
+export function generateReact(effect: EffectDefinition, params: Params, animate: boolean): string {
+  return effect.buildReact ? effect.buildReact(params, animate) : "";
+}
 
 export function generateSvg(effect: EffectDefinition, params: Params, animate: boolean): string {
   const inner = (effect.buildFilterInner ? effect.buildFilterInner(params, animate) : "")
@@ -23,7 +27,9 @@ export function generateCss(effect: EffectDefinition, params: Params, animate: b
 
 /** Which code tabs make sense for this effect. */
 export function availableTabs(effect: EffectDefinition): CodeLang[] {
-  return effect.kind === "css" ? ["css"] : ["svg", "css"];
+  if (effect.kind === "generator") return ["react"];
+  if (effect.kind === "css") return ["css"];
+  return ["svg", "css"];
 }
 
 /** Clamp a requested tab to one the effect actually offers. */
@@ -38,5 +44,7 @@ export function generateCode(
   animate: boolean,
   tab: CodeLang
 ): string {
-  return tab === "svg" ? generateSvg(effect, params, animate) : generateCss(effect, params, animate);
+  if (tab === "react") return generateReact(effect, params, animate);
+  if (tab === "svg") return generateSvg(effect, params, animate);
+  return generateCss(effect, params, animate);
 }

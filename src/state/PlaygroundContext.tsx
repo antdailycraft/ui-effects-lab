@@ -9,7 +9,7 @@ export interface PlaygroundState {
   previewType: PreviewType;
   compare: boolean;
   animate: boolean;
-  codeTab: "svg" | "css";
+  codeTab: "svg" | "css" | "react";
   theme: "dark" | "light";
   search: string;
   params: Params;
@@ -24,7 +24,7 @@ export type Action =
   | { type: "RESET" }
   | { type: "RANDOMIZE" }
   | { type: "SET_SEARCH"; value: string }
-  | { type: "SET_CODE_TAB"; tab: "svg" | "css" }
+  | { type: "SET_CODE_TAB"; tab: "svg" | "css" | "react" }
   | { type: "SET_THEME"; theme: "dark" | "light" }
   | { type: "LOAD_PRESET"; effectId: string; params: Params };
 
