@@ -401,6 +401,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .effect-headline .tags { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
 .chip { font-size: 10px; letter-spacing: 0.05em; color: var(--text-dim); background: var(--panel-2); border: 1px solid var(--border); border-radius: 5px; padding: 3px 7px; }
 .chip.mono { letter-spacing: 0; }
+.license-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+  color: var(--text-dim);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 5px; padding: 3px 7px 3px 6px;
+  text-decoration: none;
+  transition: color 0.13s, border-color 0.13s;
+}
+.license-chip svg {
+  width: 12px; height: 12px;
+  fill: none; stroke: var(--accent); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.license-chip:hover { color: var(--text); }
 
 .controls { padding: 6px 16px 4px; }
 .control { padding: 12px 0; border-top: 1px solid var(--border-soft); }

@@ -4,6 +4,7 @@ import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { RangeControl } from "./RangeControl";
 import { SeedControl } from "./SeedControl";
 import { ToggleControl } from "./ToggleControl";
+import { LicenseBadge } from "./LicenseBadge";
 import { CodeViewer } from "../code/CodeViewer";
 
 export function ControlsPanel() {
@@ -24,6 +25,7 @@ export function ControlsPanel() {
                 {t}
               </span>
             ))}
+            <LicenseBadge license={effect.license} />
           </div>
         </div>
 

@@ -31,6 +31,8 @@ export interface EffectDefinition {
   tech: string[];
   description: string;
   animatable?: boolean;
+  /** SPDX license id of the generated code. Omitted → MIT (our own implementation on open web standards). */
+  license?: string;
   previewTypes: PreviewType[];
   controls: ControlDefinition[];
 

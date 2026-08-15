@@ -27,3 +27,14 @@ test("renders the current effect name", () => {
   );
   expect(screen.getByText(/rough edge/i)).toBeInTheDocument();
 });
+
+test("shows a license badge linking to the SPDX page (defaults to MIT)", () => {
+  render(
+    <PlaygroundProvider>
+      <ControlsPanel />
+    </PlaygroundProvider>
+  );
+  const badge = screen.getByRole("link", { name: /MIT/i });
+  expect(badge).toHaveAttribute("href", "https://spdx.org/licenses/MIT.html");
+  expect(badge).toHaveAttribute("target", "_blank");
+});
