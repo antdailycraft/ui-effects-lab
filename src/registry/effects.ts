@@ -127,6 +127,21 @@ export function defaultParams(effect: EffectDefinition): Params {
   return p;
 }
 
+/** Clamp numeric params to each control's [min, max] (leaves strings/booleans). */
+export function clampParams(effect: EffectDefinition, params: Params): Params {
+  const out: Params = { ...params };
+  for (const c of effect.controls) {
+    const v = out[c.id];
+    if (typeof v === "number") {
+      let n = v;
+      if (c.min !== undefined) n = Math.max(c.min, n);
+      if (c.max !== undefined) n = Math.min(c.max, n);
+      out[c.id] = n;
+    }
+  }
+  return out;
+}
+
 export function groupByCategory(
   effects: EffectDefinition[]
 ): { label: string; effects: EffectDefinition[] }[] {

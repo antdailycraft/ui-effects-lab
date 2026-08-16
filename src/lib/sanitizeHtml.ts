@@ -16,12 +16,14 @@ export function sanitizeHtml(input: string): string {
       // drop whole dangerous elements (with or without a closing tag)
       .replace(/<\s*(script|iframe|object|embed)\b[\s\S]*?<\s*\/\s*\1\s*>/gi, "")
       .replace(/<\s*(script|iframe|object|embed)\b[^>]*>/gi, "")
-      // inline event handlers: on…="…" / on…='…' / on…=value
-      .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
-      .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
-      .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "")
-      // javascript: in href/src
+      // inline event handlers: on…="…" / on…='…' / on…=value.
+      // Allow whitespace OR "/" as the attribute separator (e.g. <img/onerror=…>).
+      .replace(/[\s/]on[a-z]+\s*=\s*"[^"]*"/gi, "")
+      .replace(/[\s/]on[a-z]+\s*=\s*'[^']*'/gi, "")
+      .replace(/[\s/]on[a-z]+\s*=\s*[^\s>]+/gi, "")
+      // javascript: in href/src — quoted and unquoted
       .replace(/((?:href|src)\s*=\s*")\s*javascript:[^"]*"/gi, '$1#"')
       .replace(/((?:href|src)\s*=\s*')\s*javascript:[^']*'/gi, "$1#'")
+      .replace(/((?:href|src)\s*=\s*)javascript:[^\s>]*/gi, "$1#")
   );
 }

@@ -62,3 +62,8 @@ test("combined code emits one filter per layer and a chained CSS filter", () => 
   expect(svg).toContain('<filter id="water-2">');
   expect(generateCombinedCss(chain)).toBe(".effect {\n  filter: url(#rough-edge-1) url(#water-2);\n}");
 });
+
+test("an empty chain generates valid (no-op) code, not a broken filter", () => {
+  expect(generateCombinedCss([])).toBe(".effect {\n  filter: none;\n}");
+  expect(generateCombinedSvg([], () => false)).toBe(`<svg width="0" height="0" aria-hidden="true">\n\n</svg>`);
+});

@@ -27,7 +27,7 @@ export default defineConfig({
     host: true,
     port: 5180,
     strictPort: true,
-    // Vite blocks unknown Host headers; permit access via http://atlas:5174.
+    // Vite blocks unknown Host headers; permit access via http://atlas:5180.
     allowedHosts: ["atlas"],
   },
   preview: {

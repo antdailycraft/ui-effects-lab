@@ -82,6 +82,15 @@ test("built-in preset names come straight from the library preset list", () => {
   expect(swirl.builtInPresets!.map((p) => p.name)).toContain("Default");
 });
 
+test("generator buildProps returns component props (sizing, speed, colors)", () => {
+  const swirl = getEffect("swirl")!;
+  const props = swirl.buildProps!(defaultParams(swirl), true);
+  expect(props.style).toEqual({ width: "100%", height: "100%" });
+  expect(typeof props.speed).toBe("number");
+  // not animating → speed forced to 0
+  expect(swirl.buildProps!(defaultParams(swirl), false).speed).toBe(0);
+});
+
 test("image-based generators declare usesImage and show an image prop", () => {
   const imgDither = getEffect("image-dithering")!;
   expect(imgDither.usesImage).toBe(true);

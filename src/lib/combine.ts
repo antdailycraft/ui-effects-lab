@@ -92,6 +92,7 @@ export function generateCombinedSvg(
 
 /** The exported CSS: the chained `filter` referencing each layer's filter id. */
 export function generateCombinedCss(chain: EffectLayer[]): string {
+  if (chain.length === 0) return `.effect {\n  filter: none;\n}`;
   const refs = chain.map((l, i) => `url(#${combinedFilterId(l.effectId, i)})`).join(" ");
   return `.effect {\n  filter: ${refs};\n}`;
 }

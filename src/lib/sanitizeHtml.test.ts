@@ -23,3 +23,12 @@ test("neutralizes javascript: URLs", () => {
 test("drops iframe/object/embed", () => {
   expect(sanitizeHtml(`<iframe src="evil"></iframe><span>s</span>`)).toBe(`<span>s</span>`);
 });
+
+test("strips handlers separated by a slash, not just whitespace", () => {
+  expect(sanitizeHtml(`<img/src=x/onerror=alert(1)>`)).not.toContain("onerror");
+});
+
+test("neutralizes unquoted javascript: URLs", () => {
+  const out = sanitizeHtml(`<a href=javascript:alert(1)>x</a>`);
+  expect(out).not.toContain("javascript:");
+});

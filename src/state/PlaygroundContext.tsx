@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
-import type { Params, ParamValue, PreviewType } from "../types/effects";
-import { defaultParams, getEffect, EFFECTS } from "../registry/effects";
+import type { EffectDefinition, Params, ParamValue, PreviewType } from "../types/effects";
+import { defaultParams, clampParams, getEffect, EFFECTS } from "../registry/effects";
 import { randomizeParams } from "../lib/randomize";
 import { loadTheme, loadLastEffectId, loadCustomHtml } from "../lib/storage";
 import { DEFAULT_IMAGE } from "../lib/sampleImage";
@@ -49,40 +49,54 @@ export type Action =
   | { type: "MOVE_LAYER"; index: number; dir: -1 | 1 }
   | { type: "CLEAR_LAYERS" };
 
-// A shared "#s=…" link (if present and valid) wins over the last-used effect.
-const shared = typeof location !== "undefined" ? decodeShare(location.hash) : null;
-const sharedEffect = shared && getEffect(shared.e) ? getEffect(shared.e)! : null;
+/** Merge shared params over the effect's defaults, then clamp to control ranges. */
+function restoreParams(effect: EffectDefinition, shared: Params | undefined): Params {
+  return clampParams(effect, { ...defaultParams(effect), ...(shared ?? {}) });
+}
 
-const savedId = loadLastEffectId();
-const firstId = sharedEffect
-  ? sharedEffect.id
-  : savedId && getEffect(savedId)
-    ? savedId
-    : EFFECTS[0].id;
+/**
+ * Build the initial state, honoring a `#s=…` share hash when present (it wins
+ * over the last-used effect in LocalStorage). Exported for testing; the app
+ * calls it with `location.hash`.
+ */
+export function buildInitialState(hash: string): PlaygroundState {
+  const shared = decodeShare(hash);
+  const sharedEffect = shared && getEffect(shared.e) ? getEffect(shared.e)! : null;
 
-export const initialState: PlaygroundState = {
-  effectId: firstId,
-  previewType: sharedEffect && shared?.pv ? shared.pv : "card",
-  compareMode: "off",
-  fullscreen: false,
-  animate: true,
-  codeTab: "svg",
-  theme: loadTheme(),
-  search: "",
-  params: sharedEffect
-    ? { ...defaultParams(sharedEffect), ...shared!.p }
-    : defaultParams(getEffect(firstId)!),
-  imageUrl: DEFAULT_IMAGE,
-  customHtml: loadCustomHtml(),
-  layers:
-    shared?.l
-      ?.flatMap((x): EffectLayer[] => {
+  const savedId = loadLastEffectId();
+  const firstId = sharedEffect
+    ? sharedEffect.id
+    : savedId && getEffect(savedId)
+      ? savedId
+      : EFFECTS[0].id;
+
+  return {
+    effectId: firstId,
+    previewType: sharedEffect && shared?.pv ? shared.pv : "card",
+    compareMode: "off",
+    fullscreen: false,
+    animate: true,
+    codeTab: "svg",
+    theme: loadTheme(),
+    search: "",
+    params: sharedEffect
+      ? restoreParams(sharedEffect, shared!.p)
+      : defaultParams(getEffect(firstId)!),
+    imageUrl: DEFAULT_IMAGE,
+    customHtml: loadCustomHtml(),
+    layers:
+      shared?.l?.flatMap((x): EffectLayer[] => {
         const e = getEffect(x.e);
-        // Keep only stackable effects, and merge over defaults so a missing or
-        // stale param can't produce a NaN/undefined filter attribute.
-        return e && isStackable(e) ? [{ effectId: x.e, params: { ...defaultParams(e), ...x.p } }] : [];
+        // Keep only stackable effects; merge defaults + clamp so a missing or
+        // out-of-range param can't produce a NaN/invalid filter attribute.
+        return e && isStackable(e) ? [{ effectId: x.e, params: restoreParams(e, x.p) }] : [];
       }) ?? [],
-};
+  };
+}
+
+export const initialState: PlaygroundState = buildInitialState(
+  typeof location !== "undefined" ? location.hash : ""
+);
 
 export function reducer(state: PlaygroundState, action: Action): PlaygroundState {
   switch (action.type) {

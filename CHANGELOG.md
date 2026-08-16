@@ -19,6 +19,15 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Fixed
 
+- **Restored share params are clamped to each control's range** — a hand-edited
+  or stale hash can no longer feed an out-of-range value into an effect (e.g. a
+  `speed: 0` yielding an `Infinity` animation duration).
+- **Empty combined chain emits valid code** — `filter: none` instead of a broken
+  empty `filter:` value.
+- **Sanitizer hardening** — the Custom-preview sanitizer now also strips
+  slash-separated inline handlers (`<img/onerror=…>`) and unquoted `javascript:`
+  URLs. (Still documented as defense-in-depth for a self-only surface, not a
+  hardened trust boundary.)
 - **Shared combination layers merge over defaults** — a layer from a share link
   that's missing a parameter (older build / hand-edited hash) no longer produces
   a `NaN`/`undefined` filter attribute; each layer is filled from its effect's
@@ -64,6 +73,15 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 - Dead "Coming soon" placeholder rendering path in the catalog (the placeholder
   map has been empty since all effects became real).
+
+### Internal
+
+- Initial-state derivation extracted to a testable `buildInitialState(hash)`
+  (covering share-hash precedence, param merge/clamp, and layer filtering).
+- `@types/node` aligned to the CI runtime (Node 20); jsdom `getContext` noise
+  silenced in the test setup; stale `vite.config.ts` port comment fixed.
+- More tests: initial-state restore, sanitizer bypasses, empty-chain codegen,
+  and generator `buildProps`.
 
 ### Changed
 
