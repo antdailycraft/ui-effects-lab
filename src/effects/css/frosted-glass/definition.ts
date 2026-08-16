@@ -13,7 +13,7 @@ export const frostedGlass: EffectDefinition = {
     "Glassmorphism — a translucent tinted panel that blurs whatever sits behind it.",
   kind: "css",
   cssClass: "fx-frosted",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "blur", label: "Blur", type: "range", min: 0, max: 24, step: 1, def: 8, decimals: 0, unit: "px", random: [4, 18] },
     { id: "tint", label: "Tint", type: "range", min: 0.05, max: 0.8, step: 0.05, def: 0.4, decimals: 2, random: [0.15, 0.6] },

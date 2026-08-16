@@ -11,7 +11,7 @@ export const gooey: EffectDefinition = {
   tech: ["feGaussianBlur", "feColorMatrix", "feComposite"],
   description:
     "Blurs the source, then crushes the alpha channel with feColorMatrix so nearby shapes melt together like metaballs.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "blur", label: "Blur", type: "range", min: 0, max: 20, step: 0.5, def: 8, decimals: 1, unit: "px", random: [4, 14] },
     { id: "contrast", label: "Gooeyness", type: "range", min: 8, max: 30, step: 1, def: 18, decimals: 0, random: [12, 26] },

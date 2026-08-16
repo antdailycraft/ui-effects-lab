@@ -16,7 +16,7 @@ export const posterize: EffectDefinition = {
   tech: ["feComponentTransfer"],
   description:
     "Quantizes each color channel into a few discrete steps with feComponentTransfer for a poster / color-banding look.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "levels", label: "Levels", type: "range", min: 2, max: 8, step: 1, def: 4, decimals: 0, random: [2, 6] },
   ],

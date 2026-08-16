@@ -11,7 +11,7 @@ export const motionBlur: EffectDefinition = {
   tech: ["feGaussianBlur"],
   description:
     "A directional Gaussian blur (independent X/Y deviation) for a motion-streak look. Browser-native.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "x", label: "Blur X", type: "range", min: 0, max: 24, step: 0.5, def: 8, decimals: 1, unit: "px", random: [4, 18] },
     { id: "y", label: "Blur Y", type: "range", min: 0, max: 24, step: 0.5, def: 0, decimals: 1, unit: "px", random: [0, 6] },

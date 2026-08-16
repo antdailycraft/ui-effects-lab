@@ -456,6 +456,63 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pv-image .sub { position: absolute; left: 20px; bottom: 6px; font-size: 11px; color: rgba(255,255,255,0.75); }
 
+/* Button target — a product CTA pair */
+.pv-button {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  padding: 44px 48px;
+}
+.pv-button .btn {
+  font-family: inherit; font-weight: 600; line-height: 1;
+  border: none; border-radius: 13px; cursor: pointer;
+  transition: none;
+}
+.pv-button .btn-primary {
+  font-size: 17px; padding: 16px 32px; color: #fff;
+  background: linear-gradient(135deg, #ff8a3d, #ff5d73 58%, #c0417a);
+  box-shadow: 0 12px 28px -12px rgba(255, 93, 115, 0.75);
+}
+.pv-button .btn-ghost {
+  font-size: 14px; padding: 12px 24px;
+  color: var(--text); background: var(--panel-2);
+  border: 1px solid var(--border);
+}
+
+/* Newspaper target — a vintage broadsheet front page */
+.pv-newspaper {
+  width: 340px; padding: 18px 18px 20px;
+  background: #f3ead6; color: #201a12;
+  border-radius: 4px; overflow: hidden;
+  box-shadow: var(--shadow);
+  font-family: Georgia, "Times New Roman", serif;
+  text-align: center;
+}
+.pv-newspaper .masthead {
+  font-size: 29px; font-weight: 800; letter-spacing: -0.01em;
+  border-bottom: 3px double #201a12; padding-bottom: 8px;
+}
+.pv-newspaper .dateline {
+  display: flex; justify-content: space-between; gap: 8px;
+  font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 5px 0; border-bottom: 1px solid #201a12; margin-bottom: 11px;
+}
+.pv-newspaper .headline {
+  font-size: 22px; font-weight: 800; line-height: 1.08;
+  letter-spacing: -0.01em; margin: 2px 0 5px;
+}
+.pv-newspaper .subhead {
+  font-size: 11px; font-style: italic; color: #4a3f2e;
+  padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #cdbfa0;
+}
+.pv-newspaper .cols {
+  column-count: 3; column-gap: 12px; column-rule: 1px solid #cdbfa0;
+  text-align: justify; font-size: 8.5px; line-height: 1.5; color: #3a3124;
+}
+.pv-newspaper .cols p { margin: 0 0 6px; }
+.pv-newspaper .cols .drop::first-letter {
+  font-size: 26px; font-weight: 800; line-height: 0.8;
+  float: left; padding: 2px 3px 0 0;
+}
+
 /* ---------- Right: controls + code ---------- */
 .right-scroll { flex: 1; overflow-y: auto; min-width: 0; }
 .panel-head {

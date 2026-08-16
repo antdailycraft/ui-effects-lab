@@ -8,6 +8,8 @@ import { FilterHost, LIVE_FILTER_ID } from "./FilterHost";
 import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
 import { ImagePreview } from "./ImagePreview";
+import { ButtonPreview } from "./ButtonPreview";
+import { NewspaperPreview } from "./NewspaperPreview";
 import { ImagePicker } from "./ImagePicker";
 import { CompareSlider } from "./CompareSlider";
 
@@ -17,12 +19,16 @@ const TARGETS: Record<PreviewType, (props: TargetProps) => JSX.Element> = {
   card: CardPreview,
   text: TextPreview,
   image: ImagePreview,
+  button: ButtonPreview,
+  newspaper: NewspaperPreview,
 };
 
 const PV_OPTIONS: { id: PreviewType; label: string }[] = [
   { id: "card", label: "Card" },
   { id: "text", label: "Text" },
   { id: "image", label: "Image" },
+  { id: "button", label: "Button" },
+  { id: "newspaper", label: "Newspaper" },
 ];
 
 const COMPARE_OPTIONS: { id: CompareMode; label: string }[] = [
@@ -113,7 +119,13 @@ export function PreviewCanvas() {
     );
   }
 
-  const Target = TARGETS[state.previewType];
+  // Only offer the preview targets this effect declares it supports, and fall
+  // back to its first if the persisted selection isn't one of them.
+  const pvOptions = PV_OPTIONS.filter((o) => effect.previewTypes.includes(o.id));
+  const previewType = effect.previewTypes.includes(state.previewType)
+    ? state.previewType
+    : effect.previewTypes[0];
+  const Target = TARGETS[previewType];
   const applied = appliedProps(effect, state.params, animate);
   const mode = state.compareMode;
 
@@ -123,10 +135,10 @@ export function PreviewCanvas() {
       <div className="stage-bar">
         <span className="seg-label">Preview</span>
         <div className="seg">
-          {PV_OPTIONS.map((o) => (
+          {pvOptions.map((o) => (
             <button
               key={o.id}
-              className={state.previewType === o.id ? "on" : ""}
+              className={previewType === o.id ? "on" : ""}
               onClick={() => dispatch({ type: "SET_PREVIEW", preview: o.id })}
             >
               {o.label}
@@ -157,7 +169,7 @@ export function PreviewCanvas() {
         ) : (
           <div
             className={
-              "stage-grid" + (mode === "side-by-side" && state.previewType === "text" ? " stack" : "")
+              "stage-grid" + (mode === "side-by-side" && previewType === "text" ? " stack" : "")
             }
           >
             {mode === "side-by-side" ? (

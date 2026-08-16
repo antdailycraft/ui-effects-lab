@@ -14,7 +14,7 @@ export const conicSpin: EffectDefinition = {
   kind: "css",
   cssClass: "fx-conic",
   animatable: true,
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "strength", label: "Overlay Strength", type: "range", min: 0.1, max: 1, step: 0.05, def: 0.6, decimals: 2, random: [0.3, 0.9] },
     { id: "speed", label: "Spin Speed", type: "range", min: 1, max: 10, step: 0.5, def: 5, decimals: 1, unit: "×", isAnimationControl: true },

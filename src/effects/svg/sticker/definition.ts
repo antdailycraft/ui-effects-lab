@@ -10,7 +10,7 @@ export const sticker: EffectDefinition = {
   tech: ["feMorphology", "feFlood", "feComposite", "feMerge"],
   description:
     "Dilates the shape's alpha with feMorphology to lay a solid outline behind it — the die-cut sticker look.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "radius", label: "Outline Width", type: "range", min: 0, max: 12, step: 0.5, def: 4, decimals: 1, unit: "px", random: [2, 9] },
   ],

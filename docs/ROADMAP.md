@@ -6,7 +6,7 @@ in [`CHANGELOG.md`](../CHANGELOG.md) and the *plan* here.
 
 Legend: ✅ done · 🟡 in progress · ⬜ not started
 
-_Last updated: 2026-08-16 (v0.1.0)_
+_Last updated: 2026-08-16 (post-v0.1.0: P1 preview targets complete)_
 
 ## P0 — Must have · ✅ complete
 
@@ -25,8 +25,12 @@ _Last updated: 2026-08-16 (v0.1.0)_
 - ✅ Animation controls (enabled / speed / paused; respects reduced-motion)
 - ✅ Search
 - ✅ React JSX export (code viewer React tab)
-- ⬜ **Newspaper preview** target
-- ⬜ **Button preview** target
+- ✅ Newspaper preview target
+- ✅ Button preview target
+
+P1 is complete. The preview toggle is now data-driven — each effect only offers
+the targets its `previewTypes` declares (all filter/CSS/retro effects support all
+five: card, text, image, button, newspaper).
 
 ## P2 — Later · the remaining backlog
 

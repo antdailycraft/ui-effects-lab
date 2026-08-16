@@ -12,7 +12,7 @@ export const water: EffectDefinition = {
   description:
     "Directional turbulence (X ≠ Y frequency) drives a displacement map to ripple the surface like water.",
   animatable: true,
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "freqX", label: "Frequency X", type: "range", min: 0.004, max: 0.06, step: 0.001, def: 0.012, decimals: 3, random: [0.006, 0.03] },
     { id: "freqY", label: "Frequency Y", type: "range", min: 0.004, max: 0.06, step: 0.001, def: 0.04, decimals: 3, random: [0.02, 0.055] },

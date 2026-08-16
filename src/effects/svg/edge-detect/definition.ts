@@ -11,7 +11,7 @@ export const edgeDetect: EffectDefinition = {
   tech: ["feConvolveMatrix"],
   description:
     "A Laplacian convolution kernel that keeps only the edges, dropping flat areas to black. Browser-native.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "amount", label: "Edge Strength", type: "range", min: 0.5, max: 3, step: 0.1, def: 1, decimals: 1, random: [0.8, 2] },
   ],

@@ -12,7 +12,7 @@ export const glitch: EffectDefinition = {
   description:
     "Splits the red and cyan channels and offsets them apart for a chromatic-aberration glitch, with optional jitter.",
   animatable: true,
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "amount", label: "Split Amount", type: "range", min: 0, max: 15, step: 0.5, def: 5, decimals: 1, unit: "px", random: [2, 10] },
     { id: "speed", label: "Animation Speed", type: "range", min: 1, max: 10, step: 0.5, def: 5, decimals: 1, unit: "×", isAnimationControl: true },

@@ -44,3 +44,25 @@ test("switching preview type to Text shows the text target", async () => {
   await userEvent.click(screen.getByRole("button", { name: /^text$/i }));
   expect(screen.getByText(/turbulence/i)).toBeInTheDocument();
 });
+
+test("Button preview target renders CTA buttons", async () => {
+  render(
+    <PlaygroundProvider>
+      <PreviewCanvas />
+    </PlaygroundProvider>
+  );
+  await userEvent.click(screen.getByRole("button", { name: /^button$/i }));
+  expect(screen.getByRole("button", { name: /get started/i })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /read the docs/i })).toBeInTheDocument();
+});
+
+test("Newspaper preview target renders the broadsheet masthead", async () => {
+  render(
+    <PlaygroundProvider>
+      <PreviewCanvas />
+    </PlaygroundProvider>
+  );
+  await userEvent.click(screen.getByRole("button", { name: /^newspaper$/i }));
+  expect(screen.getByText(/the daily turbulence/i)).toBeInTheDocument();
+  expect(screen.getByText(/filters reshape the front page/i)).toBeInTheDocument();
+});

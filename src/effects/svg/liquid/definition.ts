@@ -12,7 +12,7 @@ export const liquid: EffectDefinition = {
   description:
     "Strong, non-directional turbulence drives a large displacement map for a gooey, molten-liquid warp.",
   animatable: true,
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.008, max: 0.04, step: 0.001, def: 0.015, decimals: 3, random: [0.01, 0.03] },
     { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 5, step: 1, def: 4, decimals: 0, random: [2, 5] },

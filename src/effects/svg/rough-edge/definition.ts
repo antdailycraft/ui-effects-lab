@@ -11,7 +11,7 @@ export const roughEdge: EffectDefinition = {
   tech: ["feTurbulence", "feDisplacementMap"],
   description:
     "Uses a fractal-noise map to displace an element's edges, giving a hand-drawn, torn-paper look.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.005, max: 0.1, step: 0.001, def: 0.04, decimals: 3, random: [0.01, 0.07] },
     { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 5, step: 1, def: 3, decimals: 0, random: [1, 4] },

@@ -10,7 +10,20 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Newspaper & Button preview targets** — two new preview targets complete the
+  P1 set: a vintage broadsheet front page (masthead, dateline, three justified
+  columns with a drop cap) and a product CTA pair (primary + ghost button). Every
+  filter / CSS / retro effect now supports all five targets (card, text, image,
+  button, newspaper).
+
+### Changed
+
+- **Data-driven preview toggle** — the Preview target buttons now render from the
+  selected effect's `previewTypes` instead of a fixed list, and the active target
+  falls back to the effect's first supported one when the persisted selection
+  isn't available.
 
 ## [0.1.0] - 2026-08-16
 

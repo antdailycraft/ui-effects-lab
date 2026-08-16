@@ -11,7 +11,7 @@ export const noise: EffectDefinition = {
   tech: ["feTurbulence", "feColorMatrix", "feComposite"],
   description:
     "Renders feTurbulence's raw procedural noise, clipped to the element — the core building block behind every other filter here.",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.05, max: 1.5, step: 0.01, def: 0.6, decimals: 2, random: [0.3, 1.0] },
     { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 5, step: 1, def: 3, decimals: 0, random: [1, 4] },

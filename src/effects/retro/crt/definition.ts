@@ -14,7 +14,7 @@ export const crt: EffectDefinition = {
   kind: "css",
   cssClass: "fx-crt",
   animatable: true,
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "scan", label: "Scanline Strength", type: "range", min: 0, max: 0.6, step: 0.05, def: 0.35, decimals: 2, random: [0.2, 0.5] },
     { id: "gap", label: "Scanline Gap", type: "range", min: 2, max: 6, step: 1, def: 3, decimals: 0, unit: "px", random: [2, 5] },

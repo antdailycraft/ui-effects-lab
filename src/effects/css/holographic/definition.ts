@@ -14,7 +14,7 @@ export const holographic: EffectDefinition = {
   kind: "css",
   cssClass: "fx-holo",
   animatable: true,
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "strength", label: "Sheen Strength", type: "range", min: 0.1, max: 1, step: 0.05, def: 0.55, decimals: 2, random: [0.3, 0.85] },
     { id: "angle", label: "Angle", type: "range", min: 0, max: 360, step: 5, def: 115, decimals: 0, unit: "°", random: [0, 360] },

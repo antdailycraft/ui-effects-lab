@@ -12,7 +12,7 @@ export const gradientBorder: EffectDefinition = {
     "A gradient stroke drawn only on the element's border using mask-composite (the padding-box XOR trick). Browser-native.",
   kind: "css",
   cssClass: "fx-gradborder",
-  previewTypes: ["card", "text", "image"],
+  previewTypes: ["card", "text", "image", "button", "newspaper"],
   controls: [
     { id: "width", label: "Border Width", type: "range", min: 1, max: 12, step: 0.5, def: 4, decimals: 1, unit: "px", random: [2, 8] },
     { id: "angle", label: "Angle", type: "range", min: 0, max: 360, step: 5, def: 120, decimals: 0, unit: "°", random: [0, 360] },
