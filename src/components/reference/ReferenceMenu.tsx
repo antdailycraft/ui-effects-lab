@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { CursorsModal } from "./CursorsModal";
 import { TermsModal } from "./TermsModal";
 
-type Tool = "cursors" | "terms" | null;
+// The emoji dataset is large (~240 KB), so load the picker + data on demand.
+const EmojiModal = lazy(() => import("./EmojiModal").then((m) => ({ default: m.EmojiModal })));
+
+type Tool = "cursors" | "terms" | "emoji" | null;
 
 const ITEMS: { id: Exclude<Tool, null>; label: string; desc: string }[] = [
   { id: "terms", label: "UI/UX Terms", desc: "Glossary of interface vocabulary & UX laws." },
   { id: "cursors", label: "CSS Cursors", desc: "Preview & copy every cursor style." },
+  { id: "emoji", label: "Emoji", desc: "Search 3,900+ emoji, click to copy." },
 ];
 
 export function ReferenceMenu() {
@@ -74,6 +78,11 @@ export function ReferenceMenu() {
 
       {tool === "cursors" && <CursorsModal onClose={() => setTool(null)} />}
       {tool === "terms" && <TermsModal onClose={() => setTool(null)} />}
+      {tool === "emoji" && (
+        <Suspense fallback={null}>
+          <EmojiModal onClose={() => setTool(null)} />
+        </Suspense>
+      )}
     </div>
   );
 }

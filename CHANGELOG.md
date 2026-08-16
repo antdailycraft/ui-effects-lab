@@ -18,7 +18,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
     Layout, Components, Interaction, Motion, UX Laws, Accessibility, Typography).
   - **CSS Cursors** — a grid of every cursor keyword; hover previews the cursor
     live, click copies `cursor: <value>;`.
-  - (An emoji picker is planned next.)
+  - **Emoji** — a searchable, category-filtered picker over all 3,944 Unicode
+    emoji with click-to-copy. The dataset is generated from
+    `docs/reference/EMOJI.html` (`scripts/gen-emoji.mjs`) and the picker + data
+    load lazily (a ~190 KB chunk, not in the initial bundle); the grid is
+    virtualized so only the visible rows render.
 
 - **Resources menu expanded** (7 → 23) — added Stitch (Google's AI UI tool) to
   Tools, Dribbble and Godly to Inspiration, a **Components** group (shadcn/ui,
