@@ -1,4 +1,4 @@
-import { Swirl, swirlPresets } from "@paper-design/shaders-react";
+import { swirlPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const swirl = shaderGenerator({
@@ -6,9 +6,8 @@ export const swirl = shaderGenerator({
   name: "Swirl",
   componentName: "Swirl",
   description:
-    "Concentric color bands twisted into a hypnotic swirl on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: Swirl,
-  presets: swirlPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Concentric color bands twisted into a hypnotic swirl on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: swirlPresets,
   tags: ["swirl", "spiral", "shader", "webgl", "animation"],
   props: ["speed", "bandCount", "twist", "softness"],
   controls: [

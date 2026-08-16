@@ -1,4 +1,4 @@
-import { LensDistortion, lensDistortionPresets } from "@paper-design/shaders-react";
+import { lensDistortionPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const lensDistortion = shaderGenerator({
@@ -6,9 +6,8 @@ export const lensDistortion = shaderGenerator({
   name: "Lens Distortion",
   componentName: "LensDistortion",
   description:
-    "Bends a source image through a prismatic lens with chromatic spread on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: LensDistortion,
-  presets: lensDistortionPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Bends a source image through a prismatic lens with chromatic spread on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: lensDistortionPresets,
   tags: ["lens", "distortion", "image", "chromatic", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "spread", "bias", "perspective", "count"],

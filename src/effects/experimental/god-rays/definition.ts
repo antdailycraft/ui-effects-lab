@@ -1,4 +1,4 @@
-import { GodRays, godRaysPresets } from "@paper-design/shaders-react";
+import { godRaysPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const godRays = shaderGenerator({
@@ -6,9 +6,8 @@ export const godRays = shaderGenerator({
   name: "God Rays",
   componentName: "GodRays",
   description:
-    "Volumetric light rays beaming from a center point on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: GodRays,
-  presets: godRaysPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Volumetric light rays beaming from a center point on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: godRaysPresets,
   tags: ["light", "rays", "shader", "webgl", "animation"],
   props: ["speed", "density", "intensity", "bloom"],
   controls: [

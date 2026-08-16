@@ -1,4 +1,4 @@
-import { FlutedGlass, flutedGlassPresets } from "@paper-design/shaders-react";
+import { flutedGlassPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const flutedGlass = shaderGenerator({
@@ -6,9 +6,8 @@ export const flutedGlass = shaderGenerator({
   name: "Fluted Glass",
   componentName: "FlutedGlass",
   description:
-    "Vertical fluted / ribbed glass refracting the color beneath it. From @paper-design/shaders (Apache-2.0).",
-  component: FlutedGlass,
-  presets: flutedGlassPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Vertical fluted / ribbed glass refracting the color beneath it. From @paper-design/shaders (Apache-2.0).",
+  presets: flutedGlassPresets,
   tags: ["glass", "fluted", "refraction", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "distortion", "size", "highlights"],

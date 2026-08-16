@@ -1,4 +1,4 @@
-import { Dithering, ditheringPresets } from "@paper-design/shaders-react";
+import { ditheringPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const dithering = shaderGenerator({
@@ -6,9 +6,8 @@ export const dithering = shaderGenerator({
   name: "Dithering",
   componentName: "Dithering",
   description:
-    "An animated ordered-dither shader for a retro 1-bit / print look. From @paper-design/shaders (Apache-2.0).",
-  component: Dithering,
-  presets: ditheringPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "An animated ordered-dither shader for a retro 1-bit / print look. From @paper-design/shaders (Apache-2.0).",
+  presets: ditheringPresets,
   tags: ["dither", "retro", "shader", "webgl", "animation"],
   props: ["speed", "size", "scale"],
   controls: [

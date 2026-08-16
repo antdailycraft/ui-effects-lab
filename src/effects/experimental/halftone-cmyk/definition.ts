@@ -1,4 +1,4 @@
-import { HalftoneCmyk, halftoneCmykPresets } from "@paper-design/shaders-react";
+import { halftoneCmykPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const halftoneCmyk = shaderGenerator({
@@ -6,9 +6,8 @@ export const halftoneCmyk = shaderGenerator({
   name: "Halftone CMYK",
   componentName: "HalftoneCmyk",
   description:
-    "A CMYK four-plate halftone print simulation on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: HalftoneCmyk,
-  presets: halftoneCmykPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A CMYK four-plate halftone print simulation on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: halftoneCmykPresets,
   tags: ["halftone", "cmyk", "print", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "size", "contrast", "softness"],

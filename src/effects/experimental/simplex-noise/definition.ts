@@ -1,4 +1,4 @@
-import { SimplexNoise, simplexNoisePresets } from "@paper-design/shaders-react";
+import { simplexNoisePresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const simplexNoise = shaderGenerator({
@@ -6,9 +6,8 @@ export const simplexNoise = shaderGenerator({
   name: "Simplex Noise",
   componentName: "SimplexNoise",
   description:
-    "Banded simplex noise with stepped colors on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: SimplexNoise,
-  presets: simplexNoisePresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Banded simplex noise with stepped colors on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: simplexNoisePresets,
   tags: ["noise", "simplex", "shader", "webgl", "animation"],
   props: ["speed", "stepsPerColor", "softness", "scale"],
   controls: [

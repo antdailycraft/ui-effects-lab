@@ -1,4 +1,4 @@
-import { ImageDithering, imageDitheringPresets } from "@paper-design/shaders-react";
+import { imageDitheringPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const imageDithering = shaderGenerator({
@@ -6,9 +6,8 @@ export const imageDithering = shaderGenerator({
   name: "Image Dithering",
   componentName: "ImageDithering",
   description:
-    "Ordered-dithers a source image into a retro low-color screen on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: ImageDithering,
-  presets: imageDitheringPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Ordered-dithers a source image into a retro low-color screen on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: imageDitheringPresets,
   tags: ["dither", "image", "retro", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "size", "colorSteps"],

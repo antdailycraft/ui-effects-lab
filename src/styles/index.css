@@ -404,6 +404,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--panel-2);
 }
 .pv-generator > * { display: block; width: 100%; height: 100%; }
+.pv-loading { display: grid; place-items: center; color: var(--text-faint); font-size: 12.5px; }
 
 .pv-card {
   width: 300px;

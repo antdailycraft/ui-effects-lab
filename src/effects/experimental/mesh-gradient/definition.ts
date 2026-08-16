@@ -1,4 +1,4 @@
-import { MeshGradient, meshGradientPresets } from "@paper-design/shaders-react";
+import { meshGradientPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const meshGradient = shaderGenerator({
@@ -6,9 +6,8 @@ export const meshGradient = shaderGenerator({
   name: "Mesh Gradient",
   componentName: "MeshGradient",
   description:
-    "An animated flowing mesh gradient rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: MeshGradient,
-  presets: meshGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "An animated flowing mesh gradient rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: meshGradientPresets,
   tags: ["gradient", "shader", "webgl", "animation"],
   props: ["speed", "distortion", "swirl", "scale"],
   controls: [

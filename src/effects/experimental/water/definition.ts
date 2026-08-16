@@ -1,4 +1,4 @@
-import { Water, waterPresets } from "@paper-design/shaders-react";
+import { waterPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const water = shaderGenerator({
@@ -6,9 +6,8 @@ export const water = shaderGenerator({
   name: "Water",
   componentName: "Water",
   description:
-    "Animated water caustics with rippling highlights and edges. From @paper-design/shaders (Apache-2.0).",
-  component: Water,
-  presets: waterPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Animated water caustics with rippling highlights and edges. From @paper-design/shaders (Apache-2.0).",
+  presets: waterPresets,
   tags: ["water", "caustics", "shader", "webgl", "animation"],
   props: ["speed", "highlights", "edges", "waves"],
   controls: [

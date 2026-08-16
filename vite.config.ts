@@ -13,10 +13,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // Split the heavy WebGL shader library and React into their own chunks
-        // so they cache independently and don't bloat the main entry chunk.
+        // React in its own cacheable chunk. The WebGL shader library is now
+        // reached only via dynamic import (lazy generators), so Rollup emits it
+        // as an on-demand chunk automatically — it's no longer in the initial load.
         manualChunks: {
-          shaders: ["@paper-design/shaders-react"],
           react: ["react", "react-dom"],
         },
       },

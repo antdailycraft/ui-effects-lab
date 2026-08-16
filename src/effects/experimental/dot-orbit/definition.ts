@@ -1,4 +1,4 @@
-import { DotOrbit, dotOrbitPresets } from "@paper-design/shaders-react";
+import { dotOrbitPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const dotOrbit = shaderGenerator({
@@ -6,9 +6,8 @@ export const dotOrbit = shaderGenerator({
   name: "Dot Orbit",
   componentName: "DotOrbit",
   description:
-    "A grid of colored dots orbiting their cells on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: DotOrbit,
-  presets: dotOrbitPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A grid of colored dots orbiting their cells on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: dotOrbitPresets,
   tags: ["dots", "orbit", "shader", "webgl", "animation"],
   props: ["speed", "size", "spreading", "scale"],
   controls: [

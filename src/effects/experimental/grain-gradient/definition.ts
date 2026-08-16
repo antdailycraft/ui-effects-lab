@@ -1,4 +1,4 @@
-import { GrainGradient, grainGradientPresets } from "@paper-design/shaders-react";
+import { grainGradientPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const grainGradient = shaderGenerator({
@@ -6,9 +6,8 @@ export const grainGradient = shaderGenerator({
   name: "Grain Gradient",
   componentName: "GrainGradient",
   description:
-    "A grainy animated gradient rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: GrainGradient,
-  presets: grainGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A grainy animated gradient rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: grainGradientPresets,
   tags: ["gradient", "grain", "shader", "webgl", "animation"],
   props: ["speed", "intensity", "softness", "scale"],
   controls: [

@@ -1,4 +1,4 @@
-import { HalftoneDots, halftoneDotsPresets } from "@paper-design/shaders-react";
+import { halftoneDotsPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const halftoneDots = shaderGenerator({
@@ -6,9 +6,8 @@ export const halftoneDots = shaderGenerator({
   name: "Halftone Dots",
   componentName: "HalftoneDots",
   description:
-    "A single-plate halftone dot screen over a gradient on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: HalftoneDots,
-  presets: halftoneDotsPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A single-plate halftone dot screen over a gradient on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: halftoneDotsPresets,
   tags: ["halftone", "dots", "print", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "size", "radius", "contrast"],

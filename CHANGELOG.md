@@ -10,7 +10,16 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Performance
+
+- **Generators now lazy-load the WebGL library** — the ~264 KB
+  `@paper-design/shaders-react` bundle is no longer in the initial download; it's
+  fetched on demand the first time a generator is shown (behind a Suspense
+  fallback). Preset metadata moved to a generated local snapshot
+  (`src/effects/experimental/presets.generated.ts`, regenerated via
+  `scripts/gen-presets.mjs`) so the effect registry stays synchronous. First load
+  for SVG/CSS/Retro visitors drops by ~264 KB (verified: the shader chunk is no
+  longer referenced in `index.html`).
 
 ## [0.6.0] - 2026-08-17
 

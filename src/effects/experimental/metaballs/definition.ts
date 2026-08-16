@@ -1,4 +1,4 @@
-import { Metaballs, metaballsPresets } from "@paper-design/shaders-react";
+import { metaballsPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const metaballs = shaderGenerator({
@@ -6,9 +6,8 @@ export const metaballs = shaderGenerator({
   name: "Metaballs",
   componentName: "Metaballs",
   description:
-    "Merging organic blobs (metaballs) rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: Metaballs,
-  presets: metaballsPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Merging organic blobs (metaballs) rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: metaballsPresets,
   tags: ["metaballs", "blob", "shader", "webgl", "animation"],
   props: ["speed", "count", "size", "scale"],
   controls: [

@@ -1,4 +1,4 @@
-import { Voronoi, voronoiPresets } from "@paper-design/shaders-react";
+import { voronoiPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const voronoi = shaderGenerator({
@@ -6,9 +6,8 @@ export const voronoi = shaderGenerator({
   name: "Voronoi",
   componentName: "Voronoi",
   description:
-    "Animated Voronoi cells with adjustable gaps and glow, rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: Voronoi,
-  presets: voronoiPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Animated Voronoi cells with adjustable gaps and glow, rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: voronoiPresets,
   tags: ["voronoi", "cells", "shader", "webgl", "animation"],
   props: ["speed", "distortion", "gap", "glow", "scale"],
   controls: [

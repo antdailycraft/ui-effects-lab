@@ -1,4 +1,4 @@
-import { ColorPanels, colorPanelsPresets } from "@paper-design/shaders-react";
+import { colorPanelsPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const colorPanels = shaderGenerator({
@@ -6,9 +6,8 @@ export const colorPanels = shaderGenerator({
   name: "Color Panels",
   componentName: "ColorPanels",
   description:
-    "Translucent colored panels drifting and layering in 3-D. From @paper-design/shaders (Apache-2.0).",
-  component: ColorPanels,
-  presets: colorPanelsPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Translucent colored panels drifting and layering in 3-D. From @paper-design/shaders (Apache-2.0).",
+  presets: colorPanelsPresets,
   tags: ["panels", "layers", "shader", "webgl", "animation"],
   props: ["speed", "length", "blur", "scale"],
   controls: [

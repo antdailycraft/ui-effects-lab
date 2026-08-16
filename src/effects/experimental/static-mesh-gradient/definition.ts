@@ -1,4 +1,4 @@
-import { StaticMeshGradient, staticMeshGradientPresets } from "@paper-design/shaders-react";
+import { staticMeshGradientPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const staticMeshGradient = shaderGenerator({
@@ -6,9 +6,8 @@ export const staticMeshGradient = shaderGenerator({
   name: "Static Mesh Gradient",
   componentName: "StaticMeshGradient",
   description:
-    "A smooth multi-point mesh gradient with wave shaping on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: StaticMeshGradient,
-  presets: staticMeshGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A smooth multi-point mesh gradient with wave shaping on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: staticMeshGradientPresets,
   tags: ["gradient", "mesh", "shader", "webgl", "animation"],
   props: ["speed", "positions", "waveX", "waveY"],
   controls: [

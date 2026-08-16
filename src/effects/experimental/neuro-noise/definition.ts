@@ -1,4 +1,4 @@
-import { NeuroNoise, neuroNoisePresets } from "@paper-design/shaders-react";
+import { neuroNoisePresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const neuroNoise = shaderGenerator({
@@ -6,9 +6,8 @@ export const neuroNoise = shaderGenerator({
   name: "Neuro Noise",
   componentName: "NeuroNoise",
   description:
-    "Organic neural-network-like noise filaments rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: NeuroNoise,
-  presets: neuroNoisePresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Organic neural-network-like noise filaments rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: neuroNoisePresets,
   tags: ["noise", "neural", "shader", "webgl", "animation"],
   props: ["speed", "brightness", "contrast", "scale"],
   controls: [

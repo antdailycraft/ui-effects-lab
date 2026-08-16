@@ -1,4 +1,4 @@
-import { DotGrid, dotGridPresets } from "@paper-design/shaders-react";
+import { dotGridPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const dotGrid = shaderGenerator({
@@ -6,9 +6,8 @@ export const dotGrid = shaderGenerator({
   name: "Dot Grid",
   componentName: "DotGrid",
   description:
-    "A crisp configurable grid of dots rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: DotGrid,
-  presets: dotGridPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A crisp configurable grid of dots rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: dotGridPresets,
   tags: ["dots", "grid", "shader", "webgl"],
   animatable: false,
   props: ["size", "gapX", "gapY", "strokeWidth"],

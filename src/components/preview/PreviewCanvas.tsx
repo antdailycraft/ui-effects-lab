@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties } from "react";
+import { Suspense, useEffect, type CSSProperties } from "react";
 import type { EffectDefinition, Params, PreviewType } from "../../types/effects";
 import { usePlayground } from "../../state/PlaygroundContext";
 import type { CompareMode } from "../../state/PlaygroundContext";
@@ -129,8 +129,13 @@ export function PreviewCanvas() {
         </div>
         <div className="stage">
           <div className="pv-generator">
-            {/* Unmount the WebGL canvas while the tab is hidden to stop GPU work. */}
-            {visible && <Generator {...props} />}
+            {/* Unmount the WebGL canvas while the tab is hidden to stop GPU work.
+                The shader library loads lazily, so a Suspense boundary covers it. */}
+            {visible && (
+              <Suspense fallback={<div className="pv-loading">Loading shader…</div>}>
+                <Generator {...props} />
+              </Suspense>
+            )}
           </div>
           <div className="stage-hint">
             {!effect.animatable

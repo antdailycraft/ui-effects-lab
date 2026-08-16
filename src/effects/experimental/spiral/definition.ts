@@ -1,4 +1,4 @@
-import { Spiral, spiralPresets } from "@paper-design/shaders-react";
+import { spiralPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const spiral = shaderGenerator({
@@ -6,9 +6,8 @@ export const spiral = shaderGenerator({
   name: "Spiral",
   componentName: "Spiral",
   description:
-    "A hypnotic rotating spiral of tapered strokes rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: Spiral,
-  presets: spiralPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A hypnotic rotating spiral of tapered strokes rendered on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: spiralPresets,
   tags: ["spiral", "hypnotic", "shader", "webgl", "animation"],
   props: ["speed", "density", "distortion", "strokeWidth"],
   controls: [

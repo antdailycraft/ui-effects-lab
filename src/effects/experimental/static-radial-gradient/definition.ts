@@ -1,4 +1,4 @@
-import { StaticRadialGradient, staticRadialGradientPresets } from "@paper-design/shaders-react";
+import { staticRadialGradientPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const staticRadialGradient = shaderGenerator({
@@ -6,9 +6,8 @@ export const staticRadialGradient = shaderGenerator({
   name: "Static Radial Gradient",
   componentName: "StaticRadialGradient",
   description:
-    "A soft radial gradient with adjustable focal point and falloff on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: StaticRadialGradient,
-  presets: staticRadialGradientPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A soft radial gradient with adjustable focal point and falloff on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: staticRadialGradientPresets,
   tags: ["gradient", "radial", "shader", "webgl", "animation"],
   props: ["speed", "radius", "focalDistance", "falloff"],
   controls: [

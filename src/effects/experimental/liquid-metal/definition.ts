@@ -1,4 +1,4 @@
-import { LiquidMetal, liquidMetalPresets } from "@paper-design/shaders-react";
+import { liquidMetalPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const liquidMetal = shaderGenerator({
@@ -6,9 +6,8 @@ export const liquidMetal = shaderGenerator({
   name: "Liquid Metal",
   componentName: "LiquidMetal",
   description:
-    "A rippling chrome / mercury surface with chromatic edges on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: LiquidMetal,
-  presets: liquidMetalPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A rippling chrome / mercury surface with chromatic edges on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: liquidMetalPresets,
   tags: ["metal", "chrome", "shader", "webgl", "animation"],
   props: ["speed", "distortion", "repetition", "softness"],
   controls: [

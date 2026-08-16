@@ -1,4 +1,18 @@
+import { lazy, type ComponentType } from "react";
 import type { ControlDefinition, EffectDefinition, Params } from "../../types/effects";
+
+/**
+ * Lazily loads a component from the WebGL shader library by export name, so the
+ * ~270 KB library is fetched only when a generator is actually rendered (not in
+ * the initial bundle). The registry stays synchronous because preset metadata
+ * comes from a local snapshot (`presets.generated.ts`), not the library.
+ */
+function lazyShader(componentName: string): EffectDefinition["component"] {
+  return lazy(async () => {
+    const mod = (await import("@paper-design/shaders-react")) as Record<string, unknown>;
+    return { default: mod[componentName] as ComponentType<unknown> };
+  }) as unknown as EffectDefinition["component"];
+}
 
 /**
  * Builds a generator EffectDefinition wrapping a @paper-design/shaders component.
@@ -11,7 +25,6 @@ export function shaderGenerator(config: {
   name: string;
   componentName: string;
   description: string;
-  component: unknown;
   /** the library's own preset list; presets[0] provides the base props (colors etc.) */
   presets: { name: string; params: Record<string, unknown> }[];
   tags?: string[];
@@ -80,7 +93,7 @@ export function shaderGenerator(config: {
         (c): ControlDefinition => ({ id: c.id, label: c.label, type: "color", def: c.def })
       ),
     ],
-    component: config.component as EffectDefinition["component"],
+    component: lazyShader(config.componentName),
     buildProps: (p, animate) => ({
       ...base,
       style: { width: "100%", height: "100%" },

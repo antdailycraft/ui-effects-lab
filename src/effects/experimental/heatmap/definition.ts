@@ -1,4 +1,4 @@
-import { Heatmap, heatmapPresets } from "@paper-design/shaders-react";
+import { heatmapPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const heatmap = shaderGenerator({
@@ -6,9 +6,8 @@ export const heatmap = shaderGenerator({
   name: "Heatmap",
   componentName: "Heatmap",
   description:
-    "Turns a source image into flowing thermal-camera contours on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: Heatmap,
-  presets: heatmapPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Turns a source image into flowing thermal-camera contours on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: heatmapPresets,
   tags: ["heatmap", "thermal", "image", "shader", "webgl", "animation"],
   usesImage: true,
   props: ["speed", "contour", "noise", "innerGlow"],

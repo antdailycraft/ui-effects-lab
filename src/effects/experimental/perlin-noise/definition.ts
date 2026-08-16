@@ -1,4 +1,4 @@
-import { PerlinNoise, perlinNoisePresets } from "@paper-design/shaders-react";
+import { perlinNoisePresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const perlinNoise = shaderGenerator({
@@ -6,9 +6,8 @@ export const perlinNoise = shaderGenerator({
   name: "Perlin Noise",
   componentName: "PerlinNoise",
   description:
-    "Classic fractal Perlin noise clouds with adjustable octaves. From @paper-design/shaders (Apache-2.0).",
-  component: PerlinNoise,
-  presets: perlinNoisePresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Classic fractal Perlin noise clouds with adjustable octaves. From @paper-design/shaders (Apache-2.0).",
+  presets: perlinNoisePresets,
   tags: ["noise", "perlin", "clouds", "shader", "webgl", "animation"],
   props: ["speed", "proportion", "softness", "octaveCount"],
   controls: [

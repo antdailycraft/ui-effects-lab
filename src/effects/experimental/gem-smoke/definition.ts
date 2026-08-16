@@ -1,4 +1,4 @@
-import { GemSmoke, gemSmokePresets } from "@paper-design/shaders-react";
+import { gemSmokePresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const gemSmoke = shaderGenerator({
@@ -6,9 +6,8 @@ export const gemSmoke = shaderGenerator({
   name: "Gem Smoke",
   componentName: "GemSmoke",
   description:
-    "Glowing gem-like smoke with inner and outer light on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: GemSmoke,
-  presets: gemSmokePresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Glowing gem-like smoke with inner and outer light on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: gemSmokePresets,
   tags: ["smoke", "gem", "glow", "shader", "webgl", "animation"],
   props: ["speed", "outerGlow", "innerGlow", "innerDistortion"],
   controls: [

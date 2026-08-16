@@ -1,4 +1,4 @@
-import { PaperTexture, paperTexturePresets } from "@paper-design/shaders-react";
+import { paperTexturePresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const paperTexture = shaderGenerator({
@@ -6,9 +6,8 @@ export const paperTexture = shaderGenerator({
   name: "Paper Texture",
   componentName: "PaperTexture",
   description:
-    "Procedural paper fibre, roughness and crumples on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: PaperTexture,
-  presets: paperTexturePresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "Procedural paper fibre, roughness and crumples on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: paperTexturePresets,
   tags: ["paper", "texture", "fibre", "shader", "webgl", "animation"],
   props: ["speed", "contrast", "roughness", "crumples"],
   controls: [

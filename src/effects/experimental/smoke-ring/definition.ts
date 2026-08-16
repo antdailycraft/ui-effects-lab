@@ -1,4 +1,4 @@
-import { SmokeRing, smokeRingPresets } from "@paper-design/shaders-react";
+import { smokeRingPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const smokeRing = shaderGenerator({
@@ -6,9 +6,8 @@ export const smokeRing = shaderGenerator({
   name: "Smoke Ring",
   componentName: "SmokeRing",
   description:
-    "A soft ring of turbulent smoke curling around a center. From @paper-design/shaders (Apache-2.0).",
-  component: SmokeRing,
-  presets: smokeRingPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A soft ring of turbulent smoke curling around a center. From @paper-design/shaders (Apache-2.0).",
+  presets: smokeRingPresets,
   tags: ["smoke", "ring", "shader", "webgl", "animation"],
   props: ["speed", "radius", "thickness", "noiseScale"],
   controls: [

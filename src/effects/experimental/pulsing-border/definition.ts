@@ -1,4 +1,4 @@
-import { PulsingBorder, pulsingBorderPresets } from "@paper-design/shaders-react";
+import { pulsingBorderPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const pulsingBorder = shaderGenerator({
@@ -6,9 +6,8 @@ export const pulsingBorder = shaderGenerator({
   name: "Pulsing Border",
   componentName: "PulsingBorder",
   description:
-    "A glowing, pulsing border of colored light around the frame. From @paper-design/shaders (Apache-2.0).",
-  component: PulsingBorder,
-  presets: pulsingBorderPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A glowing, pulsing border of colored light around the frame. From @paper-design/shaders (Apache-2.0).",
+  presets: pulsingBorderPresets,
   tags: ["border", "glow", "pulse", "shader", "webgl", "animation"],
   props: ["speed", "thickness", "intensity", "bloom"],
   controls: [

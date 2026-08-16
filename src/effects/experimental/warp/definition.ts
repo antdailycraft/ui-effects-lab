@@ -1,4 +1,4 @@
-import { Warp, warpPresets } from "@paper-design/shaders-react";
+import { warpPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const warp = shaderGenerator({
@@ -6,9 +6,8 @@ export const warp = shaderGenerator({
   name: "Warp",
   componentName: "Warp",
   description:
-    "A GPU shader that warps layered shapes into flowing marbled ribbons. From @paper-design/shaders (Apache-2.0).",
-  component: Warp,
-  presets: warpPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A GPU shader that warps layered shapes into flowing marbled ribbons. From @paper-design/shaders (Apache-2.0).",
+  presets: warpPresets,
   tags: ["warp", "shader", "webgl", "animation"],
   props: ["speed", "distortion", "swirl", "softness"],
   controls: [

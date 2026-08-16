@@ -1,4 +1,4 @@
-import { Waves, wavesPresets } from "@paper-design/shaders-react";
+import { wavesPresets } from "../presets.generated";
 import { shaderGenerator } from "../shaderGenerator";
 
 export const waves = shaderGenerator({
@@ -6,9 +6,8 @@ export const waves = shaderGenerator({
   name: "Waves",
   componentName: "Waves",
   description:
-    "A crisp repeating wave / zig-zag line pattern on the GPU. From @paper-design/shaders (Apache-2.0).",
-  component: Waves,
-  presets: wavesPresets as unknown as { name: string; params: Record<string, unknown> }[],
+    "A crisp repeating wave / zig-zag line pattern on the GPU. From @paper-design/shaders (Apache-2.0).",
+  presets: wavesPresets,
   tags: ["waves", "lines", "pattern", "shader", "webgl"],
   animatable: false,
   props: ["shape", "frequency", "amplitude", "spacing"],
