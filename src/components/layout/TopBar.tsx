@@ -22,6 +22,7 @@ export function TopBar() {
   const next = state.theme === "dark" ? "light" : "dark";
   return (
     <header className="topbar" role="banner">
+      <h1 className="sr-only">UI Effects Lab</h1>
       <div className="brand">
         <span className="brand-mark">
           <svg className="i i-sm" viewBox="0 0 24 24">

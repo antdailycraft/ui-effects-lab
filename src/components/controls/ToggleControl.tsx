@@ -24,7 +24,7 @@ export function ToggleControl({
           onClick={onToggle}
         />
       </div>
-      {note && <div className="reduced-note show">{note}</div>}
+      {note && <div className="reduced-note">{note}</div>}
     </div>
   );
 }

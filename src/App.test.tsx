@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders the product name in the top bar", () => {
+test("renders the product name as the page heading", () => {
   render(<App />);
-  expect(screen.getByText(/UI Effects/i)).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /ui effects lab/i })).toBeInTheDocument();
 });

@@ -4,6 +4,7 @@ import { RESOURCE_GROUPS } from "../../data/resources";
 export function ResourcesMenu() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -11,7 +12,10 @@ export function ResourcesMenu() {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
     };
     document.addEventListener("mousedown", onDoc);
     document.addEventListener("keydown", onKey);
@@ -24,6 +28,7 @@ export function ResourcesMenu() {
   return (
     <div className="resources" ref={ref}>
       <button
+        ref={triggerRef}
         className="topbar-link"
         aria-haspopup="menu"
         aria-expanded={open}

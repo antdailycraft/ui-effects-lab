@@ -80,6 +80,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-bottom: 1px solid var(--border);
   background: var(--panel);
 }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
 .brand { display: flex; align-items: center; gap: 11px; }
 .brand-mark {
   width: 26px; height: 26px; border-radius: 7px;
@@ -650,8 +654,7 @@ input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
 .mini-sw.on { background: var(--accent); }
 .mini-sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
 .mini-sw.on::after { transform: translateX(17px); }
-.reduced-note { font-size: 11px; color: var(--text-faint); margin-top: 6px; display: none; }
-.reduced-note.show { display: block; }
+.reduced-note { font-size: 11px; color: var(--text-faint); margin-top: 6px; }
 
 /* ---------- Combine (effect stack) ---------- */
 .stack { padding: 2px 16px 8px; }

@@ -26,8 +26,12 @@ export function ImagePicker() {
         aria-label="Image URL"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            const v = (e.target as HTMLInputElement).value.trim();
-            if (v) dispatch({ type: "SET_IMAGE", url: v });
+            const input = e.target as HTMLInputElement;
+            const v = input.value.trim();
+            if (v) {
+              dispatch({ type: "SET_IMAGE", url: v });
+              input.value = "";
+            }
           }
         }}
       />

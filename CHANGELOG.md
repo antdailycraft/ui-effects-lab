@@ -58,6 +58,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   `:focus-within`/`:focus-visible`, not only on hover.
 - **Higher-contrast faint text** — `--text-faint` was darkened (light) and
   lightened (dark) to clear WCAG AA for small labels.
+- **Page has a heading** — a visually-hidden `<h1>` gives the app a top-level
+  heading for screen-reader structure.
+- **Resources menu restores focus** to its trigger on Escape.
+- **Compare slider keyboard is complete** — Home/End jump to 0/100, PageUp/Down
+  step by 10, and `aria-valuetext` announces the split.
 
 ### Performance
 
@@ -73,6 +78,8 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 - Dead "Coming soon" placeholder rendering path in the catalog (the placeholder
   map has been empty since all effects became real).
+- Dead `.reduced-note`/`.show` toggle CSS (the note is already conditionally
+  rendered).
 
 ### Internal
 

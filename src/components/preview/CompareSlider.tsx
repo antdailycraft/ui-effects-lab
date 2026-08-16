@@ -48,10 +48,15 @@ export function CompareSlider({ before, after }: { before: ReactNode; after: Rea
         aria-valuenow={Math.round(pos)}
         aria-valuemin={0}
         aria-valuemax={100}
+        aria-valuetext={`${Math.round(pos)}% original`}
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === "ArrowLeft") setPos((p) => Math.max(0, p - 2));
-          if (e.key === "ArrowRight") setPos((p) => Math.min(100, p + 2));
+          else if (e.key === "ArrowRight") setPos((p) => Math.min(100, p + 2));
+          else if (e.key === "PageDown") setPos((p) => Math.max(0, p - 10));
+          else if (e.key === "PageUp") setPos((p) => Math.min(100, p + 10));
+          else if (e.key === "Home") setPos(0);
+          else if (e.key === "End") setPos(100);
         }}
       >
         <span className="cs-handle" aria-hidden="true">
