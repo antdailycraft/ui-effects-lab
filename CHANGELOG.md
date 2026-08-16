@@ -10,7 +10,13 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Resource hover thumbnails** — hovering a site in the Resources menu shows a
+  preview thumbnail: the site's `og:image` where one exists, otherwise a bundled
+  screenshot (`public/thumbs/`, generated once via `scripts/gen-covers.mjs`).
+  The image loads only on hover (behind a shimmer skeleton) and hides gracefully
+  if it fails.
 
 ## [0.7.0] - 2026-08-17
 
