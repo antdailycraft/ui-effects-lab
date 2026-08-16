@@ -10,6 +10,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-08-17
+
+An in-app landing page, a paginated effect gallery, a Three.js showcase, and
+richer reference/resources tools.
+
 ### Added
 
 - **In-app landing page** — a new landing screen shown before the workspace: a
@@ -17,7 +22,8 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   static gradient where WebGL is unavailable), the Explore → Tweak → Compare →
   Copy loop, and a clickable SVG-filter effect marquee that deep-links straight
   into an effect. "Open the Lab" enters the workspace; a `#s=` share link skips
-  the landing and opens the shared effect directly.
+  the landing and opens the shared effect directly. The top-bar brand logo
+  returns to the landing at any time.
 
 - **Glossary: Pagination & Pagination dots** — two new Components terms (with live
   previews) covering page controls and the dot indicator (a.k.a. page control /
@@ -45,6 +51,16 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   otherwise a bundled screenshot (`public/thumbs/`, generated once via
   `scripts/gen-covers.mjs`). It loads only on hover (behind a shimmer skeleton)
   and hides gracefully if it fails.
+
+### Changed
+
+- **Gallery replaces scroll with pagination** — the effect gallery pages through
+  tiles with prev/next arrows and a dot pager instead of scrolling, which also
+  keeps the number of live WebGL contexts within the browser's limit.
+
+### Removed
+
+- Dropped the **MVP** badge from the top bar.
 
 ## [0.7.0] - 2026-08-17
 
@@ -383,7 +399,8 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.4.0...v0.5.0
