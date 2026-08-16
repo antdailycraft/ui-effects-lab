@@ -1,5 +1,6 @@
 import { usePlayground } from "../../state/PlaygroundContext";
 import { ResourcesMenu } from "./ResourcesMenu";
+import { ReferenceMenu } from "../reference/ReferenceMenu";
 
 function MoonIcon() {
   return (
@@ -36,6 +37,7 @@ export function TopBar() {
       </div>
       <span className="brand-tag">MVP</span>
       <div className="topbar-spacer" />
+      <ReferenceMenu />
       <ResourcesMenu />
       <button
         className="icon-btn"

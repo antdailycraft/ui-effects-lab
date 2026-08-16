@@ -12,6 +12,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Reference menu → CSS Cursors** — a new top-bar **Reference** menu opens design
+  reference tools in a focus-trapped modal. First tool: a **CSS cursor** showcase
+  — hover a tile to preview the cursor live, click to copy `cursor: <value>;`.
+  (UI/UX terminology and an emoji picker are planned next; a shared `<Modal>` was
+  introduced for these tools.)
+
 - **Resources menu expanded** (7 → 23) — added Stitch (Google's AI UI tool) to
   Tools, Dribbble and Godly to Inspiration, a **Components** group (shadcn/ui,
   21st.dev), a **Learn** group (Laws of UX, DESIGN.md), a **Libraries** group of
