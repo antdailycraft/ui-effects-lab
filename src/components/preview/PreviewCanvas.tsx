@@ -92,9 +92,10 @@ export function PreviewCanvas() {
   const animate = state.animate && !reduced && !!effect.animatable;
   const fullscreen = state.fullscreen;
 
-  // Escape leaves fullscreen.
+  // Escape leaves fullscreen; move focus into the overlay on enter.
   useEffect(() => {
     if (!fullscreen) return;
+    document.querySelector<HTMLElement>(".pv-fullscreen .fs-btn")?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") dispatch({ type: "SET_FULLSCREEN", value: false });
     };
@@ -160,6 +161,7 @@ export function PreviewCanvas() {
             <button
               key={o.id}
               className={previewType === o.id ? "on" : ""}
+              aria-pressed={previewType === o.id}
               onClick={() => dispatch({ type: "SET_PREVIEW", preview: o.id })}
             >
               {o.label}
@@ -173,6 +175,7 @@ export function PreviewCanvas() {
             <button
               key={o.id}
               className={mode === o.id ? "on" : ""}
+              aria-pressed={mode === o.id}
               onClick={() => dispatch({ type: "SET_COMPARE_MODE", mode: o.id })}
             >
               {o.label}

@@ -35,6 +35,21 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   *dormant* — the selected effect renders on its own and its code shows — with a
   note in the Combine panel; switching back to an SVG effect reactivates it.
 
+### Accessibility
+
+- **Full-code modal now manages focus** — focus moves into the dialog on open, is
+  trapped within it (Tab/Shift+Tab wrap), and returns to the Expand trigger on
+  close, honoring its `aria-modal` promise.
+- **Fullscreen preview isolates the background** — the side columns become
+  `inert` while fullscreen (no stray Tab/AT access behind the overlay) and focus
+  moves to the exit button on enter.
+- **Segmented controls announce their selected state** — Preview, Compare, code
+  tabs, and image-source samples now set `aria-pressed`.
+- **Favorite star is reachable by keyboard** — it stays visible on
+  `:focus-within`/`:focus-visible`, not only on hover.
+- **Higher-contrast faint text** — `--text-faint` was darkened (light) and
+  lightened (dark) to clear WCAG AA for small labels.
+
 ### Changed
 
 - **Combination layers are capped at 4** (GPU cost grows with each stacked

@@ -24,6 +24,18 @@ test("Slider compare mode renders a draggable split handle", async () => {
   expect(screen.getByRole("slider", { name: /comparison split/i })).toBeInTheDocument();
 });
 
+test("the active preview target button exposes aria-pressed", async () => {
+  render(
+    <PlaygroundProvider>
+      <PreviewCanvas />
+    </PlaygroundProvider>
+  );
+  const buttonTarget = screen.getByRole("button", { name: /^button$/i });
+  expect(buttonTarget).toHaveAttribute("aria-pressed", "false");
+  await userEvent.click(buttonTarget);
+  expect(buttonTarget).toHaveAttribute("aria-pressed", "true");
+});
+
 test("Fullscreen button toggles the immersive preview overlay", async () => {
   const { container } = render(
     <PlaygroundProvider>

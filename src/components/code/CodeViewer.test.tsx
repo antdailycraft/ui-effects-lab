@@ -35,11 +35,16 @@ test("Expand opens a modal with the full code, its own Copy, and closes", async 
   );
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 
-  await userEvent.click(screen.getByRole("button", { name: /expand code/i }));
+  const expand = screen.getByRole("button", { name: /expand code/i });
+  await userEvent.click(expand);
   const dialog = screen.getByRole("dialog");
   expect(within(dialog).getByText(/rough-edge/)).toBeInTheDocument();
   expect(within(dialog).getByRole("button", { name: /copy/i })).toBeInTheDocument();
+  // focus moved into the dialog on open
+  expect(dialog.contains(document.activeElement)).toBe(true);
 
   await userEvent.click(within(dialog).getByRole("button", { name: /close/i }));
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  // focus restored to the trigger on close
+  expect(document.activeElement).toBe(expand);
 });

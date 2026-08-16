@@ -39,6 +39,7 @@ export function CodeViewer() {
           <button
             key={t}
             className={"code-tab" + (tab === t ? " on" : "")}
+            aria-pressed={tab === t}
             onClick={() => dispatch({ type: "SET_CODE_TAB", tab: t })}
           >
             {t.toUpperCase()}

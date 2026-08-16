@@ -13,6 +13,7 @@ export function ImagePicker() {
             className={"img-sample" + (state.imageUrl === s.url ? " on" : "")}
             style={{ backgroundImage: s.url ? `url(${s.url})` : undefined }}
             aria-label={`Sample image ${s.name}`}
+            aria-pressed={state.imageUrl === s.url}
             title={s.name}
             onClick={() => dispatch({ type: "SET_IMAGE", url: s.url })}
           />

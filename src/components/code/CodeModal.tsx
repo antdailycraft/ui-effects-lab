@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { CodeLang } from "../../lib/codegen";
 import { CopyButton } from "./CopyButton";
 
@@ -13,9 +13,38 @@ export function CodeModal({
   html: string;
   onClose: () => void;
 }) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    // Remember what was focused so we can restore it on close.
+    const opener = document.activeElement as HTMLElement | null;
+    const focusables = () =>
+      Array.from(
+        modalRef.current?.querySelectorAll<HTMLElement>(
+          'button, a[href], input, textarea, [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      );
+    focusables()[0]?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      // Trap Tab within the dialog.
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -23,6 +52,7 @@ export function CodeModal({
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      opener?.focus?.();
     };
   }, [onClose]);
 
@@ -34,7 +64,7 @@ export function CodeModal({
       aria-label={`${lang.toUpperCase()} code`}
       onClick={onClose}
     >
-      <div className="code-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="code-modal" ref={modalRef} onClick={(e) => e.stopPropagation()}>
         <div className="code-modal-head">
           <span className="code-modal-title">{lang.toUpperCase()} — full code</span>
           <div className="code-modal-actions">
