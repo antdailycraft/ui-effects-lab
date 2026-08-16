@@ -28,3 +28,15 @@ test("exposes a Resources menu trigger", () => {
   );
   expect(screen.getByRole("button", { name: /resources/i })).toBeInTheDocument();
 });
+
+test("links to the GitHub repository in a new tab", () => {
+  render(
+    <PlaygroundProvider>
+      <TopBar />
+    </PlaygroundProvider>
+  );
+  const link = screen.getByRole("link", { name: /github repository/i });
+  expect(link).toHaveAttribute("href", "https://github.com/antdailycraft/ui-effects-lab");
+  expect(link).toHaveAttribute("target", "_blank");
+  expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
+});
