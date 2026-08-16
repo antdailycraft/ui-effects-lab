@@ -53,18 +53,20 @@ async function ogImage(url) {
 
 async function mshots(url, file) {
   const src = `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=640&h=400`;
-  for (let i = 0; i < 12; i++) {
+  // mShots serves a ~9 KB "Generating Preview…" placeholder until the real
+  // screenshot is ready, so keep polling and require a clearly larger image.
+  for (let i = 0; i < 18; i++) {
     try {
       const r = await fetch(src, { headers: { "user-agent": UA } });
       const buf = Buffer.from(await r.arrayBuffer());
-      if (buf.length > 6000) {
+      if (buf.length > 20000) {
         writeFileSync(file, buf);
         return true;
       }
     } catch {
       /* retry */
     }
-    await sleep(2500);
+    await sleep(3000);
   }
   return false;
 }

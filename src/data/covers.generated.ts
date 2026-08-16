@@ -9,7 +9,7 @@ export const COVERS: Record<string, string> = {
   "https://refero.design/": "https://refero.design/open-graph-4-1200x630.png",
   "https://recent.design/websites": "https://recent.design/og.png",
   "https://www.awwwards.com/websites/nominees/": "/thumbs/awwwards.png",
-  "https://land-book.com/design/landing-page": "/thumbs/land-book.png",
+  "https://land-book.com/design/landing-page": "https://cdn.land-book.com/assets/og-image.webp",
   "https://dribbble.com/": "/thumbs/dribbble.png",
   "https://godly.website/": "/thumbs/godly.png",
   "https://ui.shadcn.com/": "https://ui.shadcn.com/og?title=The%20Foundation%20for%20your%20Design%20System&amp;description=A%20set%20of%20beautifully%20designed%20components%20that%20you%20can%20customize%2C%20extend%2C%20and%20build%20on.%20Start%20here%20then%20make%20it%20your%20own.%20Open%20Source.%20Open%20Code.",
