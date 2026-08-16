@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { CursorsModal } from "./CursorsModal";
+import { TermsModal } from "./TermsModal";
 
-type Tool = "cursors" | null;
+type Tool = "cursors" | "terms" | null;
 
 const ITEMS: { id: Exclude<Tool, null>; label: string; desc: string }[] = [
+  { id: "terms", label: "UI/UX Terms", desc: "Glossary of interface vocabulary & UX laws." },
   { id: "cursors", label: "CSS Cursors", desc: "Preview & copy every cursor style." },
 ];
 
@@ -71,6 +73,7 @@ export function ReferenceMenu() {
       )}
 
       {tool === "cursors" && <CursorsModal onClose={() => setTool(null)} />}
+      {tool === "terms" && <TermsModal onClose={() => setTool(null)} />}
     </div>
   );
 }

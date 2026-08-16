@@ -21,6 +21,20 @@ test("Reference menu opens the CSS Cursors tool in a focus-trapped dialog", asyn
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
 
+test("Reference menu opens the UI/UX Terms glossary with search & category filter", async () => {
+  render(<ReferenceMenu />);
+  await userEvent.click(screen.getByRole("button", { name: /reference/i }));
+  await userEvent.click(screen.getByRole("menuitem", { name: /ui\/ux terms/i }));
+
+  const dialog = screen.getByRole("dialog", { name: /ui\/ux terms/i });
+  expect(within(dialog).getByText("Toast")).toBeInTheDocument();
+
+  // search narrows the list
+  await userEvent.type(within(dialog).getByLabelText(/search terms/i), "fitts");
+  expect(within(dialog).getByText("Fitts's Law")).toBeInTheDocument();
+  expect(within(dialog).queryByText("Toast")).not.toBeInTheDocument();
+});
+
 test("clicking a cursor tile copies its declaration", async () => {
   const writeText = vi.fn().mockResolvedValue(undefined);
   Object.assign(navigator, { clipboard: { writeText } });
