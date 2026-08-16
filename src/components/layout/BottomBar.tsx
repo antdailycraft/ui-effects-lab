@@ -4,7 +4,8 @@ import { getEffect } from "../../registry/effects";
 import { generateCode, resolveTab } from "../../lib/codegen";
 import { shareUrl } from "../../lib/share";
 import {
-  previewChain,
+  activeChain,
+  isStackable,
   generateCombinedSvg,
   generateCombinedCss,
 } from "../../lib/combine";
@@ -22,8 +23,8 @@ export function BottomBar() {
 
   const copy = async () => {
     let code: string;
-    if (state.layers.length > 0) {
-      const chain = previewChain(state.layers, state.effectId, state.params);
+    if (state.layers.length > 0 && isStackable(effect)) {
+      const chain = activeChain(state.layers, state.effectId, state.params);
       const animateFor = (e: EffectDefinition) => state.animate && !reduced && !!e.animatable;
       code =
         state.codeTab === "css"

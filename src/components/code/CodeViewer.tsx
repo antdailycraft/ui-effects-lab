@@ -3,7 +3,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import type { EffectDefinition } from "../../types/effects";
 import { availableTabs, generateCode, type CodeLang } from "../../lib/codegen";
-import { previewChain, generateCombinedSvg, generateCombinedCss } from "../../lib/combine";
+import { activeChain, isStackable, generateCombinedSvg, generateCombinedCss } from "../../lib/combine";
 import { highlightSvg, highlightCss } from "../../lib/highlight";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { CopyButton } from "./CopyButton";
@@ -16,9 +16,10 @@ export function CodeViewer() {
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
 
-  // A combination stack generates chained SVG + CSS instead of the single effect.
-  const combining = state.layers.length > 0;
-  const chain = previewChain(state.layers, state.effectId, state.params);
+  // A combination stack generates chained SVG + CSS instead of the single effect
+  // — but only while the active effect is SVG-stackable (otherwise it's dormant).
+  const combining = state.layers.length > 0 && isStackable(effect);
+  const chain = activeChain(state.layers, state.effectId, state.params);
   const animateFor = (e: EffectDefinition) => state.animate && !reduced && !!e.animatable;
 
   const tabs: CodeLang[] = combining ? ["svg", "css"] : availableTabs(effect);

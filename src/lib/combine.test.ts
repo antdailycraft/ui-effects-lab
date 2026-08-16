@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 import {
   isStackable,
   previewChain,
+  activeChain,
   chainFilterCss,
   generateCombinedSvg,
   generateCombinedCss,
@@ -33,6 +34,18 @@ test("previewChain de-dupes when the active effect equals the last committed lay
 test("a non-stackable active effect is not added to the chain", () => {
   const layers = [{ effectId: "water", params: { scale: 20 } }];
   expect(previewChain(layers, "frosted-glass", {})).toHaveLength(1);
+});
+
+test("activeChain is empty when the active effect can't be stacked (stack stays dormant)", () => {
+  const layers = [{ effectId: "water", params: { scale: 20 } }];
+  // CSS and generator active effects → chain empty, so they render on their own
+  expect(activeChain(layers, "frosted-glass", {})).toEqual([]);
+  expect(activeChain(layers, "swirl", {})).toEqual([]);
+  // SVG active → the committed layers apply (plus the active on top)
+  expect(activeChain(layers, "rough-edge", { scale: 9 }).map((l) => l.effectId)).toEqual([
+    "water",
+    "rough-edge",
+  ]);
 });
 
 test("chainFilterCss references each live filter in order", () => {

@@ -10,7 +10,28 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **CI workflow** (`.github/workflows/ci.yml`) — typecheck, test, and build on
+  every push and pull request, so regressions and `tsc` errors are caught before
+  a deploy.
+- The top-bar GitHub icon now links to the repository (opens in a new tab).
+
+### Fixed
+
+- **Combination no longer drops a non-SVG effect.** Selecting a CSS or WebGL
+  generator effect while a combine stack existed silently replaced it with the
+  SVG chain (wrong preview and wrong generated code). The stack now goes
+  *dormant* — the selected effect renders on its own and its code shows — with a
+  note in the Combine panel; switching back to an SVG effect reactivates it.
+
+### Changed
+
+- **Combination layers are capped at 4** (GPU cost grows with each stacked
+  animated filter); the Add button disables at the cap.
+- **Build splits the WebGL shader library and React into separate chunks**
+  (`manualChunks`), removing the >500 kB single-chunk warning and letting them
+  cache independently. (Full lazy-loading of generators remains a follow-up.)
 
 ## [0.5.0] - 2026-08-17
 

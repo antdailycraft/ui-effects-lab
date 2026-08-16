@@ -7,6 +7,9 @@ export interface EffectLayer {
   params: Params;
 }
 
+/** Hard cap on committed combination layers (GPU cost grows with each one). */
+export const MAX_LAYERS = 4;
+
 /** SVG-filter effects (the only kind that chains via `filter: url(#a) url(#b)`). */
 export function isStackable(effect: EffectDefinition): boolean {
   return !!effect.buildFilterInner && effect.kind !== "generator";
@@ -37,6 +40,22 @@ export function previewChain(
     if (!dup) chain.push({ effectId: active.id, params: activeParams });
   }
   return chain;
+}
+
+/**
+ * The chain actually applied to the preview/code. Empty when the active effect
+ * isn't SVG-stackable (a CSS or generator effect) — the committed layers stay
+ * dormant and the active effect renders on its own, rather than being silently
+ * replaced by the stack.
+ */
+export function activeChain(
+  layers: EffectLayer[],
+  activeId: string,
+  activeParams: Params
+): EffectLayer[] {
+  const active = getEffect(activeId);
+  if (!active || !isStackable(active)) return [];
+  return previewChain(layers, activeId, activeParams);
 }
 
 /** DOM id for the i-th live filter in the chain. */

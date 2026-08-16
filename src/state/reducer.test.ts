@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 import { reducer, initialState } from "./PlaygroundContext";
 import { defaultParams, getEffect } from "../registry/effects";
+import { MAX_LAYERS } from "../lib/combine";
 
 test("SELECT_EFFECT switches effect and loads its defaults", () => {
   const s = reducer(initialState, { type: "SELECT_EFFECT", id: "water" });
@@ -70,6 +71,12 @@ test("ADD_LAYER snapshots the active SVG effect; REMOVE/MOVE/CLEAR edit the stac
 test("ADD_LAYER is a no-op for non-stackable (generator/CSS) effects", () => {
   const gen = reducer(initialState, { type: "SELECT_EFFECT", id: "swirl" });
   expect(reducer(gen, { type: "ADD_LAYER" }).layers).toEqual([]);
+});
+
+test("ADD_LAYER stops at the layer cap", () => {
+  let s = initialState;
+  for (let i = 0; i < 10; i++) s = reducer(s, { type: "ADD_LAYER" });
+  expect(s.layers.length).toBe(MAX_LAYERS);
 });
 
 test("LOAD_PRESET fills missing params from the effect's defaults (partial presets are safe)", () => {

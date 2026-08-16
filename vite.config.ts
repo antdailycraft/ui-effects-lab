@@ -10,6 +10,18 @@ const base = process.env.DEPLOY_TARGET === "gh-pages" ? "/ui-effects-lab/" : "/"
 export default defineConfig({
   base,
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Split the heavy WebGL shader library and React into their own chunks
+        // so they cache independently and don't bloat the main entry chunk.
+        manualChunks: {
+          shaders: ["@paper-design/shaders-react"],
+          react: ["react", "react-dom"],
+        },
+      },
+    },
+  },
   server: {
     // Expose the dev server on all network interfaces (external access).
     host: true,

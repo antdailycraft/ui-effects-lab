@@ -6,7 +6,7 @@ import { loadTheme, loadLastEffectId, loadCustomHtml } from "../lib/storage";
 import { DEFAULT_IMAGE } from "../lib/sampleImage";
 import { decodeShare } from "../lib/share";
 import type { EffectLayer } from "../lib/combine";
-import { isStackable } from "../lib/combine";
+import { isStackable, MAX_LAYERS } from "../lib/combine";
 
 export type CompareMode = "off" | "side-by-side" | "slider";
 
@@ -116,7 +116,7 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
       return { ...state, customHtml: action.html };
     case "ADD_LAYER": {
       const effect = getEffect(state.effectId);
-      if (!effect || !isStackable(effect)) return state;
+      if (!effect || !isStackable(effect) || state.layers.length >= MAX_LAYERS) return state;
       return {
         ...state,
         layers: [...state.layers, { effectId: state.effectId, params: { ...state.params } }],

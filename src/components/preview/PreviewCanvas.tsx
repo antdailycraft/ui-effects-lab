@@ -4,7 +4,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import type { CompareMode } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { previewChain, chainFilterCss } from "../../lib/combine";
+import { activeChain, chainFilterCss, isStackable } from "../../lib/combine";
 import { FilterHost } from "./FilterHost";
 import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
@@ -105,13 +105,14 @@ export function PreviewCanvas() {
   const mainClass = "col col-center" + (fullscreen ? " pv-fullscreen" : "");
 
   // The live SVG-filter chain: committed layers + the active effect on top.
-  const chain = previewChain(state.layers, state.effectId, state.params);
-  const combining = state.layers.length > 0;
+  // Empty when the active effect isn't SVG-stackable (stack stays dormant).
+  const chain = activeChain(state.layers, state.effectId, state.params);
+  const combining = state.layers.length > 0 && isStackable(effect);
 
   // Generator kind: the effect IS the preview (a self-contained component), so
-  // preview targets and compare don't apply — unless a combination stack is
-  // active, in which case we fall through to render the SVG chain on a target.
-  if (effect.kind === "generator" && effect.component && !combining) {
+  // preview targets and compare don't apply. A dormant stack (chain empty)
+  // never blocks this — the generator renders on its own.
+  if (effect.kind === "generator" && effect.component && chain.length === 0) {
     const Generator = effect.component;
     const props = effect.buildProps ? effect.buildProps(state.params, animate) : {};
     if (effect.usesImage) props.image = state.imageUrl;

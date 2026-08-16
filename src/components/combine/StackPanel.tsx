@@ -1,12 +1,15 @@
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
-import { isStackable } from "../../lib/combine";
+import { isStackable, MAX_LAYERS } from "../../lib/combine";
 
 export function StackPanel() {
   const { state, dispatch } = usePlayground();
   const active = getEffect(state.effectId)!;
-  const canAdd = isStackable(active);
+  const stackable = isStackable(active);
   const layers = state.layers;
+  const atCap = layers.length >= MAX_LAYERS;
+  const canAdd = stackable && !atCap;
+  const dormant = layers.length > 0 && !stackable;
 
   return (
     <>
@@ -22,11 +25,26 @@ export function StackPanel() {
         <button
           className="stack-add"
           disabled={!canAdd}
-          title={canAdd ? "Add the current effect as a layer" : "Only SVG-filter effects can be combined"}
+          title={
+            atCap
+              ? `Stack is full (max ${MAX_LAYERS})`
+              : stackable
+                ? "Add the current effect as a layer"
+                : "Only SVG-filter effects can be combined"
+          }
           onClick={() => dispatch({ type: "ADD_LAYER" })}
         >
           + Add “{active.name}” to stack
         </button>
+
+        {dormant && (
+          <div className="stack-note">
+            Stack is paused — “{active.name}” isn’t an SVG filter. Switch to an SVG effect to combine.
+          </div>
+        )}
+        {atCap && (
+          <div className="stack-note">Maximum {MAX_LAYERS} layers — remove one to add another.</div>
+        )}
 
         {layers.length === 0 ? (
           <div className="stack-empty">
