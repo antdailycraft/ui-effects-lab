@@ -11,7 +11,7 @@ export const dropShadow: EffectDefinition = {
   tech: ["feDropShadow"],
   description:
     "A single-primitive shadow that follows the element's actual alpha shape (not its bounding box, unlike CSS box-shadow).",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "dx", label: "Offset X", type: "range", min: -20, max: 20, step: 1, def: 6, decimals: 0, unit: "px", random: [-12, 12] },
     { id: "dy", label: "Offset Y", type: "range", min: -20, max: 20, step: 1, def: 8, decimals: 0, unit: "px", random: [-12, 12] },

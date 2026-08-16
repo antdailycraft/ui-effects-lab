@@ -12,7 +12,7 @@ export const heatHaze: EffectDefinition = {
   description:
     "Low-frequency animated turbulence gently warps the surface like hot air rising off a road.",
   animatable: true,
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.004, max: 0.03, step: 0.001, def: 0.011, decimals: 3, random: [0.006, 0.02] },
     { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 3, step: 1, def: 2, decimals: 0, random: [1, 3] },

@@ -11,7 +11,7 @@ export const bevel: EffectDefinition = {
   tech: ["feGaussianBlur", "feSpecularLighting", "feComposite"],
   description:
     "Treats the shape's alpha as a height map and lights it with a specular point light for a glossy 3-D bevel. Browser-native, no dependency.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "blur", label: "Edge Softness", type: "range", min: 1, max: 8, step: 0.5, def: 3, decimals: 1, unit: "px", random: [2, 6] },
     { id: "depth", label: "Bevel Depth", type: "range", min: 1, max: 12, step: 0.5, def: 5, decimals: 1, random: [3, 9] },

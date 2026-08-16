@@ -12,7 +12,7 @@ export const duotone: EffectDefinition = {
   tech: ["feColorMatrix", "feComponentTransfer"],
   description:
     "Desaturates the source, then maps shadows and highlights onto two colors for a duotone print look. Browser-native.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "shadowColor", label: "Shadow Color", type: "color", def: "#241d9a" },
     { id: "highlightColor", label: "Highlight Color", type: "color", def: "#ffd36e" },

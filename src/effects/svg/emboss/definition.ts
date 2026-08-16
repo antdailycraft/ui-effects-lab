@@ -11,7 +11,7 @@ export const emboss: EffectDefinition = {
   tech: ["feConvolveMatrix"],
   description:
     "A directional convolution kernel that turns edges into a raised metal-relief / emboss look. Browser-native, no dependency.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "amount", label: "Relief Depth", type: "range", min: 0.5, max: 3, step: 0.1, def: 1.5, decimals: 1, random: [1, 2.5] },
   ],

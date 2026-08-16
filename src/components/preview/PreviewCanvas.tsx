@@ -10,6 +10,8 @@ import { TextPreview } from "./TextPreview";
 import { ImagePreview } from "./ImagePreview";
 import { ButtonPreview } from "./ButtonPreview";
 import { NewspaperPreview } from "./NewspaperPreview";
+import { CustomPreview } from "./CustomPreview";
+import { CustomHtmlBar } from "./CustomHtmlBar";
 import { ImagePicker } from "./ImagePicker";
 import { CompareSlider } from "./CompareSlider";
 
@@ -21,6 +23,7 @@ const TARGETS: Record<PreviewType, (props: TargetProps) => JSX.Element> = {
   image: ImagePreview,
   button: ButtonPreview,
   newspaper: NewspaperPreview,
+  custom: CustomPreview,
 };
 
 const PV_OPTIONS: { id: PreviewType; label: string }[] = [
@@ -29,6 +32,7 @@ const PV_OPTIONS: { id: PreviewType; label: string }[] = [
   { id: "image", label: "Image" },
   { id: "button", label: "Button" },
   { id: "newspaper", label: "Newspaper" },
+  { id: "custom", label: "Custom" },
 ];
 
 const COMPARE_OPTIONS: { id: CompareMode; label: string }[] = [
@@ -160,6 +164,7 @@ export function PreviewCanvas() {
         </div>
         <FullscreenButton />
       </div>
+      {previewType === "custom" && <CustomHtmlBar />}
       <div className="stage">
         {mode === "slider" ? (
           <CompareSlider

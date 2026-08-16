@@ -12,7 +12,7 @@ export const cloud: EffectDefinition = {
   description:
     "Soft, blurred fractal noise layered over the element as drifting fog or cloud.",
   animatable: true,
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.004, max: 0.03, step: 0.001, def: 0.012, decimals: 3, random: [0.006, 0.02] },
     { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 5, step: 1, def: 4, decimals: 0, random: [3, 5] },

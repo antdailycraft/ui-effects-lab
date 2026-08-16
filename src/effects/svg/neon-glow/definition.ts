@@ -11,7 +11,7 @@ export const neonGlow: EffectDefinition = {
   tech: ["feMorphology", "feFlood", "feGaussianBlur", "feMerge"],
   description:
     "Spreads the shape's alpha, floods it with a colored light, blurs it, and stacks it under the source for a neon glow. Browser-native.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "color", label: "Glow Color", type: "color", def: "#f53df5" },
     { id: "size", label: "Glow Spread", type: "range", min: 0, max: 8, step: 0.5, def: 2, decimals: 1, unit: "px", random: [1, 5] },

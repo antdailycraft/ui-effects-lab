@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 
 export type EffectCategory = "svg-filter" | "css" | "retro" | "experimental";
-export type PreviewType = "card" | "text" | "image" | "button" | "newspaper";
+export type PreviewType = "card" | "text" | "image" | "button" | "newspaper" | "custom";
 export type ControlType = "range" | "seed" | "toggle" | "color";
 export type ParamValue = number | boolean | string;
 export type Params = Record<string, ParamValue>;

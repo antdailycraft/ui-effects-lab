@@ -41,13 +41,14 @@ Phase 5 (Sharing) is the main outstanding chunk.
 - ✅ **Export to CodePen / StackBlitz** — native effects → static HTML+CSS pen;
   generators → React (esm.sh on CodePen, Vite project on StackBlitz).
 - ✅ **Favorites** — star effects; a pinned "★ Favorites" group in the catalog.
-- ⬜ Custom HTML preview target
+- ✅ **Custom HTML preview** — a "Custom" target renders sanitized user markup
+  with the effect applied live (persisted to LocalStorage).
 - ⬜ Effect combination (stacking multiple filters)
 - ⬜ Community presets
 
-The three remaining P2 items are larger and need product decisions (a code-input
-surface, a filter-stacking model, and a hosted preset backend), so they're held
-for a follow-up rather than bundled into the current sharing work.
+The two remaining P2 items are larger and need product decisions (a filter-
+stacking model that reworks the single-effect core, and a hosted preset backend
+that breaks the LocalStorage-only MVP), so they're held for a follow-up.
 
 ## Beyond the PRD — already shipped
 

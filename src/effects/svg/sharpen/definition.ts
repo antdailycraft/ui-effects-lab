@@ -11,7 +11,7 @@ export const sharpen: EffectDefinition = {
   tech: ["feConvolveMatrix"],
   description:
     "An unsharp convolution kernel that boosts local contrast at edges. Browser-native, no dependency.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "amount", label: "Amount", type: "range", min: 0, max: 2, step: 0.1, def: 1, decimals: 1, random: [0.4, 1.6] },
   ],

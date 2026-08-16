@@ -10,7 +10,13 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Custom HTML preview** — a new "Custom" preview target renders your own markup
+  with the effect applied live. An inline editor (persisted to LocalStorage, with
+  a Reset to the sample) sits under the preview bar; the markup is sanitized
+  (drops `<script>`/`<iframe>`/`<object>`/`<embed>`, inline event handlers, and
+  `javascript:` URLs) before rendering. Available on every SVG/CSS/Retro effect.
 
 ## [0.3.0] - 2026-08-16
 

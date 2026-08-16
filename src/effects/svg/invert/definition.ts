@@ -11,7 +11,7 @@ export const invert: EffectDefinition = {
   tech: ["feComponentTransfer"],
   description:
     "Inverts each color channel with a two-point transfer table, mixable from identity to full negative. Browser-native.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "amount", label: "Amount", type: "range", min: 0, max: 1, step: 0.05, def: 1, decimals: 2, random: [0.4, 1] },
   ],

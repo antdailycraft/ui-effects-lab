@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer } from "react";
 import type { Params, ParamValue, PreviewType } from "../types/effects";
 import { defaultParams, getEffect, EFFECTS } from "../registry/effects";
 import { randomizeParams } from "../lib/randomize";
-import { loadTheme, loadLastEffectId } from "../lib/storage";
+import { loadTheme, loadLastEffectId, loadCustomHtml } from "../lib/storage";
 import { DEFAULT_IMAGE } from "../lib/sampleImage";
 import { decodeShare } from "../lib/share";
 
@@ -20,6 +20,8 @@ export interface PlaygroundState {
   params: Params;
   /** Source image (URL / data URI) for image-based generators. */
   imageUrl: string;
+  /** User-authored markup for the "custom" preview target. */
+  customHtml: string;
 }
 
 export type Action =
@@ -36,7 +38,8 @@ export type Action =
   | { type: "SET_CODE_TAB"; tab: "svg" | "css" | "react" }
   | { type: "SET_THEME"; theme: "dark" | "light" }
   | { type: "LOAD_PRESET"; effectId: string; params: Params }
-  | { type: "SET_IMAGE"; url: string };
+  | { type: "SET_IMAGE"; url: string }
+  | { type: "SET_CUSTOM_HTML"; html: string };
 
 // A shared "#s=…" link (if present and valid) wins over the last-used effect.
 const shared = typeof location !== "undefined" ? decodeShare(location.hash) : null;
@@ -62,6 +65,7 @@ export const initialState: PlaygroundState = {
     ? { ...defaultParams(sharedEffect), ...shared!.p }
     : defaultParams(getEffect(firstId)!),
   imageUrl: DEFAULT_IMAGE,
+  customHtml: loadCustomHtml(),
 };
 
 export function reducer(state: PlaygroundState, action: Action): PlaygroundState {
@@ -93,6 +97,8 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
       return { ...state, codeTab: action.tab };
     case "SET_IMAGE":
       return { ...state, imageUrl: action.url };
+    case "SET_CUSTOM_HTML":
+      return { ...state, customHtml: action.html };
     case "SET_THEME":
       return { ...state, theme: action.theme };
     case "LOAD_PRESET": {

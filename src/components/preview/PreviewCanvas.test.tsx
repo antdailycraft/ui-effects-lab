@@ -66,3 +66,17 @@ test("Newspaper preview target renders the broadsheet masthead", async () => {
   expect(screen.getByText(/the daily turbulence/i)).toBeInTheDocument();
   expect(screen.getByText(/filters reshape the front page/i)).toBeInTheDocument();
 });
+
+test("Custom preview target shows a markup editor and renders it live", async () => {
+  render(
+    <PlaygroundProvider>
+      <PreviewCanvas />
+    </PlaygroundProvider>
+  );
+  await userEvent.click(screen.getByRole("button", { name: /^custom$/i }));
+  const editor = screen.getByLabelText(/custom html markup/i);
+  expect(editor).toBeInTheDocument();
+  await userEvent.clear(editor);
+  await userEvent.type(editor, "<h4>Hello Custom</h4>");
+  expect(screen.getByText("Hello Custom")).toBeInTheDocument();
+});

@@ -11,7 +11,7 @@ export const paperGrain: EffectDefinition = {
   tech: ["feTurbulence", "feColorMatrix", "feBlend"],
   description:
     "High-frequency fractal noise multiplied over the source for a fine paper / film-grain texture.",
-  previewTypes: ["card", "text", "image", "button", "newspaper"],
+  previewTypes: ["card", "text", "image", "button", "newspaper", "custom"],
   controls: [
     { id: "baseFrequency", label: "Base Frequency", type: "range", min: 0.2, max: 1, step: 0.01, def: 0.65, decimals: 2, random: [0.4, 0.9] },
     { id: "numOctaves", label: "Num Octaves", type: "range", min: 1, max: 4, step: 1, def: 3, decimals: 0, random: [2, 4] },
