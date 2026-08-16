@@ -15,23 +15,28 @@ test("opening the menu reveals every resource as a new-tab link", async () => {
   await userEvent.click(screen.getByRole("button", { name: /resources/i }));
 
   expect(screen.getByRole("menu")).toBeInTheDocument();
+  // Match by unique href (resource names/descriptions can share words).
+  const byHref = new Map(
+    screen.getAllByRole("menuitem").map((a) => [a.getAttribute("href"), a])
+  );
   for (const r of ALL) {
-    const link = screen.getByRole("menuitem", { name: new RegExp(r.name, "i") });
-    expect(link).toHaveAttribute("href", r.url);
+    const link = byHref.get(r.url);
+    expect(link, `missing menuitem for ${r.name}`).toBeTruthy();
     expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
+    expect(link!.getAttribute("rel")).toContain("noopener");
   }
 });
 
-test("includes all curated sites across Tools / Inspiration / Components / Learn", () => {
-  expect(ALL).toHaveLength(12);
+test("includes all curated sites across Tools / Inspiration / Components / Libraries / Learn", () => {
+  expect(ALL).toHaveLength(20);
   expect(ALL.map((r) => r.name)).toEqual([
     "MagicPattern", "Variant",
     "SEESAW", "Refero", "Recent", "Awwwards", "Land-book", "Dribbble", "Godly",
     "shadcn/ui", "21st.dev",
+    "Rete.js", "React Flow", "tldraw", "Motion", "GSAP", "Three.js", "p5.js", "dnd kit",
     "Laws of UX",
   ]);
   expect(RESOURCE_GROUPS.map((g) => g.label)).toEqual([
-    "Tools", "Inspiration", "Components", "Learn",
+    "Tools", "Inspiration", "Components", "Libraries", "Learn",
   ]);
 });

@@ -82,6 +82,51 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     ],
   },
   {
+    label: "Libraries",
+    items: [
+      {
+        name: "Rete.js",
+        url: "https://retejs.org/examples/",
+        desc: "Framework for node-based visual editors & visual programming.",
+      },
+      {
+        name: "React Flow",
+        url: "https://reactflow.dev/",
+        desc: "Node-based editors & interactive diagrams for React (by xyflow).",
+      },
+      {
+        name: "tldraw",
+        url: "https://tldraw.dev/",
+        desc: "Infinite-canvas whiteboard SDK you can embed and extend.",
+      },
+      {
+        name: "Motion",
+        url: "https://motion.dev/",
+        desc: "Production animation for JS & React (formerly Framer Motion).",
+      },
+      {
+        name: "GSAP",
+        url: "https://gsap.com/",
+        desc: "Professional-grade web animation toolkit.",
+      },
+      {
+        name: "Three.js",
+        url: "https://threejs.org/",
+        desc: "3D graphics in the browser via WebGL.",
+      },
+      {
+        name: "p5.js",
+        url: "https://p5js.org/",
+        desc: "Creative coding — generative art & interaction on canvas.",
+      },
+      {
+        name: "dnd kit",
+        url: "https://dndkit.com/",
+        desc: "Modern, accessible drag-and-drop toolkit for React.",
+      },
+    ],
+  },
+  {
     label: "Learn",
     items: [
       {
