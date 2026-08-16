@@ -10,6 +10,23 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [0.1.0] - 2026-08-16
+
+A large feature release: a new WebGL **Generators** category (16 → 50 effects),
+built-in and user presets, a compare drag slider, fullscreen, and deployment
+wiring.
+
+### Changed
+
+- **Compare state shape (breaking, internal)** — `PlaygroundState.compare:
+  boolean` became `compareMode: "off" | "side-by-side" | "slider"` and gained
+  `fullscreen: boolean`; `TOGGLE_COMPARE` was replaced by `SET_COMPARE_MODE` /
+  `TOGGLE_FULLSCREEN` / `SET_FULLSCREEN`. `ParamValue` widened to include
+  `string` for color controls. Added `@types/node` so `vite.config.ts` can read
+  `process.env` under `tsc`.
+
 ### Fixed
 
 - **CSS syntax highlighting** — the CSS code tab (and the full-code modal) was
@@ -73,10 +90,10 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   Neuro Noise, Smoke Ring, Spiral, Perlin Noise, Pulsing Border, Color Panels,
   Dot Grid, Fluted Glass, Gem Smoke, Halftone CMYK, Halftone Dots,
   Paper Texture, Simplex Noise, Static Mesh Gradient, Static Radial Gradient,
-  and Waves — every standalone shader in the library. The three image-input
-  shaders (ImageDithering, LensDistortion, Heatmap) are omitted because they
-  render blank without a source image. Added via a small `shaderGenerator`
-  factory that spreads each shader's own preset defaults.
+  and Waves — every standalone shader in the library. Added via a small
+  `shaderGenerator` factory that spreads each shader's own preset defaults. (The
+  three image-input shaders — ImageDithering, LensDistortion, Heatmap — arrived
+  with the image-source picker below, bringing the total to 30.)
 
 ## [0.0.1] - 2026-08-15
 
@@ -118,5 +135,6 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/antdailycraft/ui-effects-lab/releases/tag/v0.0.1

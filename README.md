@@ -22,31 +22,35 @@ npm run build   # type-check and build for production
 
 ## Effects
 
-- **SVG Filters** — Rough Edge, Paper Grain, Noise Texture, Water Distortion,
-  Liquid, Heat Haze, Cloud / Fog (the `feTurbulence` family, see
-  `docs/effects/feTurbulence.md`), plus Sticker (`feMorphology`), Gooey
-  (`feColorMatrix` metaballs), Drop Shadow (`feDropShadow`), and Posterize
-  (`feComponentTransfer`).
-- **CSS Effects** — Frosted Glass (`backdrop-filter`), Holographic Card
-  (iridescent gradient + `mix-blend-mode`), Conic Spin (`@property` +
-  `conic-gradient`).
-- **Retro** — Glitch (RGB channel split via SVG filter), CRT / Analog
-  (scanlines + vignette).
+**50 effects** across four categories:
 
-Library/tech research behind these additions lives in
-`docs/research/2026-08-14-css-effects-libraries.md`.
+- **SVG Filters** (14) — the `feTurbulence` family (Rough Edge, Paper Grain,
+  Noise Texture, Water Distortion, Liquid, Heat Haze, Cloud / Fog; see
+  `docs/effects/feTurbulence.md`) plus Sticker, Gooey, Drop Shadow, Posterize,
+  Emboss, Sharpen, Bevel, Color Grade, Duotone, Invert, Edge Detect, Motion
+  Blur, and Neon Glow (`feConvolveMatrix`, `feColorMatrix`, `feComponentTransfer`,
+  `feMorphology`, …).
+- **CSS Effects** (4) — Frosted Glass (`backdrop-filter`), Holographic Card
+  (gradient + `mix-blend-mode`), Conic Spin (`@property` + `conic-gradient`),
+  Gradient Border (`mask-composite`).
+- **Retro** (2) — Glitch (RGB channel split), CRT / Analog (scanlines + vignette).
+- **Generators** (30) — GPU shaders from `@paper-design/shaders-react`
+  (Apache-2.0): Mesh Gradient, Warp, Voronoi, Metaballs, Swirl, God Rays, Liquid
+  Metal, Dithering, and more — each with its library presets as built-in chips.
 
-Effects declare a `kind` of `"svg"` (applied via `filter: url(#id)`) or `"css"`
-(a class + CSS custom properties); the code viewer shows the SVG+CSS or CSS-only
-tabs accordingly. See `docs/PRD.md` for the full product spec and
-`docs/superpowers/plans/` for the implementation plan.
+Effects declare a `kind` of `"svg"` (applied via `filter: url(#id)`), `"css"` (a
+class + CSS custom properties), or `"generator"` (a self-contained component that
+*is* the preview); the code viewer shows SVG / CSS / React tabs accordingly.
+Library/tech research behind these lives in
+`docs/research/2026-08-14-css-effects-libraries.md`. See `docs/PRD.md` for the
+full product spec and `docs/superpowers/plans/` for the implementation plan.
 
 ## Project layout
 
 ```
 src/
   types/        effect type model
-  effects/svg/  one folder per effect (definition.ts)
+  effects/      svg/ css/ retro/ experimental/ — one folder per effect (definition.ts)
   registry/     effect registry + helpers
   lib/          format, randomize, codegen, highlight, storage (pure, unit-tested)
   state/        PlaygroundContext (reducer + provider)
@@ -54,8 +58,12 @@ src/
   styles/       design tokens + component CSS
 ```
 
-Roadmap (not yet built): local presets, comparison drag-slider, fullscreen,
-React JSX export, URL sharing.
+## Roadmap
+
+Status is tracked in [`docs/ROADMAP.md`](./docs/ROADMAP.md). In short: the P0
+must-haves and most of P1 are done (presets, compare drag-slider, fullscreen,
+React export all shipped in v0.1.0). Remaining: the Newspaper/Button preview
+targets and Phase 5 — **URL sharing** (next up) and CodePen/StackBlitz export.
 
 ## Changelog & releases
 
