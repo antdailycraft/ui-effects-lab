@@ -24,6 +24,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://variant.com/",
         desc: "AI design generation — keep scrolling for variants, Style Dropper to lift a look.",
       },
+      {
+        name: "Stitch",
+        url: "https://stitch.withgoogle.com/docs",
+        desc: "Google's AI tool that turns prompts into UI designs & front-end code.",
+      },
     ],
   },
   {

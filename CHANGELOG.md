@@ -12,11 +12,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
-- **Resources menu expanded** (7 → 22) — added Dribbble and Godly to Inspiration,
-  a **Components** group (shadcn/ui, 21st.dev), a **Learn** group (Laws of UX,
-  DESIGN.md), a **Libraries** group of JS-based interactive UI/UX toolkits
-  (Rete.js, React Flow, tldraw, Motion, GSAP, Three.js, p5.js, dnd kit), and an
-  **Assets** group (Kenney — free CC0 game/UI assets).
+- **Resources menu expanded** (7 → 23) — added Stitch (Google's AI UI tool) to
+  Tools, Dribbble and Godly to Inspiration, a **Components** group (shadcn/ui,
+  21st.dev), a **Learn** group (Laws of UX, DESIGN.md), a **Libraries** group of
+  JS-based interactive UI/UX toolkits (Rete.js, React Flow, tldraw, Motion, GSAP,
+  Three.js, p5.js, dnd kit), and an **Assets** group (Kenney — free CC0 assets).
 - **Layer inline editing** — click a layer in the Combine panel to edit its
   parameters in place. The Controls panel (plus Reset, Randomize, and the
   generated code) targets that layer, a banner shows which layer is being edited
