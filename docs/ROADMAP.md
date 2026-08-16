@@ -6,7 +6,7 @@ in [`CHANGELOG.md`](../CHANGELOG.md) and the *plan* here.
 
 Legend: ✅ done · 🟡 in progress · ⬜ not started
 
-_Last updated: 2026-08-16 (v0.2.0 — P1 complete)_
+_Last updated: 2026-08-16 (v0.3.0 — Phase 5 sharing shipped)_
 
 ## P0 — Must have · ✅ complete
 
@@ -70,4 +70,4 @@ Delivered on top of the original spec (see CHANGELOG `[0.1.0]`):
 | 2 — SVG Effects | turbulence family + more | ✅ |
 | 3 — Experiment UX | randomize, compare, preset, fullscreen | ✅ |
 | 4 — CSS / Retro | glass, glitch, CRT, hologram | ✅ |
-| 5 — Sharing | URL serialization, share, export | ⬜ |
+| 5 — Sharing | URL serialization, share, export | ✅ |
