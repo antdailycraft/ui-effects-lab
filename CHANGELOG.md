@@ -10,6 +10,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [0.7.0] - 2026-08-17
+
+Design reference tools, a much larger Resources menu, and combine improvements.
+
 ### Added
 
 - **Reference menu** — a new top-bar **Reference** menu opens design reference
@@ -54,6 +60,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   `scripts/gen-presets.mjs`) so the effect registry stays synchronous. First load
   for SVG/CSS/Retro visitors drops by ~264 KB (verified: the shader chunk is no
   longer referenced in `index.html`).
+
+### Fixed
+
+- **Resources menu scrolls** when its groups exceed the viewport height (it ran
+  off-screen once the curated list grew).
 
 ## [0.6.0] - 2026-08-17
 
@@ -338,7 +349,8 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.3.0...v0.4.0

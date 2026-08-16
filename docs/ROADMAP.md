@@ -6,7 +6,7 @@ in [`CHANGELOG.md`](../CHANGELOG.md) and the *plan* here.
 
 Legend: ✅ done · 🟡 in progress · ⬜ not started
 
-_Last updated: 2026-08-17 (v0.6.0 + audit hardening, combine follow-ups, Reference tools shipped)_
+_Last updated: 2026-08-17 (v0.7.0 — Reference tools, Resources expansion, combine follow-ups)_
 
 ## P0 — Must have · ✅ complete
 
