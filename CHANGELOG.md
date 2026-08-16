@@ -16,13 +16,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   Codrops **Webzibition** (Inspiration), and **PixiJS** (Libraries); 26 curated
   sites total.
 
-- **Effect gallery** — a top-bar **Gallery** opens a grid of the 20 SVG-filter
-  effects (rendered at their defaults on a shared sample tile) plus all 30 WebGL
-  generators (live). Generator tiles mount only while on screen and are capped at
-  10 concurrent WebGL contexts (IntersectionObserver + a mount budget) so the
-  browser's context limit is never exceeded; over-budget tiles show a shimmer
-  until a slot frees. Click any tile to open that effect. Built from the live
-  registry.
+- **Effect gallery** — a top-bar **Gallery** opens a **paginated** grid (dot
+  pagination, no scroll) of the 20 SVG-filter effects (rendered at their defaults
+  on a shared sample tile) plus all 30 WebGL generators (live). 10 tiles per
+  page, so only the current page's generators are mounted — the browser's WebGL
+  context limit is never exceeded without any scroll bookkeeping. Click any tile
+  to open that effect. Built from the live registry.
 - **Three.js showcase** — a bundled standalone "Dissolve" demo
   (`public/showcase/dissolve.html`): a note dissolving along a simplex-noise
   threshold into ~46k GPU particles, with Burn/Glitch/Ink-bleed variants, live

@@ -767,17 +767,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ---------- Effect gallery ---------- */
 .gal-modal { max-width: 900px; }
-/* Bounded height keeps only a couple generator rows on screen at once, so the
-   IntersectionObserver-mounted WebGL tiles stay well under the browser's
-   live-context limit. */
-.gal-scroll { overflow-y: auto; max-height: min(360px, 58vh); padding: 6px 18px 20px; }
+/* Paginated (no scroll): each page shows PAGE items, which also caps how many
+   live WebGL generator contexts exist at once. */
+.gal-body { padding: 8px 18px 6px; }
 .gal-section {
   font-family: inherit; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--text-faint); margin: 16px 2px 10px;
+  color: var(--text-faint); margin: 4px 2px 12px;
 }
 .gal-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;
 }
+.gal-pager {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  padding: 14px 18px 18px; border-top: 1px solid var(--border-soft);
+}
+.gal-pager-arrow {
+  width: 28px; height: 28px; border-radius: 7px; font-size: 16px; line-height: 1;
+  color: var(--text-dim); border: 1px solid var(--border); background: var(--panel-2);
+  transition: color 0.13s, border-color 0.13s, opacity 0.13s;
+}
+.gal-pager-arrow:hover:not(:disabled) { color: var(--text); border-color: var(--accent-line); }
+.gal-pager-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+.gal-dots { display: inline-flex; align-items: center; gap: 8px; }
+.gal-dot {
+  width: 9px; height: 9px; border-radius: 50%; padding: 0;
+  background: var(--border); border: 0; cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+.gal-dot:hover { background: var(--text-faint); }
+.gal-dot.on { background: var(--accent); transform: scale(1.25); }
 .gal-tile {
   display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: 10px;
   background: var(--panel-2); border: 1px solid var(--border);
