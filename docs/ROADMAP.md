@@ -6,7 +6,7 @@ in [`CHANGELOG.md`](../CHANGELOG.md) and the *plan* here.
 
 Legend: ✅ done · 🟡 in progress · ⬜ not started
 
-_Last updated: 2026-08-17 (v0.6.0 — audit hardening: correctness, perf, a11y, CI)_
+_Last updated: 2026-08-17 (v0.6.0 + audit hardening, combine follow-ups; new "Next" directions queued)_
 
 ## P0 — Must have · ✅ complete
 
@@ -54,6 +54,23 @@ Former follow-ups, all done: sandbox export covers a combination stack,
 generators lazy-load, and combination layers are now editable in place (click a
 layer in the Combine panel). The only remaining P2 item is Community Presets
 (needs a hosted backend).
+
+## Next — new directions (queued, not yet scheduled)
+
+Ideas beyond the effects playground, to broaden the tool into a small design
+reference. Each keeps the product's Explore → Copy loop.
+
+- ⬜ **Design terminology reference** — an in-app glossary of UI/UX vocabulary
+  and component names (e.g. toast, skeleton, affordance, disclosure, bento grid,
+  segmented control) so users learn the words for what they're building. Likely a
+  searchable reference panel or a Resources-style section.
+- ⬜ **CSS cursor showcase** — a reference/playground of every CSS `cursor` value
+  (pointer, grab/grabbing, crosshair, zoom-in/out, not-allowed, col-resize, …)
+  with live hover demos and copy-to-clipboard.
+- ⬜ **Emoji picker / index** — an offline emoji search with categories and
+  click-to-copy. Seeded by [`docs/reference/EMOJI.html`](./reference/EMOJI.html)
+  (Emojipedia-style, Unicode 17.0, ~3,944 symbols, virtualized grid). Could ship
+  as a utility panel or a Resources entry.
 
 ## Beyond the PRD — already shipped
 
