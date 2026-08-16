@@ -134,6 +134,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://dndkit.com/",
         desc: "Modern, accessible drag-and-drop toolkit for React.",
       },
+      {
+        name: "PixiJS",
+        url: "https://pixijs.com/showcase",
+        desc: "Fast 2D WebGL renderer for interactive graphics, games & effects.",
+      },
     ],
   },
   {
