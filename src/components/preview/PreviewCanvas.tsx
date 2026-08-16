@@ -4,6 +4,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import type { CompareMode } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useDocumentVisible } from "../../hooks/useDocumentVisible";
 import { activeChain, chainFilterCss, isStackable } from "../../lib/combine";
 import { FilterHost } from "./FilterHost";
 import { CardPreview } from "./CardPreview";
@@ -91,6 +92,7 @@ export function PreviewCanvas() {
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
   const fullscreen = state.fullscreen;
+  const visible = useDocumentVisible();
 
   // Escape leaves fullscreen; move focus into the overlay on enter.
   useEffect(() => {
@@ -127,7 +129,8 @@ export function PreviewCanvas() {
         </div>
         <div className="stage">
           <div className="pv-generator">
-            <Generator {...props} />
+            {/* Unmount the WebGL canvas while the tab is hidden to stop GPU work. */}
+            {visible && <Generator {...props} />}
           </div>
           <div className="stage-hint">
             {!effect.animatable

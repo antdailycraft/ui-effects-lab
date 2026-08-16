@@ -115,8 +115,10 @@ export const EFFECTS: EffectDefinition[] = [
   lensDistortion,
 ];
 
+const BY_ID = new Map(EFFECTS.map((e) => [e.id, e] as const));
+
 export function getEffect(id: string): EffectDefinition | undefined {
-  return EFFECTS.find((e) => e.id === id);
+  return BY_ID.get(id);
 }
 
 export function defaultParams(effect: EffectDefinition): Params {

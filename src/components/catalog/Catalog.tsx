@@ -1,30 +1,28 @@
+import { useMemo } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { EFFECTS, groupByCategory } from "../../registry/effects";
 import { useFavorites } from "../../hooks/useFavorites";
 import { SearchBox } from "./SearchBox";
 import { EffectItem } from "./EffectItem";
 
-// Effects not yet implemented, shown as disabled "Coming soon" rows.
-// All previously-listed placeholders are now real effects in the registry.
-const PLACEHOLDERS: Record<string, string[]> = {};
-
 export function Catalog() {
   const { state } = usePlayground();
-  const { isFavorite, toggle } = useFavorites();
+  const { favorites: favoriteIds, isFavorite, toggle } = useFavorites();
   const term = state.search.trim().toLowerCase();
-  const match = (text: string) => !term || text.toLowerCase().includes(term);
 
-  const filtered = EFFECTS.filter((e) =>
-    match(`${e.name} ${e.tags.join(" ")} ${e.tech.join(" ")}`)
-  );
-  const groups = groupByCategory(filtered);
-  const favorites = filtered.filter((e) => isFavorite(e.id));
+  // The filter/group work only depends on the search term — memoize it so a
+  // slider drag (which changes unrelated context state) doesn't recompute it.
+  const { groups, favorites } = useMemo(() => {
+    const filtered = EFFECTS.filter((e) =>
+      `${e.name} ${e.tags.join(" ")} ${e.tech.join(" ")}`.toLowerCase().includes(term)
+    );
+    return {
+      groups: groupByCategory(filtered),
+      favorites: filtered.filter((e) => favoriteIds.includes(e.id)),
+    };
+  }, [term, favoriteIds]);
 
-  const placeholderGroups = Object.entries(PLACEHOLDERS)
-    .map(([label, items]) => ({ label, items: items.filter(match) }))
-    .filter((g) => g.items.length > 0);
-
-  const empty = groups.length === 0 && placeholderGroups.length === 0;
+  const empty = groups.length === 0;
 
   return (
     <aside className="col col-left">
@@ -48,25 +46,6 @@ export function Catalog() {
             <div className="cat-label">{g.label}</div>
             {g.effects.map((e) => (
               <EffectItem effect={e} key={e.id} favorite={isFavorite(e.id)} onToggleFavorite={toggle} />
-            ))}
-          </div>
-        ))}
-        {placeholderGroups.map((g) => (
-          <div className="cat-group" key={g.label}>
-            <div className="cat-label">{g.label}</div>
-            {g.items.map((name) => (
-              <button
-                className="effect-item"
-                style={{ opacity: 0.5, cursor: "not-allowed" }}
-                disabled
-                key={name}
-              >
-                <span className="effect-dot" />
-                <span className="effect-meta">
-                  <div className="effect-name">{name}</div>
-                  <div className="effect-sub">Coming soon</div>
-                </span>
-              </button>
             ))}
           </div>
         ))}

@@ -50,6 +50,21 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 - **Higher-contrast faint text** — `--text-faint` was darkened (light) and
   lightened (dark) to clear WCAG AA for small labels.
 
+### Performance
+
+- **WebGL generators unmount while the tab is hidden** — no GPU render loop runs
+  in a background tab (per the PRD's "stop rendering inactive previews").
+- **`getEffect` is now an O(1) map lookup** instead of a linear scan over 57
+  effects on every render.
+- **Catalog filtering and code generation are memoized** — a slider drag no
+  longer re-filters/re-groups the 57-effect catalog or re-generates and
+  re-highlights the code every frame.
+
+### Removed
+
+- Dead "Coming soon" placeholder rendering path in the catalog (the placeholder
+  map has been empty since all effects became real).
+
 ### Changed
 
 - **Combination layers are capped at 4** (GPU cost grows with each stacked

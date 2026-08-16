@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import type { EffectDefinition } from "../../types/effects";
@@ -24,13 +24,18 @@ export function CodeViewer() {
 
   const tabs: CodeLang[] = combining ? ["svg", "css"] : availableTabs(effect);
   const tab = tabs.includes(state.codeTab) ? state.codeTab : tabs[0];
-  const code = combining
-    ? tab === "css"
-      ? generateCombinedCss(chain)
-      : generateCombinedSvg(chain, animateFor)
-    : generateCode(effect, state.params, animate, tab);
-  // CSS has its own tokenizer; SVG and React (JSX) are markup-ish.
-  const html = tab === "css" ? highlightCss(code) : highlightSvg(code);
+  // Regenerating + re-highlighting on every render is wasteful; recompute only
+  // when the inputs actually change.
+  const { code, html } = useMemo(() => {
+    const src = combining
+      ? tab === "css"
+        ? generateCombinedCss(chain)
+        : generateCombinedSvg(chain, animateFor)
+      : generateCode(effect, state.params, animate, tab);
+    // CSS has its own tokenizer; SVG and React (JSX) are markup-ish.
+    return { code: src, html: tab === "css" ? highlightCss(src) : highlightSvg(src) };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [combining, tab, effect, state.params, state.layers, animate]);
 
   return (
     <div className="code-block">
