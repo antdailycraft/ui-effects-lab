@@ -7,3 +7,17 @@ if (typeof HTMLCanvasElement !== "undefined") {
   HTMLCanvasElement.prototype.getContext = (() =>
     null) as typeof HTMLCanvasElement.prototype.getContext;
 }
+
+// jsdom has no IntersectionObserver. Provide a no-op that never intersects, so
+// gallery generator tiles stay as placeholders (no WebGL mount) in tests.
+if (typeof IntersectionObserver === "undefined") {
+  class IO {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  }
+  (globalThis as unknown as { IntersectionObserver: unknown }).IntersectionObserver = IO;
+}

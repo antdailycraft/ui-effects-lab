@@ -17,7 +17,7 @@ test("Gallery shows SVG filters at defaults and a tile opens that effect", async
   );
 
   await userEvent.click(screen.getByRole("button", { name: /gallery/i }));
-  const dialog = screen.getByRole("dialog", { name: /svg filter gallery/i });
+  const dialog = screen.getByRole("dialog", { name: /effect gallery/i });
   // multiple filter tiles rendered
   expect(within(dialog).getByRole("button", { name: /water distortion/i })).toBeInTheDocument();
 
