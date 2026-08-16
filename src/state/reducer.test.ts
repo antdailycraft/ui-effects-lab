@@ -47,6 +47,31 @@ test("LOAD_PRESET switches effect and applies the preset's params together", () 
   expect(s.params.scale).toBe(30);
 });
 
+test("ADD_LAYER snapshots the active SVG effect; REMOVE/MOVE/CLEAR edit the stack", () => {
+  // active effect defaults to an SVG-filter effect (rough-edge)
+  const one = reducer(initialState, { type: "ADD_LAYER" });
+  expect(one.layers).toHaveLength(1);
+  expect(one.layers[0].effectId).toBe(initialState.effectId);
+
+  // add a second (switch to water first)
+  const onWater = reducer(one, { type: "SELECT_EFFECT", id: "water" });
+  const two = reducer(onWater, { type: "ADD_LAYER" });
+  expect(two.layers.map((l) => l.effectId)).toEqual([initialState.effectId, "water"]);
+
+  // reorder
+  const moved = reducer(two, { type: "MOVE_LAYER", index: 0, dir: 1 });
+  expect(moved.layers.map((l) => l.effectId)).toEqual(["water", initialState.effectId]);
+
+  // remove + clear
+  expect(reducer(moved, { type: "REMOVE_LAYER", index: 0 }).layers).toHaveLength(1);
+  expect(reducer(moved, { type: "CLEAR_LAYERS" }).layers).toEqual([]);
+});
+
+test("ADD_LAYER is a no-op for non-stackable (generator/CSS) effects", () => {
+  const gen = reducer(initialState, { type: "SELECT_EFFECT", id: "swirl" });
+  expect(reducer(gen, { type: "ADD_LAYER" }).layers).toEqual([]);
+});
+
 test("LOAD_PRESET fills missing params from the effect's defaults (partial presets are safe)", () => {
   const swirl = getEffect("swirl")!;
   const s = reducer(initialState, {

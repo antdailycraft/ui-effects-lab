@@ -25,7 +25,7 @@ test("renders the current effect name", () => {
       <ControlsPanel />
     </PlaygroundProvider>
   );
-  expect(screen.getByText(/rough edge/i)).toBeInTheDocument();
+  expect(screen.getByText("Rough Edge")).toBeInTheDocument();
 });
 
 test("shows a license badge linking to the SPDX page (defaults to MIT)", () => {

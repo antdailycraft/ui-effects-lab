@@ -6,6 +6,7 @@ import { SeedControl } from "./SeedControl";
 import { ColorControl } from "./ColorControl";
 import { ToggleControl } from "./ToggleControl";
 import { LicenseBadge } from "./LicenseBadge";
+import { StackPanel } from "../combine/StackPanel";
 import { PresetsPanel } from "../presets/PresetsPanel";
 import { CodeViewer } from "../code/CodeViewer";
 
@@ -59,6 +60,8 @@ export function ControlsPanel() {
             />
           )}
         </div>
+
+        <StackPanel />
 
         <PresetsPanel />
 

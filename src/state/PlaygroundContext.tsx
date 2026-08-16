@@ -5,6 +5,8 @@ import { randomizeParams } from "../lib/randomize";
 import { loadTheme, loadLastEffectId, loadCustomHtml } from "../lib/storage";
 import { DEFAULT_IMAGE } from "../lib/sampleImage";
 import { decodeShare } from "../lib/share";
+import type { EffectLayer } from "../lib/combine";
+import { isStackable } from "../lib/combine";
 
 export type CompareMode = "off" | "side-by-side" | "slider";
 
@@ -22,6 +24,8 @@ export interface PlaygroundState {
   imageUrl: string;
   /** User-authored markup for the "custom" preview target. */
   customHtml: string;
+  /** Committed SVG-filter effects stacked under the active one (Combine). */
+  layers: EffectLayer[];
 }
 
 export type Action =
@@ -39,7 +43,11 @@ export type Action =
   | { type: "SET_THEME"; theme: "dark" | "light" }
   | { type: "LOAD_PRESET"; effectId: string; params: Params }
   | { type: "SET_IMAGE"; url: string }
-  | { type: "SET_CUSTOM_HTML"; html: string };
+  | { type: "SET_CUSTOM_HTML"; html: string }
+  | { type: "ADD_LAYER" }
+  | { type: "REMOVE_LAYER"; index: number }
+  | { type: "MOVE_LAYER"; index: number; dir: -1 | 1 }
+  | { type: "CLEAR_LAYERS" };
 
 // A shared "#s=…" link (if present and valid) wins over the last-used effect.
 const shared = typeof location !== "undefined" ? decodeShare(location.hash) : null;
@@ -66,6 +74,13 @@ export const initialState: PlaygroundState = {
     : defaultParams(getEffect(firstId)!),
   imageUrl: DEFAULT_IMAGE,
   customHtml: loadCustomHtml(),
+  layers:
+    shared?.l
+      ?.map((x) => ({ effectId: x.e, params: x.p }))
+      .filter((l) => {
+        const e = getEffect(l.effectId);
+        return e && isStackable(e);
+      }) ?? [],
 };
 
 export function reducer(state: PlaygroundState, action: Action): PlaygroundState {
@@ -99,6 +114,25 @@ export function reducer(state: PlaygroundState, action: Action): PlaygroundState
       return { ...state, imageUrl: action.url };
     case "SET_CUSTOM_HTML":
       return { ...state, customHtml: action.html };
+    case "ADD_LAYER": {
+      const effect = getEffect(state.effectId);
+      if (!effect || !isStackable(effect)) return state;
+      return {
+        ...state,
+        layers: [...state.layers, { effectId: state.effectId, params: { ...state.params } }],
+      };
+    }
+    case "REMOVE_LAYER":
+      return { ...state, layers: state.layers.filter((_, i) => i !== action.index) };
+    case "MOVE_LAYER": {
+      const to = action.index + action.dir;
+      if (to < 0 || to >= state.layers.length) return state;
+      const layers = [...state.layers];
+      [layers[action.index], layers[to]] = [layers[to], layers[action.index]];
+      return { ...state, layers };
+    }
+    case "CLEAR_LAYERS":
+      return { ...state, layers: [] };
     case "SET_THEME":
       return { ...state, theme: action.theme };
     case "LOAD_PRESET": {

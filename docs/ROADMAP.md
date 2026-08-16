@@ -43,12 +43,16 @@ Phase 5 (Sharing) is the main outstanding chunk.
 - ✅ **Favorites** — star effects; a pinned "★ Favorites" group in the catalog.
 - ✅ **Custom HTML preview** — a "Custom" target renders sanitized user markup
   with the effect applied live (persisted to LocalStorage).
-- ⬜ Effect combination (stacking multiple filters)
-- ⬜ Community presets
+- ✅ **Effect combination** — a "Combine" panel stacks SVG-filter effects into a
+  `filter: url(#a) url(#b) …` chain (add/reorder/remove/clear); preview, combined
+  code, Copy, and URL share all follow the stack. SVG-filter effects only.
+- ⬜ Community presets — needs a hosted backend, which breaks the LocalStorage-
+  only MVP; a server-less alternative would be a curated read-only gallery
+  shipped as static JSON. Held for a product decision.
 
-The two remaining P2 items are larger and need product decisions (a filter-
-stacking model that reworks the single-effect core, and a hosted preset backend
-that breaks the LocalStorage-only MVP), so they're held for a follow-up.
+Follow-ups noted in the CHANGELOG: sandbox export (CodePen/StackBlitz) doesn't
+yet cover a combination stack, and layer params use the snapshot model (remove &
+re-add to retune) rather than inline per-layer editing.
 
 ## Beyond the PRD — already shipped
 

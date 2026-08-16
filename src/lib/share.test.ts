@@ -16,6 +16,27 @@ test("decode handles unicode params", () => {
   expect(decodeShare(encodeShare(payload))).toEqual(payload);
 });
 
+test("encode → decode round-trips combination layers", () => {
+  const payload = {
+    e: "water",
+    p: { scale: 12 },
+    l: [
+      { e: "rough-edge", p: { scale: 9 } },
+      { e: "water", p: { scale: 20 } },
+    ],
+  };
+  expect(decodeShare(encodeShare(payload))).toEqual(payload);
+});
+
+test("decode drops malformed layer entries", () => {
+  const encoded = encodeShare({
+    e: "water",
+    p: {},
+    l: [{ e: "rough-edge", p: { scale: 9 } }, { bad: true } as never],
+  });
+  expect(decodeShare(encoded)?.l).toEqual([{ e: "rough-edge", p: { scale: 9 } }]);
+});
+
 test("decode returns null for absent or malformed hashes", () => {
   expect(decodeShare("")).toBeNull();
   expect(decodeShare("#other=1")).toBeNull();

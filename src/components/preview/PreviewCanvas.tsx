@@ -4,7 +4,8 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import type { CompareMode } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { FilterHost, LIVE_FILTER_ID } from "./FilterHost";
+import { previewChain, chainFilterCss } from "../../lib/combine";
+import { FilterHost } from "./FilterHost";
 import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
 import { ImagePreview } from "./ImagePreview";
@@ -41,15 +42,25 @@ const COMPARE_OPTIONS: { id: CompareMode; label: string }[] = [
   { id: "slider", label: "Slider" },
 ];
 
-/** How the current effect is applied to a preview target. */
-function appliedProps(effect: EffectDefinition, params: Params, animate: boolean): TargetProps {
+/**
+ * How the effect(s) apply to a target. A non-empty SVG-filter `chainLen` wins
+ * (the combined `filter: url(#…) url(#…)` chain); otherwise a lone CSS effect
+ * applies its class + custom properties.
+ */
+function appliedProps(
+  effect: EffectDefinition,
+  params: Params,
+  animate: boolean,
+  chainLen: number
+): TargetProps {
+  if (chainLen > 0) return { style: { filter: chainFilterCss(chainLen) } };
   if (effect.kind === "css" && effect.buildStyle) {
     return {
       className: `${effect.cssClass ?? ""}${animate ? " fx-anim" : ""}`.trim(),
       style: effect.buildStyle(params, animate) as unknown as CSSProperties,
     };
   }
-  return { style: { filter: `url(#${LIVE_FILTER_ID})` } };
+  return {};
 }
 
 /** A button that enters/exits the immersive fullscreen preview. */
@@ -93,9 +104,14 @@ export function PreviewCanvas() {
 
   const mainClass = "col col-center" + (fullscreen ? " pv-fullscreen" : "");
 
-  // Generator kind: the effect IS the preview (a self-contained component),
-  // so preview targets and before/after compare don't apply.
-  if (effect.kind === "generator" && effect.component) {
+  // The live SVG-filter chain: committed layers + the active effect on top.
+  const chain = previewChain(state.layers, state.effectId, state.params);
+  const combining = state.layers.length > 0;
+
+  // Generator kind: the effect IS the preview (a self-contained component), so
+  // preview targets and compare don't apply — unless a combination stack is
+  // active, in which case we fall through to render the SVG chain on a target.
+  if (effect.kind === "generator" && effect.component && !combining) {
     const Generator = effect.component;
     const props = effect.buildProps ? effect.buildProps(state.params, animate) : {};
     if (effect.usesImage) props.image = state.imageUrl;
@@ -130,7 +146,7 @@ export function PreviewCanvas() {
     ? state.previewType
     : effect.previewTypes[0];
   const Target = TARGETS[previewType];
-  const applied = appliedProps(effect, state.params, animate);
+  const applied = appliedProps(effect, state.params, animate, chain.length);
   const mode = state.compareMode;
 
   return (
@@ -194,11 +210,13 @@ export function PreviewCanvas() {
           </div>
         )}
         <div className="stage-hint">
-          {effect.animatable
-            ? animate
-              ? "Animating — toggle in Controls"
-              : "Static — enable Animate in Controls"
-            : "Drag the sliders to tune the effect in real time"}
+          {combining
+            ? `${chain.length} SVG ${chain.length === 1 ? "filter" : "filters"} combined`
+            : effect.animatable
+              ? animate
+                ? "Animating — toggle in Controls"
+                : "Static — enable Animate in Controls"
+              : "Drag the sliders to tune the effect in real time"}
         </div>
       </div>
     </main>

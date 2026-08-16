@@ -8,6 +8,8 @@ export interface SharePayload {
   p: Params;
   /** previewType (optional) */
   pv?: PreviewType;
+  /** committed combination layers (optional) */
+  l?: { e: string; p: Params }[];
 }
 
 const PREFIX = "#s=";
@@ -58,6 +60,13 @@ export function decodeShare(hash: string): SharePayload | null {
       const payload = obj as SharePayload;
       // Drop an unrecognized preview type rather than trust it blindly.
       if (payload.pv && !PREVIEW_TYPES.includes(payload.pv)) delete payload.pv;
+      // Keep only well-formed layer entries.
+      if (payload.l) {
+        payload.l = Array.isArray(payload.l)
+          ? payload.l.filter((x) => x && typeof x.e === "string" && x.p && typeof x.p === "object")
+          : undefined;
+        if (payload.l && payload.l.length === 0) delete payload.l;
+      }
       return payload;
     }
   } catch {

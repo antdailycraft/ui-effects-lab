@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
-import { availableTabs, generateCode, resolveTab } from "../../lib/codegen";
+import type { EffectDefinition } from "../../types/effects";
+import { availableTabs, generateCode, type CodeLang } from "../../lib/codegen";
+import { previewChain, generateCombinedSvg, generateCombinedCss } from "../../lib/combine";
 import { highlightSvg, highlightCss } from "../../lib/highlight";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { CopyButton } from "./CopyButton";
@@ -14,9 +16,18 @@ export function CodeViewer() {
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
 
-  const tabs = availableTabs(effect);
-  const tab = resolveTab(effect, state.codeTab);
-  const code = generateCode(effect, state.params, animate, tab);
+  // A combination stack generates chained SVG + CSS instead of the single effect.
+  const combining = state.layers.length > 0;
+  const chain = previewChain(state.layers, state.effectId, state.params);
+  const animateFor = (e: EffectDefinition) => state.animate && !reduced && !!e.animatable;
+
+  const tabs: CodeLang[] = combining ? ["svg", "css"] : availableTabs(effect);
+  const tab = tabs.includes(state.codeTab) ? state.codeTab : tabs[0];
+  const code = combining
+    ? tab === "css"
+      ? generateCombinedCss(chain)
+      : generateCombinedSvg(chain, animateFor)
+    : generateCode(effect, state.params, animate, tab);
   // CSS has its own tokenizer; SVG and React (JSX) are markup-ish.
   const html = tab === "css" ? highlightCss(code) : highlightSvg(code);
 

@@ -3,6 +3,12 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { generateCode, resolveTab } from "../../lib/codegen";
 import { shareUrl } from "../../lib/share";
+import {
+  previewChain,
+  generateCombinedSvg,
+  generateCombinedCss,
+} from "../../lib/combine";
+import type { EffectDefinition } from "../../types/effects";
 import { ExportButtons } from "./ExportButtons";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
@@ -15,7 +21,17 @@ export function BottomBar() {
   const [shared, setShared] = useState(false);
 
   const copy = async () => {
-    const code = generateCode(effect, state.params, animate, resolveTab(effect, state.codeTab));
+    let code: string;
+    if (state.layers.length > 0) {
+      const chain = previewChain(state.layers, state.effectId, state.params);
+      const animateFor = (e: EffectDefinition) => state.animate && !reduced && !!e.animatable;
+      code =
+        state.codeTab === "css"
+          ? generateCombinedCss(chain)
+          : generateCombinedSvg(chain, animateFor);
+    } else {
+      code = generateCode(effect, state.params, animate, resolveTab(effect, state.codeTab));
+    }
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -26,7 +42,14 @@ export function BottomBar() {
   };
 
   const share = async () => {
-    const url = shareUrl({ e: state.effectId, p: state.params, pv: state.previewType });
+    const url = shareUrl({
+      e: state.effectId,
+      p: state.params,
+      pv: state.previewType,
+      ...(state.layers.length
+        ? { l: state.layers.map((x) => ({ e: x.effectId, p: x.params })) }
+        : {}),
+    });
     // Reflect the current view in the address bar so a copied link round-trips.
     try {
       history.replaceState(null, "", url);

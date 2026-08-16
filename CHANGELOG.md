@@ -10,7 +10,21 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Effect combination (SVG filter stacking)** — a new "Combine" panel stacks
+  SVG-filter effects into a chain (`filter: url(#a) url(#b) …`) applied in order.
+  Add the active effect as a layer, reorder or remove layers, or clear the stack.
+  The preview renders the committed layers plus the active effect as a live top
+  (de-duped so a just-added layer isn't applied twice); the code viewer emits the
+  combined SVG (one `<filter>` per layer) + the chained CSS, and Copy code and
+  URL sharing include the stack. SVG-filter effects only — CSS and WebGL
+  generators can't be chained.
+
+### Known limitations
+
+- Sandbox export (CodePen/StackBlitz) still exports the single active effect, not
+  a combination stack — a follow-up.
 
 ## [0.4.0] - 2026-08-17
 
