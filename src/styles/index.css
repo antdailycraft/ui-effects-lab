@@ -806,6 +806,83 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .gal-dot:hover { background: var(--text-faint); }
 .gal-dot.on { background: var(--accent); transform: scale(1.25); }
+
+/* ---------- Landing ---------- */
+.lp { min-height: 100vh; background: var(--bg); color: var(--text); overflow-x: hidden; }
+.lp-hero { position: relative; min-height: 92vh; display: flex; flex-direction: column; overflow: hidden; }
+.lp-hero-bg { position: absolute; inset: 0; z-index: 0; }
+.lp-hero-bg > *,
+.lp-hero-bg canvas { width: 100% !important; height: 100% !important; display: block; }
+.lp-hero-fallback {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 80% at 20% 15%, #ffd36e, transparent 60%),
+    radial-gradient(70% 90% at 85% 25%, #ff6a9c, transparent 55%),
+    radial-gradient(90% 90% at 60% 100%, #5b7bff, transparent 60%),
+    linear-gradient(160deg, #241a3a, #101a33);
+}
+.lp-hero-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(6, 8, 11, 0.35) 0%, rgba(6, 8, 11, 0.5) 45%, rgba(6, 8, 11, 0.82) 100%);
+}
+.lp-top { position: relative; z-index: 2; display: flex; align-items: center; gap: 11px; padding: 26px 30px; }
+.lp-mark {
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px;
+  background: var(--accent); color: var(--accent-ink);
+}
+.lp-mark svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.lp-brand { font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+.lp-hero-inner { position: relative; z-index: 2; margin-top: auto; padding: 0 30px 8vh; max-width: 940px; }
+.lp-eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent);
+}
+.lp-title {
+  font-size: clamp(44px, 8.4vw, 120px); line-height: 0.9; letter-spacing: -0.04em;
+  font-weight: 800; margin: 14px 0 0; color: #fff;
+}
+.lp-title em { font-style: normal; color: var(--accent); }
+.lp-sub { max-width: 56ch; margin: 22px 0 0; font-size: 15px; line-height: 1.6; color: rgba(240, 242, 247, 0.82); }
+.lp-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.lp-btn {
+  padding: 13px 22px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  transition: filter 0.13s, border-color 0.13s, background 0.13s;
+}
+.lp-btn.primary { background: var(--accent); color: var(--accent-ink); }
+.lp-btn.primary:hover { filter: brightness(1.07); }
+.lp-btn.ghost { color: #fff; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.22); }
+.lp-btn.ghost:hover { border-color: #fff; }
+
+.lp-marquee {
+  position: relative; z-index: 2; overflow: hidden; padding: 22px 0;
+  background: var(--panel); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
+}
+.lp-track { display: flex; gap: 14px; width: max-content; animation: lp-marquee 46s linear infinite; }
+.lp-track.still { animation: none; }
+.lp-marquee:hover .lp-track { animation-play-state: paused; }
+.lp-chip {
+  flex: none; display: flex; align-items: center; gap: 12px; padding: 9px 14px 9px 9px; border-radius: 12px;
+  background: var(--panel-2); border: 1px solid var(--border); transition: border-color 0.13s;
+}
+.lp-chip:hover { border-color: var(--accent-line); }
+.lp-chip-art {
+  width: 46px; height: 34px; display: grid; place-items: center; border-radius: 8px;
+  font-size: 16px; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg, #ff8a3d, #ff5d73 55%, #c0417a);
+}
+.lp-chip-name { font-size: 12.5px; color: var(--text); white-space: nowrap; }
+
+.lp-loop {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px;
+  background: var(--border-soft);
+}
+.lp-step { background: var(--bg); padding: 34px 30px; }
+.lp-step-n { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; color: var(--accent); }
+.lp-step h3 { font-size: 20px; margin: 12px 0 8px; letter-spacing: -0.01em; }
+.lp-step p { font-size: 13.5px; line-height: 1.55; color: var(--text-dim); }
+.lp-foot { display: grid; place-items: center; padding: 64px 30px 84px; }
+@keyframes lp-marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .lp-track { animation: none; } }
 .gal-tile {
   display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: 10px;
   background: var(--panel-2); border: 1px solid var(--border);
