@@ -50,9 +50,9 @@ Phase 5 (Sharing) is the main outstanding chunk.
   only MVP; a server-less alternative would be a curated read-only gallery
   shipped as static JSON. Held for a product decision.
 
-Follow-ups noted in the CHANGELOG: sandbox export (CodePen/StackBlitz) doesn't
-yet cover a combination stack, and layer params use the snapshot model (remove &
-re-add to retune) rather than inline per-layer editing.
+Follow-up: layer params use the snapshot model (remove & re-add to retune)
+rather than inline per-layer editing. (Sandbox export now covers a combination
+stack, and generators lazy-load — both former follow-ups, done.)
 
 ## Beyond the PRD — already shipped
 

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { buildDemo, codePenData, stackBlitzProject } from "./export";
+import { buildDemo, buildCombinedDemo, codePenData, stackBlitzProject } from "./export";
 import { getEffect, defaultParams } from "../registry/effects";
 
 const demoFor = (id: string) => {
@@ -39,6 +39,22 @@ test("an image shader export uses the real image URL, not the placeholder", () =
   if (demo.kind !== "react") return;
   expect(demo.jsx).toContain('image="https://cdn.example/pic.png"');
   expect(demo.jsx).not.toContain("/your-image.jpg");
+});
+
+test("a combination stack exports a static demo chaining every layer's filter", () => {
+  const rough = getEffect("rough-edge")!;
+  const water = getEffect("water")!;
+  const chain = [
+    { effectId: "rough-edge", params: defaultParams(rough) },
+    { effectId: "water", params: defaultParams(water) },
+  ];
+  const demo = buildCombinedDemo(chain, () => false);
+  expect(demo.kind).toBe("static");
+  if (demo.kind !== "static") return;
+  expect(demo.html).toContain('<filter id="rough-edge-1">');
+  expect(demo.html).toContain('<filter id="water-2">');
+  expect(demo.html).toContain('class="effect card"');
+  expect(demo.css).toContain("filter: url(#rough-edge-1) url(#water-2);");
 });
 
 test("CodePen payload: static → html/css, generator → babel JS with esm.sh imports", () => {

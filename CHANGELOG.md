@@ -10,6 +10,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+### Added
+
+- **Combination-stack export** — CodePen/StackBlitz now export the whole chained
+  SVG filter (one `<filter>` per layer + the combined `filter:` rule on a sample
+  card) when a combine stack is active, instead of just the active effect.
+
 ### Performance
 
 - **Generators now lazy-load the WebGL library** — the ~264 KB

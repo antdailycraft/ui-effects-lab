@@ -1,14 +1,24 @@
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
+import type { EffectDefinition } from "../../types/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { buildDemo, openInCodePen, openInStackBlitz } from "../../lib/export";
+import { activeChain, isStackable } from "../../lib/combine";
+import { buildDemo, buildCombinedDemo, openInCodePen, openInStackBlitz } from "../../lib/export";
 
 export function ExportButtons() {
   const { state } = usePlayground();
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
-  const demo = () => buildDemo(effect, state.params, animate, state.imageUrl);
+  const demo = () => {
+    // A combination stack exports the whole chained filter, not just one effect.
+    if (state.layers.length > 0 && isStackable(effect)) {
+      const chain = activeChain(state.layers, state.effectId, state.params);
+      const animateFor = (e: EffectDefinition) => state.animate && !reduced && !!e.animatable;
+      return buildCombinedDemo(chain, animateFor);
+    }
+    return buildDemo(effect, state.params, animate, state.imageUrl);
+  };
 
   return (
     <>

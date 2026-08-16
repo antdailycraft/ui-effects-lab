@@ -1,5 +1,6 @@
 import type { EffectDefinition, Params } from "../types/effects";
 import { generateSvg, generateCss, generateReact } from "./codegen";
+import { generateCombinedSvg, generateCombinedCss, type EffectLayer } from "./combine";
 
 /** A self-contained, runnable demo of one effect. */
 export type Demo =
@@ -119,6 +120,20 @@ ${body}
 
 createRoot(document.getElementById("${rootId}")).render(<App />);
 `;
+}
+
+/** A static demo of a combination stack: the chained SVG filters on a sample card. */
+export function buildCombinedDemo(
+  chain: EffectLayer[],
+  animateFor: (effect: EffectDefinition) => boolean
+): Demo {
+  return {
+    kind: "static",
+    title: `UI Effects Lab — Combined (${chain.length} filters)`,
+    description: "A stacked SVG filter chain from UI Effects Lab.",
+    html: `${generateCombinedSvg(chain, animateFor)}\n\n${DEMO_HTML}`,
+    css: `${DEMO_CSS_BASE}\n\n${generateCombinedCss(chain)}`,
+  };
 }
 
 /* ---------- CodePen (prefill define API) ---------- */
