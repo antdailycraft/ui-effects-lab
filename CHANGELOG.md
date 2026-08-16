@@ -12,6 +12,10 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Glossary: Pagination & Pagination dots** — two new Components terms (with live
+  previews) covering page controls and the dot indicator (a.k.a. page control /
+  bullets).
+
 - **Resources additions** — the official Unicode full emoji chart (Learn),
   Codrops **Webzibition** (Inspiration), and **PixiJS** (Libraries); 26 curated
   sites total.

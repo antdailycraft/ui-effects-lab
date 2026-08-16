@@ -49,6 +49,8 @@ export const TERMS: Term[] = [
   { term: "Stepper", category: "Components", def: "A component that guides through ordered steps or increments a value.", example: "Checkout steps; a quantity +/−." },
   { term: "Avatar Chip", category: "Components", def: "A user's avatar and name combined into one rounded chip/tag, often removable.", example: "Assignee pills on a task." },
   { term: "Avatar Stack", category: "Components", def: "Several user avatars overlapped in a row (a.k.a. avatar group), often with a +N overflow.", example: "Collaborators on a document." },
+  { term: "Pagination", category: "Components", def: "Splitting content into pages with controls (numbers and/or prev/next) to move between them.", example: "‹ 1 2 3 › under a table or search results." },
+  { term: "Pagination dots", category: "Components", def: "A row of dots showing how many pages/slides exist and which is active — a.k.a. dot indicator, page control (iOS), or bullets (carousels).", example: "The dots under an onboarding carousel." },
 
   // Interaction
   { term: "CTA (Call to action)", category: "Interaction", def: "The button or copy that drives the user's next step; the Primary CTA is the one action you most want them to take on a screen.", example: '"Get started" as the primary button.' },

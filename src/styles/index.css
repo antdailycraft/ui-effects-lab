@@ -750,6 +750,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cp-cta { display: flex; align-items: center; gap: 10px; }
 .cp-cta .primary { font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 8px; color: var(--accent-ink); background: var(--accent); }
 .cp-cta .ghost { font-size: 12px; padding: 8px 14px; border-radius: 8px; color: var(--text-dim); background: transparent; border: 1px solid var(--border); }
+.cp-pagination { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; }
+.cp-pagination .pg,
+.cp-pagination .pg-arrow {
+  min-width: 26px; height: 26px; display: grid; place-items: center; border-radius: 7px;
+  color: var(--text-dim); background: var(--panel); border: 1px solid var(--border);
+}
+.cp-pagination .pg.on { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.cp-dots { display: inline-flex; align-items: center; gap: 9px; }
+.cp-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+.cp-dots i.on { background: var(--accent); transform: scale(1.25); }
 
 /* Emoji picker */
 .emoji-modal { max-width: 620px; }

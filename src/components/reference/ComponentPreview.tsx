@@ -134,6 +134,23 @@ const PREVIEWS: Record<string, JSX.Element> = {
       <button className="ghost">Later</button>
     </div>
   ),
+  Pagination: (
+    <div className="cp-pagination">
+      <button className="pg-arrow">‹</button>
+      <span className="pg on">1</span>
+      <span className="pg">2</span>
+      <span className="pg">3</span>
+      <button className="pg-arrow">›</button>
+    </div>
+  ),
+  "Pagination dots": (
+    <div className="cp-dots">
+      <i className="on" />
+      <i />
+      <i />
+      <i />
+    </div>
+  ),
 };
 
 export function ComponentPreview({ term }: { term: string }): JSX.Element | null {
