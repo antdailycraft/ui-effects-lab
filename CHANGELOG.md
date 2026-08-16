@@ -12,6 +12,9 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Resources menu expanded** (7 → 12) — added Dribbble and Godly to Inspiration,
+  a new **Components** group (shadcn/ui, 21st.dev), and a new **Learn** group
+  (Laws of UX), curated from a shared design-bookmark set.
 - **Layer inline editing** — click a layer in the Combine panel to edit its
   parameters in place. The Controls panel (plus Reset, Randomize, and the
   generated code) targets that layer, a banner shows which layer is being edited

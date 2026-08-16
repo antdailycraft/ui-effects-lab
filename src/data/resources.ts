@@ -54,6 +54,41 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://land-book.com/design/landing-page",
         desc: "Landing-page gallery with fine-grained filters.",
       },
+      {
+        name: "Dribbble",
+        url: "https://dribbble.com/",
+        desc: "The world's top designers & creative work — daily shots.",
+      },
+      {
+        name: "Godly",
+        url: "https://godly.website/",
+        desc: "Astronomically good web design inspiration.",
+      },
+    ],
+  },
+  {
+    label: "Components",
+    items: [
+      {
+        name: "shadcn/ui",
+        url: "https://ui.shadcn.com/",
+        desc: "Copy-paste React components — the de facto design-system foundation.",
+      },
+      {
+        name: "21st.dev",
+        url: "https://21st.dev/home",
+        desc: "UI building blocks & registry for the agentic web.",
+      },
+    ],
+  },
+  {
+    label: "Learn",
+    items: [
+      {
+        name: "Laws of UX",
+        url: "https://lawsofux.com/",
+        desc: "UX principles & psychology laws, each with examples.",
+      },
     ],
   },
 ];

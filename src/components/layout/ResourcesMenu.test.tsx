@@ -23,9 +23,15 @@ test("opening the menu reveals every resource as a new-tab link", async () => {
   }
 });
 
-test("includes all seven curated sites", () => {
-  expect(ALL).toHaveLength(7);
+test("includes all curated sites across Tools / Inspiration / Components / Learn", () => {
+  expect(ALL).toHaveLength(12);
   expect(ALL.map((r) => r.name)).toEqual([
-    "MagicPattern", "Variant", "SEESAW", "Refero", "Recent", "Awwwards", "Land-book",
+    "MagicPattern", "Variant",
+    "SEESAW", "Refero", "Recent", "Awwwards", "Land-book", "Dribbble", "Godly",
+    "shadcn/ui", "21st.dev",
+    "Laws of UX",
+  ]);
+  expect(RESOURCE_GROUPS.map((g) => g.label)).toEqual([
+    "Tools", "Inspiration", "Components", "Learn",
   ]);
 });
