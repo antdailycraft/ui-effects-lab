@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
+import { useViewNav } from "../../state/ViewContext";
 import { ResourcesMenu } from "./ResourcesMenu";
 import { ReferenceMenu } from "../reference/ReferenceMenu";
 import { FilterGallery } from "../gallery/FilterGallery";
@@ -22,12 +23,13 @@ function SunIcon() {
 
 export function TopBar() {
   const { state, dispatch } = usePlayground();
+  const { goHome } = useViewNav();
   const [gallery, setGallery] = useState(false);
   const next = state.theme === "dark" ? "light" : "dark";
   return (
     <header className="topbar" role="banner">
       <h1 className="sr-only">UI Effects Lab</h1>
-      <div className="brand">
+      <button className="brand" onClick={goHome} title="Back to landing" aria-label="Back to landing">
         <span className="brand-mark">
           <svg className="i i-sm" viewBox="0 0 24 24">
             <path d="M4 16c2-6 4-9 8-9s6 3 8 9" />
@@ -37,8 +39,7 @@ export function TopBar() {
         <span className="brand-name">
           UI Effects <span>Lab</span>
         </span>
-      </div>
-      <span className="brand-tag">MVP</span>
+      </button>
       <div className="topbar-spacer" />
       <button className="topbar-link" onClick={() => setGallery(true)}>
         <svg className="i i-sm" viewBox="0 0 24 24">
