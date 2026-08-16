@@ -12,6 +12,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Layer inline editing** — click a layer in the Combine panel to edit its
+  parameters in place. The Controls panel (plus Reset, Randomize, and the
+  generated code) targets that layer, a banner shows which layer is being edited
+  with a "Done" to exit, and the draft effect is preserved. Replaces the previous
+  snapshot-only model (remove & re-add to retune).
 - **Combination-stack export** — CodePen/StackBlitz now export the whole chained
   SVG filter (one `<filter>` per layer + the combined `filter:` rule on a sample
   card) when a combine stack is active, instead of just the active effect.

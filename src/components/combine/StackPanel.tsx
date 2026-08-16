@@ -55,10 +55,19 @@ export function StackPanel() {
           <ol className="stack-list">
             {layers.map((layer, i) => {
               const eff = getEffect(layer.effectId);
+              const isEditing = state.editingLayer === i;
               return (
-                <li className="stack-item" key={i}>
+                <li className={"stack-item" + (isEditing ? " editing" : "")} key={i}>
                   <span className="stack-idx">{i + 1}</span>
-                  <span className="stack-name">{eff?.name ?? layer.effectId}</span>
+                  <button
+                    className="stack-name"
+                    title={isEditing ? "Stop editing this layer" : "Edit this layer's parameters"}
+                    onClick={() =>
+                      dispatch({ type: "SET_EDITING_LAYER", index: isEditing ? null : i })
+                    }
+                  >
+                    {eff?.name ?? layer.effectId}
+                  </button>
                   <span className="stack-actions">
                     <button
                       aria-label={`Move ${eff?.name ?? "layer"} up`}

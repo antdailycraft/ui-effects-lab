@@ -575,6 +575,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .panel-head .desc-link { font-size: 11px; color: var(--text-faint); }
 
+.editing-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin: 10px 16px 4px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); border: 1px solid var(--accent-line);
+  font-size: 12px; color: var(--text);
+}
+.editing-banner strong { font-weight: 700; }
+.editing-banner button {
+  font-size: 11.5px; font-weight: 600; color: var(--accent-ink); background: var(--accent);
+  padding: 4px 12px; border-radius: 6px;
+}
+.editing-banner button:hover { filter: brightness(1.06); }
+
 .effect-headline { padding: 0 16px 8px; }
 .effect-headline .t { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
 .effect-headline .d { font-size: 12px; color: var(--text-dim); margin-top: 3px; line-height: 1.5; }
@@ -686,7 +699,15 @@ input[type="range"]:focus-visible { box-shadow: 0 0 0 3px var(--accent-soft); }
   display: grid; place-items: center;
   font-size: 10.5px; font-weight: 700; color: var(--accent-ink); background: var(--accent);
 }
-.stack-name { flex: 1; min-width: 0; font-size: 12.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stack-name {
+  flex: 1; min-width: 0; text-align: left;
+  font-size: 12.5px; font-weight: 500; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  cursor: pointer; transition: color 0.13s;
+}
+.stack-name:hover { color: var(--accent); }
+.stack-item.editing { border-color: var(--accent-line); background: var(--accent-soft); }
+.stack-item.editing .stack-name { color: var(--accent); }
 .stack-actions { display: inline-flex; gap: 2px; }
 .stack-actions button {
   width: 24px; height: 24px; border-radius: 6px; color: var(--text-dim); font-size: 13px;

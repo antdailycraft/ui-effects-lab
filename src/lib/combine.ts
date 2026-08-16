@@ -58,6 +58,21 @@ export function activeChain(
   return previewChain(layers, activeId, activeParams);
 }
 
+/**
+ * The chain to render, accounting for in-place layer editing: while a layer is
+ * being edited the committed stack is shown as-is (no draft top); otherwise the
+ * active effect is appended as a live top via {@link activeChain}.
+ */
+export function appliedChain(
+  layers: EffectLayer[],
+  activeId: string,
+  activeParams: Params,
+  editingLayer: number | null
+): EffectLayer[] {
+  if (editingLayer !== null) return [...layers];
+  return activeChain(layers, activeId, activeParams);
+}
+
 /** DOM id for the i-th live filter in the chain. */
 export const layerFilterId = (i: number): string => `fx-live-${i}`;
 

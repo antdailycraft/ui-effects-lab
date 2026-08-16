@@ -3,6 +3,7 @@ import {
   isStackable,
   previewChain,
   activeChain,
+  appliedChain,
   chainFilterCss,
   generateCombinedSvg,
   generateCombinedCss,
@@ -45,6 +46,17 @@ test("activeChain is empty when the active effect can't be stacked (stack stays 
   expect(activeChain(layers, "rough-edge", { scale: 9 }).map((l) => l.effectId)).toEqual([
     "water",
     "rough-edge",
+  ]);
+});
+
+test("appliedChain ignores the draft top while a layer is being edited", () => {
+  const layers = [{ effectId: "water", params: { scale: 20 } }];
+  expect(appliedChain(layers, "rough-edge", { scale: 9 }, null).map((l) => l.effectId)).toEqual([
+    "water",
+    "rough-edge",
+  ]);
+  expect(appliedChain(layers, "rough-edge", { scale: 9 }, 0).map((l) => l.effectId)).toEqual([
+    "water",
   ]);
 });
 

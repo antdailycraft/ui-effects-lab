@@ -1,7 +1,7 @@
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { activeChain, layerFilterId } from "../../lib/combine";
+import { appliedChain, layerFilterId } from "../../lib/combine";
 
 /** Kept for back-compat: the id of the first (or only) live filter. */
 export const LIVE_FILTER_ID = layerFilterId(0);
@@ -9,7 +9,7 @@ export const LIVE_FILTER_ID = layerFilterId(0);
 export function FilterHost() {
   const { state } = usePlayground();
   const reduced = useReducedMotion();
-  const chain = activeChain(state.layers, state.effectId, state.params);
+  const chain = appliedChain(state.layers, state.effectId, state.params, state.editingLayer);
   if (chain.length === 0) return null;
   return (
     <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">

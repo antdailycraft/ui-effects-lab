@@ -1,11 +1,13 @@
 import type { ControlDefinition } from "../../types/effects";
 import { usePlayground } from "../../state/PlaygroundContext";
+import { useEditTarget } from "../../hooks/useEditTarget";
 import { formatValue } from "../../lib/format";
 import { randomSeed } from "../../lib/randomize";
 
 export function SeedControl({ control }: { control: ControlDefinition }) {
-  const { state, dispatch } = usePlayground();
-  const value = state.params[control.id] as number;
+  const { dispatch } = usePlayground();
+  const { params } = useEditTarget();
+  const value = params[control.id] as number;
   return (
     <div className="control">
       <div className="ctrl-top">

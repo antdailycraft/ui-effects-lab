@@ -1,9 +1,11 @@
 import type { ControlDefinition } from "../../types/effects";
 import { usePlayground } from "../../state/PlaygroundContext";
+import { useEditTarget } from "../../hooks/useEditTarget";
 
 export function ColorControl({ control }: { control: ControlDefinition }) {
-  const { state, dispatch } = usePlayground();
-  const value = String(state.params[control.id] ?? "#000000");
+  const { dispatch } = usePlayground();
+  const { params } = useEditTarget();
+  const value = String(params[control.id] ?? "#000000");
   return (
     <div className="control">
       <div className="ctrl-top">

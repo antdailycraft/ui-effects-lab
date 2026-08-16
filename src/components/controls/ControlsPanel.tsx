@@ -1,6 +1,6 @@
 import { usePlayground } from "../../state/PlaygroundContext";
-import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useEditTarget } from "../../hooks/useEditTarget";
 import { RangeControl } from "./RangeControl";
 import { SeedControl } from "./SeedControl";
 import { ColorControl } from "./ColorControl";
@@ -13,12 +13,22 @@ import { CodeViewer } from "../code/CodeViewer";
 export function ControlsPanel() {
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
-  const effect = getEffect(state.effectId)!;
+  const { effect, editing } = useEditTarget();
   const animateActive = state.animate && !reduced;
 
   return (
     <aside className="col col-right">
       <div className="right-scroll">
+        {editing && (
+          <div className="editing-banner">
+            <span>
+              Editing layer {(state.editingLayer ?? 0) + 1}: <strong>{effect.name}</strong>
+            </span>
+            <button onClick={() => dispatch({ type: "SET_EDITING_LAYER", index: null })}>
+              Done
+            </button>
+          </div>
+        )}
         <div className="effect-headline">
           <div className="t">{effect.name}</div>
           <div className="d">{effect.description}</div>

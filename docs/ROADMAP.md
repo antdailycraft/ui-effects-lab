@@ -50,9 +50,10 @@ Phase 5 (Sharing) is the main outstanding chunk.
   only MVP; a server-less alternative would be a curated read-only gallery
   shipped as static JSON. Held for a product decision.
 
-Follow-up: layer params use the snapshot model (remove & re-add to retune)
-rather than inline per-layer editing. (Sandbox export now covers a combination
-stack, and generators lazy-load — both former follow-ups, done.)
+Former follow-ups, all done: sandbox export covers a combination stack,
+generators lazy-load, and combination layers are now editable in place (click a
+layer in the Combine panel). The only remaining P2 item is Community Presets
+(needs a hosted backend).
 
 ## Beyond the PRD — already shipped
 

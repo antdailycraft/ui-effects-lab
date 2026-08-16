@@ -2,10 +2,10 @@ import { Suspense, useEffect, type CSSProperties } from "react";
 import type { EffectDefinition, Params, PreviewType } from "../../types/effects";
 import { usePlayground } from "../../state/PlaygroundContext";
 import type { CompareMode } from "../../state/PlaygroundContext";
-import { getEffect } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { useDocumentVisible } from "../../hooks/useDocumentVisible";
-import { activeChain, chainFilterCss, isStackable } from "../../lib/combine";
+import { useEditTarget } from "../../hooks/useEditTarget";
+import { appliedChain, chainFilterCss, isStackable } from "../../lib/combine";
 import { FilterHost } from "./FilterHost";
 import { CardPreview } from "./CardPreview";
 import { TextPreview } from "./TextPreview";
@@ -89,7 +89,9 @@ function FullscreenButton() {
 export function PreviewCanvas() {
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
-  const effect = getEffect(state.effectId)!;
+  // While editing a layer, the preview reflects the layer's effect (targets,
+  // animate); otherwise the active draft effect.
+  const { effect } = useEditTarget();
   const animate = state.animate && !reduced && !!effect.animatable;
   const fullscreen = state.fullscreen;
   const visible = useDocumentVisible();
@@ -107,10 +109,12 @@ export function PreviewCanvas() {
 
   const mainClass = "col col-center" + (fullscreen ? " pv-fullscreen" : "");
 
-  // The live SVG-filter chain: committed layers + the active effect on top.
-  // Empty when the active effect isn't SVG-stackable (stack stays dormant).
-  const chain = activeChain(state.layers, state.effectId, state.params);
-  const combining = state.layers.length > 0 && isStackable(effect);
+  // The live SVG-filter chain: committed layers + the active effect on top
+  // (or just the committed layers while editing one in place). Empty when the
+  // active effect isn't SVG-stackable and there's nothing to combine.
+  const chain = appliedChain(state.layers, state.effectId, state.params, state.editingLayer);
+  const combining =
+    state.layers.length > 0 && (state.editingLayer !== null || isStackable(effect));
 
   // Generator kind: the effect IS the preview (a self-contained component), so
   // preview targets and compare don't apply. A dormant stack (chain empty)

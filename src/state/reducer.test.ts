@@ -73,6 +73,23 @@ test("ADD_LAYER is a no-op for non-stackable (generator/CSS) effects", () => {
   expect(reducer(gen, { type: "ADD_LAYER" }).layers).toEqual([]);
 });
 
+test("editing a layer routes SET_PARAM/RESET to that layer, not the draft", () => {
+  const withLayer = reducer(initialState, { type: "ADD_LAYER" });
+  const editing = reducer(withLayer, { type: "SET_EDITING_LAYER", index: 0 });
+  expect(editing.editingLayer).toBe(0);
+  const draftBefore = editing.params;
+  const edited = reducer(editing, { type: "SET_PARAM", id: "scale", value: 33 });
+  expect(edited.layers[0].params.scale).toBe(33); // layer updated
+  expect(edited.params).toEqual(draftBefore); // draft untouched
+});
+
+test("SET_EDITING_LAYER ignores an out-of-range index; SELECT_EFFECT exits editing", () => {
+  const withLayer = reducer(initialState, { type: "ADD_LAYER" });
+  expect(reducer(withLayer, { type: "SET_EDITING_LAYER", index: 5 }).editingLayer).toBeNull();
+  const editing = reducer(withLayer, { type: "SET_EDITING_LAYER", index: 0 });
+  expect(reducer(editing, { type: "SELECT_EFFECT", id: "water" }).editingLayer).toBeNull();
+});
+
 test("ADD_LAYER stops at the layer cap", () => {
   let s = initialState;
   for (let i = 0; i < 10; i++) s = reducer(s, { type: "ADD_LAYER" });
