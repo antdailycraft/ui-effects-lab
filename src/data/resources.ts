@@ -134,6 +134,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://lawsofux.com/",
         desc: "UX principles & psychology laws, each with examples.",
       },
+      {
+        name: "DESIGN.md",
+        url: "https://github.com/google-labs-code/design.md",
+        desc: "Google Labs spec for describing a visual identity to coding agents (tokens + docs).",
+      },
     ],
   },
   {

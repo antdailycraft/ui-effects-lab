@@ -28,13 +28,13 @@ test("opening the menu reveals every resource as a new-tab link", async () => {
 });
 
 test("includes all curated sites across every group", () => {
-  expect(ALL).toHaveLength(21);
+  expect(ALL).toHaveLength(22);
   expect(ALL.map((r) => r.name)).toEqual([
     "MagicPattern", "Variant",
     "SEESAW", "Refero", "Recent", "Awwwards", "Land-book", "Dribbble", "Godly",
     "shadcn/ui", "21st.dev",
     "Rete.js", "React Flow", "tldraw", "Motion", "GSAP", "Three.js", "p5.js", "dnd kit",
-    "Laws of UX",
+    "Laws of UX", "DESIGN.md",
     "Kenney",
   ]);
   expect(RESOURCE_GROUPS.map((g) => g.label)).toEqual([
