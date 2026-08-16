@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { ResourcesMenu } from "./ResourcesMenu";
 import { ReferenceMenu } from "../reference/ReferenceMenu";
+import { FilterGallery } from "../gallery/FilterGallery";
 
 function MoonIcon() {
   return (
@@ -20,6 +22,7 @@ function SunIcon() {
 
 export function TopBar() {
   const { state, dispatch } = usePlayground();
+  const [gallery, setGallery] = useState(false);
   const next = state.theme === "dark" ? "light" : "dark";
   return (
     <header className="topbar" role="banner">
@@ -37,6 +40,16 @@ export function TopBar() {
       </div>
       <span className="brand-tag">MVP</span>
       <div className="topbar-spacer" />
+      <button className="topbar-link" onClick={() => setGallery(true)}>
+        <svg className="i i-sm" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        <span className="label">Gallery</span>
+      </button>
+      {gallery && <FilterGallery onClose={() => setGallery(false)} />}
       <ReferenceMenu />
       <ResourcesMenu />
       <button

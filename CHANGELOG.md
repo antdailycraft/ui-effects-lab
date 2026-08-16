@@ -12,6 +12,10 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **SVG filter gallery** — a top-bar **Gallery** opens a grid of every SVG-filter
+  effect (20) rendered at its default parameters on a shared sample tile; click a
+  tile to open that effect in the playground. Built from the live registry, so
+  it always reflects the current filters.
 - **Three.js showcase** — a bundled standalone "Dissolve" demo
   (`public/showcase/dissolve.html`): a note dissolving along a simplex-noise
   threshold into ~46k GPU particles, with Burn/Glitch/Ink-bleed variants, live
