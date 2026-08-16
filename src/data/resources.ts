@@ -144,6 +144,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://github.com/google-labs-code/design.md",
         desc: "Google Labs spec for describing a visual identity to coding agents (tokens + docs).",
       },
+      {
+        name: "Unicode Emoji List",
+        url: "https://unicode.org/emoji/charts/full-emoji-list.html",
+        desc: "The official full emoji chart — every codepoint with vendor renderings.",
+      },
     ],
   },
   {

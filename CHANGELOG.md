@@ -12,6 +12,9 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Resources: Unicode Emoji List** — added the official full emoji chart
+  (unicode.org) to the Learn group (24 curated sites total).
+
 - **Effect gallery** — a top-bar **Gallery** opens a grid of the 20 SVG-filter
   effects (rendered at their defaults on a shared sample tile) plus all 30 WebGL
   generators (live). Generator tiles mount only while on screen and are capped at
