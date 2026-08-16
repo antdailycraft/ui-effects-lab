@@ -47,8 +47,13 @@ export const TERMS: Term[] = [
   { term: "Chip / Tag / Badge", category: "Components", def: "A compact pill for a value, filter, or status/count.", example: "Selected filters; a notification count." },
   { term: "Breadcrumb", category: "Components", def: "A trail showing the current location in a hierarchy.", example: "Home / Docs / API." },
   { term: "Stepper", category: "Components", def: "A component that guides through ordered steps or increments a value.", example: "Checkout steps; a quantity +/−." },
+  { term: "Avatar Chip", category: "Components", def: "A user's avatar and name combined into one rounded chip/tag, often removable.", example: "Assignee pills on a task." },
+  { term: "Avatar Stack", category: "Components", def: "Several user avatars overlapped in a row (a.k.a. avatar group), often with a +N overflow.", example: "Collaborators on a document." },
 
   // Interaction
+  { term: "CTA (Call to action)", category: "Interaction", def: "The button or copy that drives the user's next step; the Primary CTA is the one action you most want them to take on a screen.", example: '"Get started" as the primary button.' },
+  { term: "Speed bump", category: "Interaction", def: "A small, deliberate delay or extra step just before a hard-to-undo action — like a road bump, it slows without fully blocking, curbing impulsive clicks.", example: 'A "Delete anyway?" confirm step.' },
+  { term: "Intentional friction", category: "Interaction", def: "Deliberately adding friction where it helps — confirmation, reflection, or security before risky/irreversible actions. Not 'friction = bad', but 'friction in the wrong place = bad'.", example: "2-step verification; a cooldown before a risky action." },
   { term: "Affordance", category: "Interaction", def: "A visual cue that suggests how an element can be used.", example: "A raised button looks pressable." },
   { term: "Signifier", category: "Interaction", def: "An explicit marker that communicates an affordance.", example: "An underline signifying a link." },
   { term: "Disclosure", category: "Interaction", def: "Progressively revealing content to reduce upfront complexity.", example: "A 'Show more' expander." },

@@ -718,6 +718,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cp-step.done { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .cp-step-bar { width: 26px; height: 2px; background: var(--border); }
 .cp-step-bar.done { background: var(--accent); }
+.cp-avatar {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 10px; font-weight: 700;
+  color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-line);
+}
+.cp-avatar-chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px;
+  font-size: 12px; color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 999px;
+}
+.cp-avatar-chip .cp-x { color: var(--text-faint); font-size: 10px; }
+.cp-avatar-stack { display: inline-flex; }
+.cp-avatar-stack .cp-avatar { border: 2px solid var(--stage); margin-left: -8px; }
+.cp-avatar-stack .cp-avatar:first-child { margin-left: 0; }
+.cp-avatar-more { color: var(--text-dim); background: var(--panel-2); border-color: var(--border); }
+.cp-cta { display: flex; align-items: center; gap: 10px; }
+.cp-cta .primary { font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 8px; color: var(--accent-ink); background: var(--accent); }
+.cp-cta .ghost { font-size: 12px; padding: 8px 14px; border-radius: 8px; color: var(--text-dim); background: transparent; border: 1px solid var(--border); }
 
 /* Emoji picker */
 .emoji-modal { max-width: 620px; }

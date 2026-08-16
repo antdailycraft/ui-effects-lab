@@ -113,6 +113,27 @@ const PREVIEWS: Record<string, JSX.Element> = {
       <span className="cp-step">3</span>
     </div>
   ),
+  "Avatar Chip": (
+    <div className="cp-avatar-chip">
+      <span className="cp-avatar">JD</span>
+      <span>Jane Doe</span>
+      <span className="cp-x">✕</span>
+    </div>
+  ),
+  "Avatar Stack": (
+    <div className="cp-avatar-stack">
+      <span className="cp-avatar">A</span>
+      <span className="cp-avatar">B</span>
+      <span className="cp-avatar">C</span>
+      <span className="cp-avatar cp-avatar-more">+5</span>
+    </div>
+  ),
+  "CTA (Call to action)": (
+    <div className="cp-cta">
+      <button className="primary">Get started →</button>
+      <button className="ghost">Later</button>
+    </div>
+  ),
 };
 
 export function ComponentPreview({ term }: { term: string }): JSX.Element | null {
