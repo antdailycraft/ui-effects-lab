@@ -10,6 +10,13 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [0.6.0] - 2026-08-17
+
+A hardening release from a multi-agent audit: correctness, performance,
+accessibility, robustness, and CI.
+
 ### Added
 
 - **CI workflow** (`.github/workflows/ci.yml`) — typecheck, test, and build on
@@ -288,7 +295,8 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.2.0...v0.3.0
