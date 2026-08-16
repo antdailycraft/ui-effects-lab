@@ -12,6 +12,13 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **In-app landing page** — a new landing screen shown before the workspace: a
+  hero with a live WebGL mesh-gradient background (gracefully falling back to a
+  static gradient where WebGL is unavailable), the Explore → Tweak → Compare →
+  Copy loop, and a clickable SVG-filter effect marquee that deep-links straight
+  into an effect. "Open the Lab" enters the workspace; a `#s=` share link skips
+  the landing and opens the shared effect directly.
+
 - **Glossary: Pagination & Pagination dots** — two new Components terms (with live
   previews) covering page controls and the dot indicator (a.k.a. page control /
   bullets).
