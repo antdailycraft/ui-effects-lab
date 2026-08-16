@@ -69,6 +69,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://godly.website/",
         desc: "Astronomically good web design inspiration.",
       },
+      {
+        name: "Webzibition",
+        url: "https://tympanus.net/codrops/webzibition/",
+        desc: "Codrops' curated exhibition of standout creative websites.",
+      },
     ],
   },
   {

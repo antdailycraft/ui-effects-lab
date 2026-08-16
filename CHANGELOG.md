@@ -12,8 +12,8 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
-- **Resources: Unicode Emoji List** — added the official full emoji chart
-  (unicode.org) to the Learn group (24 curated sites total).
+- **Resources additions** — the official Unicode full emoji chart (Learn) and
+  Codrops **Webzibition** (Inspiration); 25 curated sites total.
 
 - **Effect gallery** — a top-bar **Gallery** opens a grid of the 20 SVG-filter
   effects (rendered at their defaults on a shared sample tile) plus all 30 WebGL
