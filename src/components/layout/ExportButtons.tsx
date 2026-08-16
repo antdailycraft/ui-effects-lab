@@ -8,7 +8,7 @@ export function ExportButtons() {
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
-  const demo = () => buildDemo(effect, state.params, animate);
+  const demo = () => buildDemo(effect, state.params, animate, state.imageUrl);
 
   return (
     <>

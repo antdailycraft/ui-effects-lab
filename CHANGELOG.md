@@ -19,6 +19,16 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Fixed
 
+- **Shared combination layers merge over defaults** — a layer from a share link
+  that's missing a parameter (older build / hand-edited hash) no longer produces
+  a `NaN`/`undefined` filter attribute; each layer is filled from its effect's
+  defaults on restore.
+- **Image-shader export uses the real image** — CodePen/StackBlitz exports of
+  Image Dithering / Lens Distortion / Heatmap now embed the current source image
+  instead of a broken `"/your-image.jpg"` placeholder.
+- **Share no longer silently downgrades the `custom` preview** — the `custom`
+  preview type (whose markup isn't shared) is simply omitted from the link rather
+  than encoded and then dropped on the other end.
 - **Combination no longer drops a non-SVG effect.** Selecting a CSS or WebGL
   generator effect while a combine stack existed silently replaced it with the
   SVG chain (wrong preview and wrong generated code). The stack now goes

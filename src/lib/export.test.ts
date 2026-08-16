@@ -32,6 +32,15 @@ test("a generator builds a React demo carrying its component name and JSX", () =
   expect(demo.jsx).toContain("<Swirl");
 });
 
+test("an image shader export uses the real image URL, not the placeholder", () => {
+  const e = getEffect("image-dithering")!;
+  const demo = buildDemo(e, defaultParams(e), false, "https://cdn.example/pic.png");
+  expect(demo.kind).toBe("react");
+  if (demo.kind !== "react") return;
+  expect(demo.jsx).toContain('image="https://cdn.example/pic.png"');
+  expect(demo.jsx).not.toContain("/your-image.jpg");
+});
+
 test("CodePen payload: static → html/css, generator → babel JS with esm.sh imports", () => {
   const staticPen = codePenData(demoFor("rough-edge"));
   expect(staticPen.html).toContain("<filter");

@@ -46,7 +46,9 @@ export function BottomBar() {
     const url = shareUrl({
       e: state.effectId,
       p: state.params,
-      pv: state.previewType,
+      // "custom" markup isn't shared, so don't encode that preview type —
+      // the recipient would just fall back to the default card anyway.
+      ...(state.previewType !== "custom" ? { pv: state.previewType } : {}),
       ...(state.layers.length
         ? { l: state.layers.map((x) => ({ e: x.effectId, p: x.params })) }
         : {}),

@@ -63,13 +63,24 @@ function parseReactSnippet(snippet: string): { componentName: string; jsx: strin
   return { componentName, jsx };
 }
 
-export function buildDemo(effect: EffectDefinition, params: Params, animate: boolean): Demo {
+export function buildDemo(
+  effect: EffectDefinition,
+  params: Params,
+  animate: boolean,
+  imageUrl?: string
+): Demo {
   const title = `UI Effects Lab — ${effect.name}`;
   const description = effect.description;
 
   if (effect.kind === "generator") {
-    const { componentName, jsx } = parseReactSnippet(generateReact(effect, params, animate));
-    return { kind: "react", title, description, componentName, jsx };
+    const parsed = parseReactSnippet(generateReact(effect, params, animate));
+    // Image shaders emit a placeholder `image="/your-image.jpg"`; swap in the
+    // actual source so the exported pen renders instead of showing nothing.
+    const jsx =
+      effect.usesImage && imageUrl
+        ? parsed.jsx.replace(/image="\/your-image\.jpg"/, `image="${imageUrl}"`)
+        : parsed.jsx;
+    return { kind: "react", title, description, componentName: parsed.componentName, jsx };
   }
 
   // svg / css / retro — a static HTML+CSS pen keyed to the `.effect` selector.

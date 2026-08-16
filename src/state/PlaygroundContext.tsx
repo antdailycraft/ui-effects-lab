@@ -76,10 +76,11 @@ export const initialState: PlaygroundState = {
   customHtml: loadCustomHtml(),
   layers:
     shared?.l
-      ?.map((x) => ({ effectId: x.e, params: x.p }))
-      .filter((l) => {
-        const e = getEffect(l.effectId);
-        return e && isStackable(e);
+      ?.flatMap((x): EffectLayer[] => {
+        const e = getEffect(x.e);
+        // Keep only stackable effects, and merge over defaults so a missing or
+        // stale param can't produce a NaN/undefined filter attribute.
+        return e && isStackable(e) ? [{ effectId: x.e, params: { ...defaultParams(e), ...x.p } }] : [];
       }) ?? [],
 };
 
