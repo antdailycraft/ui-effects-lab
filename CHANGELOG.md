@@ -16,8 +16,10 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   tools in a shared focus-trapped modal:
   - **UI/UX Terms** — a searchable, category-filtered glossary (~45 terms across
     Layout, Components, Interaction, Motion, UX Laws, Accessibility, Typography).
-  - **CSS Cursors** — a grid of every cursor keyword; hover previews the cursor
-    live, click copies `cursor: <value>;`.
+  - **CSS Cursors** — a grid of every cursor keyword, each drawn as an SVG glyph
+    so the shape is visible at rest (arrows, hands, I-beam, crosshair, ban,
+    hourglass, magnifier, resize arrows, …); hovering still shows the real native
+    cursor, and clicking copies `cursor: <value>;`.
   - **Emoji** — a searchable, category-filtered picker over all 3,944 Unicode
     emoji with click-to-copy. The dataset is generated from
     `docs/reference/EMOJI.html` (`scripts/gen-emoji.mjs`) and the picker + data

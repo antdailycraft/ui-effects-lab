@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal } from "../common/Modal";
 import { CURSORS } from "../../data/cursors";
+import { CursorGlyph } from "./CursorGlyph";
 
 export function CursorsModal({ onClose }: { onClose: () => void }) {
   const [copied, setCopied] = useState<string | null>(null);
@@ -37,8 +38,11 @@ export function CursorsModal({ onClose }: { onClose: () => void }) {
             title={`cursor: ${c.value};`}
             onClick={() => copy(c.value)}
           >
-            <span className="cursor-value mono">{copied === c.value ? "copied!" : c.value}</span>
-            <span className="cursor-note">{c.note}</span>
+            <CursorGlyph value={c.value} />
+            <span className="cursor-text">
+              <span className="cursor-value mono">{copied === c.value ? "copied!" : c.value}</span>
+              <span className="cursor-note">{c.note}</span>
+            </span>
           </button>
         ))}
       </div>
