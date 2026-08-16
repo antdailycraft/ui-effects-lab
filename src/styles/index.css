@@ -146,6 +146,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   z-index: 60;
   width: 320px;
   max-width: calc(100vw - 24px);
+  /* Cap to the viewport and scroll when there are many groups. */
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 12px;
