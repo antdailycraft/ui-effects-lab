@@ -37,6 +37,14 @@ test("Reference menu opens the UI/UX Terms glossary with search & category filte
   expect(within(dialog).queryByText("Toast")).not.toBeInTheDocument();
 });
 
+test("Reference menu links to the Three.js showcase in a new tab", async () => {
+  render(<ReferenceMenu />);
+  await userEvent.click(screen.getByRole("button", { name: /reference/i }));
+  const link = screen.getByRole("menuitem", { name: /dissolve/i });
+  expect(link).toHaveAttribute("href", expect.stringContaining("showcase/dissolve.html"));
+  expect(link).toHaveAttribute("target", "_blank");
+});
+
 test("clicking a cursor tile copies its declaration", async () => {
   const writeText = vi.fn().mockResolvedValue(undefined);
   Object.assign(navigator, { clipboard: { writeText } });

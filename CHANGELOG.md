@@ -12,6 +12,12 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Three.js showcase** — a bundled standalone "Dissolve" demo
+  (`public/showcase/dissolve.html`): a note dissolving along a simplex-noise
+  threshold into ~46k GPU particles, with Burn/Glitch/Ink-bleed variants, live
+  parameters, playback scrub, and a GLSL source viewer. Linked from a new
+  **Showcase** section in the Reference menu (opens in a new tab). All MIT
+  (Three.js r128, Ashima simplex noise).
 - **Resource hover thumbnails** — hovering a site in the Resources menu shows a
   preview thumbnail that follows the pointer (centered on the cursor's Y, to its
   left, clamped to the viewport): the site's `og:image` where one exists,

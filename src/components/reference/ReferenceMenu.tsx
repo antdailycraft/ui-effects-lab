@@ -73,6 +73,26 @@ export function ReferenceMenu() {
               </button>
             ))}
           </div>
+          <div className="resources-group">
+            <div className="resources-label">Showcase</div>
+            <a
+              className="resource-item"
+              role="menuitem"
+              href={`${import.meta.env.BASE_URL}showcase/dissolve.html`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+            >
+              <div className="resource-name">
+                Dissolve — Three.js
+                <svg className="i i-sm ext" viewBox="0 0 24 24">
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </div>
+              <div className="resource-desc">A note dissolving into 46k GPU particles (WebGL).</div>
+            </a>
+          </div>
         </div>
       )}
 

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dissolve — ephemeral note shader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  :root{
+    --paper:#E3E5DE; --paper-deep:#D6D9D0; --ink:#191B17;
+    --muted:#7C8077; --rule:#C6CABE; --accent:#4038B5; --card:#FBFAF4;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  .shell{display:grid;grid-template-columns:1fr 336px;height:100vh;height:100dvh}
+
+  /* ---------- stage ---------- */
+  .stage{position:relative;overflow:hidden}
+  .stage::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(115% 95% at 50% 42%, #F0F1EC 0%, var(--paper) 45%, var(--paper-deep) 100%);
+  }
+  #gl{position:absolute;inset:0;display:block}
+
+  .masthead{position:absolute;top:0;left:0;padding:26px 30px;z-index:2;pointer-events:none;transition:opacity .28s}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 9px}
+  .eyebrow b{color:var(--accent);font-weight:500}
+  h1{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;
+    font-size:clamp(30px,4.4vw,52px);line-height:.92;letter-spacing:-.035em;margin:0;
+    font-variation-settings:"opsz" 60}
+  h1 em{font-style:normal;color:var(--accent)}
+  .blurb{max-width:31ch;margin:13px 0 0;font-size:13.5px;line-height:1.5;color:#4B4F48}
+
+  .fps{position:absolute;left:30px;bottom:22px;z-index:2;
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+    color:var(--muted);display:flex;gap:16px;pointer-events:none}
+  .fps span{color:var(--ink)}
+
+  /* ---------- source panel ---------- */
+  .src{
+    position:absolute;top:0;right:0;bottom:0;width:min(560px,58%);z-index:4;
+    background:#14161A;color:#D6DBE2;display:flex;flex-direction:column;
+    transform:translateX(101%);transition:transform .34s cubic-bezier(.4,0,.15,1);
+    box-shadow:-24px 0 60px rgba(20,22,26,.22)
+  }
+  .src.open{transform:none}
+  .src-top{display:flex;align-items:center;gap:4px;padding:12px 12px 0 16px;flex:none}
+  .tab{
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+    padding:7px 11px;border:0;background:transparent;color:#6E7784;cursor:pointer;border-radius:3px
+  }
+  .tab[aria-selected="true"]{color:#F2F4F7;background:#232830}
+  .tab:hover{color:#C3CAD4}
+  .tab:focus-visible{outline:2px solid #6C63FF;outline-offset:1px}
+  .src-top .spacer{flex:1}
+  .icobtn{
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+    padding:7px 10px;border:1px solid #2E343E;background:transparent;color:#98A1AD;
+    border-radius:3px;cursor:pointer
+  }
+  .icobtn:hover{border-color:#4A525F;color:#EDF0F4}
+  .icobtn:focus-visible{outline:2px solid #6C63FF;outline-offset:1px}
+  pre.code{
+    margin:10px 0 0;padding:6px 18px 22px;overflow:auto;flex:1;
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.72;
+    white-space:pre;tab-size:2
+  }
+  pre.code .k{color:#F08D74}
+  pre.code .t{color:#7FD1C4}
+  pre.code .n{color:#C7A2F0}
+  pre.code .c{color:#5C6675;font-style:italic}
+  .src-foot{
+    flex:none;padding:11px 18px;border-top:1px solid #232830;
+    font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:#5C6675;letter-spacing:.05em
+  }
+
+  /* ---------- rail ---------- */
+  .rail{background:#EFF0EA;border-left:1px solid var(--rule);
+    display:flex;flex-direction:column;overflow-y:auto}
+  .block{padding:20px 22px;border-bottom:1px solid var(--rule)}
+  .block:last-child{border-bottom:0}
+  .label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:11px}
+
+  textarea{width:100%;height:78px;resize:none;padding:11px 12px;
+    border:1px solid var(--rule);border-radius:3px;background:var(--card);
+    color:var(--ink);font-family:"IBM Plex Sans",sans-serif;font-size:13px;line-height:1.5}
+  textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+
+  .btnrow{display:flex;gap:7px;margin-top:11px}
+  button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+    padding:9px 11px;border-radius:3px;cursor:pointer;
+    border:1px solid var(--ink);background:var(--ink);color:var(--card);flex:1;
+    transition:background .14s,color .14s,border-color .14s}
+  button.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+  button.ghost:hover{border-color:var(--ink)}
+  button:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .modes{display:grid;gap:6px}
+  .mode{display:flex;align-items:baseline;gap:10px;width:100%;text-align:left;
+    padding:10px 11px;border:1px solid var(--rule);background:transparent;color:var(--ink)}
+  .mode:hover{background:transparent;border-color:var(--ink);color:var(--ink)}
+  .mode[aria-pressed="true"]{border-color:var(--accent);background:rgba(64,56,181,.07)}
+  .mode i{width:9px;height:9px;border-radius:50%;flex:none;font-style:normal;
+    align-self:center;box-shadow:0 0 0 1px rgba(0,0,0,.12) inset}
+  .mode u{text-decoration:none;font-size:11.5px;letter-spacing:.02em}
+  .mode small{margin-left:auto;color:var(--muted);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+
+  .slider{margin-bottom:15px}
+  .slider:last-child{margin-bottom:0}
+  .slider.off{opacity:.34;pointer-events:none}
+  .srow{display:flex;justify-content:space-between;
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;margin-bottom:7px}
+  .srow span:first-child{color:var(--muted);text-transform:uppercase;letter-spacing:.13em}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:15px;background:transparent;cursor:pointer}
+  input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--rule)}
+  input[type=range]::-moz-range-track{height:1px;background:var(--rule)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;
+    border-radius:50%;background:var(--accent);margin-top:-5px}
+  input[type=range]::-moz-range-thumb{width:11px;height:11px;border:0;border-radius:50%;background:var(--accent)}
+  input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+  .toggle{display:flex;align-items:center;gap:9px;font-family:"IBM Plex Mono",monospace;
+    font-size:11px;cursor:pointer;margin-bottom:9px}
+  .toggle:last-child{margin-bottom:0}
+  .toggle input{accent-color:var(--accent);width:14px;height:14px}
+
+  .note{font-family:"IBM Plex Mono",monospace;font-size:10px;line-height:1.65;
+    color:var(--muted);letter-spacing:.02em}
+  .note b{color:var(--ink);font-weight:500}
+
+  @media (max-width:900px){
+    body{overflow:auto}
+    .shell{grid-template-columns:1fr;height:auto}
+    .stage{height:56vh;min-height:340px}
+    .rail{border-left:0;border-top:1px solid var(--rule)}
+    .masthead{padding:20px 22px}
+    .fps{left:22px}
+    .src{width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="stage">
+    <canvas id="gl"></canvas>
+
+    <div class="masthead" id="masthead">
+      <p class="eyebrow"><b>01</b> &nbsp;/&nbsp; noise-threshold dissolve</p>
+      <h1>Jot it.<br><em>Forget it.</em></h1>
+      <p class="blurb">한 장의 메모가 노이즈 임계값을 따라 사라집니다. 임계값 경계만 남겨 색을 입히면 타거나, 깨지거나, 번집니다.</p>
+    </div>
+
+    <div class="fps"><span id="fps">—</span> fps &nbsp;·&nbsp; progress <span id="prog">0.00</span> &nbsp;·&nbsp; <span id="pcount">0</span> pts</div>
+
+    <section class="src" id="src" aria-label="셰이더 원문" aria-hidden="true">
+      <div class="src-top">
+        <button class="tab" data-tab="frag" aria-selected="true">fragment</button>
+        <button class="tab" data-tab="vert" aria-selected="false">vertex</button>
+        <button class="tab" data-tab="pts"  aria-selected="false">points</button>
+        <span class="spacer"></span>
+        <button class="icobtn" id="copy">Copy</button>
+        <button class="icobtn" id="close">Close</button>
+      </div>
+      <pre class="code" id="code"></pre>
+      <div class="src-foot">simplex noise © Ian McEwan, Ashima Arts — MIT</div>
+    </section>
+  </div>
+
+  <aside class="rail">
+    <div class="block">
+      <label class="label" for="txt">메모</label>
+      <textarea id="txt" spellcheck="false">우유 2L
+Rhea 캔버스 스냅 간격 8px로
+목요일 오후 3시 회신</textarea>
+      <div class="btnrow">
+        <button id="go">Forget it</button>
+        <button id="back" class="ghost">Bring it back</button>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="label">변주</span>
+      <div class="modes">
+        <button class="mode" data-mode="0" aria-pressed="true"><i style="background:#E0932A"></i><u>Burn</u><small>ember</small></button>
+        <button class="mode" data-mode="1" aria-pressed="false"><i style="background:#16D1B4"></i><u>Glitch</u><small>blocks</small></button>
+        <button class="mode" data-mode="2" aria-pressed="false"><i style="background:#2A2E9B"></i><u>Ink bleed</u><small>soak</small></button>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="label">파라미터</span>
+      <div class="slider">
+        <div class="srow"><span>noise scale</span><span id="v-scale">6.0</span></div>
+        <input type="range" id="s-scale" min="1.5" max="18" step="0.1" value="6">
+      </div>
+      <div class="slider">
+        <div class="srow"><span>edge width</span><span id="v-edge">0.09</span></div>
+        <input type="range" id="s-edge" min="0.01" max="0.35" step="0.005" value="0.09">
+      </div>
+      <div class="slider">
+        <div class="srow"><span>turbulence</span><span id="v-speed">0.35</span></div>
+        <input type="range" id="s-speed" min="0" max="2" step="0.01" value="0.35">
+      </div>
+      <div class="slider">
+        <div class="srow"><span>curl</span><span id="v-curl">0.40</span></div>
+        <input type="range" id="s-curl" min="0" max="1" step="0.01" value="0.4">
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="label">흩날림</span>
+      <label class="toggle"><input type="checkbox" id="pts" checked> particles</label>
+      <div class="slider" id="w-scatter">
+        <div class="srow"><span>scatter</span><span id="v-scatter">1.00</span></div>
+        <input type="range" id="s-scatter" min="0" max="2.5" step="0.01" value="1">
+      </div>
+      <div class="slider" id="w-psize">
+        <div class="srow"><span>grain size</span><span id="v-psize">1.10</span></div>
+        <input type="range" id="s-psize" min="0.3" max="3" step="0.05" value="1.1">
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="label">재생</span>
+      <div class="slider">
+        <div class="srow"><span>scrub</span><span id="v-p">0.00</span></div>
+        <input type="range" id="s-p" min="0" max="1" step="0.001" value="0">
+      </div>
+      <label class="toggle"><input type="checkbox" id="loop"> auto loop</label>
+      <div class="btnrow"><button id="viewsrc" class="ghost">View GLSL</button></div>
+    </div>
+
+    <div class="block">
+      <p class="note">
+        임계값 <b>t</b>를 노이즈 범위 밖에서 안으로 밀어 넣으면서 <b>nz &lt; t</b>인 픽셀을 <b>discard</b>합니다.
+        파티클은 같은 필드를 다시 계산해 <b>nz</b>를 자신의 방출 시점으로 삼으므로, 조각이 사라진 자리에서 정확히 튀어나옵니다.
+      </p>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = id => document.getElementById(id);
+
+/* ---------------------------------------------------------------
+   note face — drawn to a 2D canvas, used as texture + particle colors
+--------------------------------------------------------------- */
+const TW = 1024, TH = 704;
+const nc = document.createElement("canvas");
+nc.width = TW; nc.height = TH;
+const nx = nc.getContext("2d", { willReadFrequently: true });
+
+function drawNote(text){
+  nx.clearRect(0,0,TW,TH);
+  nx.strokeStyle = "rgba(64,56,181,.16)"; nx.lineWidth = 2;
+  for(let y=214; y<TH-70; y+=78){
+    nx.beginPath(); nx.moveTo(78,y+.5); nx.lineTo(TW-78,y+.5); nx.stroke();
+  }
+  nx.strokeStyle = "rgba(190,74,60,.32)";
+  nx.beginPath(); nx.moveTo(120,74); nx.lineTo(120,TH-64); nx.stroke();
+
+  nx.fillStyle = "#9AA095";
+  nx.font = "500 26px 'IBM Plex Mono', monospace";
+  nx.fillText("UNSAVED", 148, 122);
+  nx.fillStyle = "#C4C9BD";
+  nx.fillText("· 이 메모는 저장되지 않습니다", 296, 122);
+
+  nx.strokeStyle = "rgba(25,27,23,.14)"; nx.lineWidth = 2;
+  nx.beginPath(); nx.moveTo(148,152); nx.lineTo(TW-78,152); nx.stroke();
+
+  nx.fillStyle = "#191B17";
+  nx.font = "400 40px 'IBM Plex Sans', system-ui, sans-serif";
+  const maxw = TW - 240;
+  let y = 260;
+  for(const raw of String(text||"").split("\n")){
+    if(y > TH-80) break;
+    if(!raw.trim()){ y += 78; continue; }
+    let line = "";
+    for(const ch of raw){
+      if(nx.measureText(line+ch).width > maxw){
+        nx.fillText(line,148,y); y += 78; line = ch;
+        if(y > TH-80) break;
+      } else line += ch;
+    }
+    if(y <= TH-80 && line) nx.fillText(line,148,y);
+    y += 78;
+  }
+  if(typeof tex !== "undefined" && tex) tex.needsUpdate = true;
+}
+
+/* ---------------------------------------------------------------
+   scene
+--------------------------------------------------------------- */
+const canvas = $("gl"), stage = canvas.parentElement;
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+
+const scene  = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+camera.position.set(0, 0, 6.4);
+const group = new THREE.Group();
+scene.add(group);
+
+const tex = new THREE.CanvasTexture(nc);
+tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+tex.minFilter = THREE.LinearFilter;
+drawNote($("txt").value);
+
+/* ---------------------------------------------------------------
+   shared GLSL
+--------------------------------------------------------------- */
+const SNOISE = `// simplex noise 3D — Ian McEwan, Ashima Arts (MIT)
+vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
+vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
+float snoise(vec3 v){
+  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);
+  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
+  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g;
+  vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
+  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;
+  i=mod289(i);
+  vec4 p=permute(permute(permute(
+      i.z+vec4(0.0,i1.z,i2.z,1.0))
+    + i.y+vec4(0.0,i1.y,i2.y,1.0))
+    + i.x+vec4(0.0,i1.x,i2.x,1.0));
+  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;
+  vec4 j=p-49.0*floor(p*ns.z*ns.z);
+  vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);
+  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);
+  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);
+  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));
+  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y);
+  vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
+  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
+  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
+  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+}`;
+
+// the single source of truth for "when does this point of the card die"
+const FIELD = `
+// dissolve field. identical in the card shader and the particle shader,
+// so a grain is born exactly where a pixel was discarded.
+float field(vec2 st, float sc, float sp, float tm, int md){
+  vec3 s;
+  if (md == 1) {
+    float c = sc * 2.2;
+    s = vec3(floor(st.x * c) / c,
+             floor(st.y * c * 0.42) / (c * 0.42),
+             floor(tm * sp * 6.0) * 0.25);
+  } else {
+    s = vec3(st * sc, tm * sp * 0.30);
+  }
+  float nz = snoise(s);
+  if (md == 2) nz = nz * 0.62 + snoise(vec3(st * sc * 0.30, tm * sp * 0.12)) * 0.55;
+  return nz;
+}
+
+const float LO = -1.18, HI = 1.18;   // noise range the threshold sweeps
+const float CARD_END = 0.75;         // card is fully gone here; the rest is grain flight`;
+
+const CURL = `
+vec3 curled(vec3 p, float amp, float ph){
+  p.z += sin(p.x * 2.1 + ph) * amp + sin(p.y * 1.5 - ph * 0.7) * amp * 0.45;
+  return p;
+}`;
+
+/* ---------------------------------------------------------------
+   uniforms (shared between card and particles)
+--------------------------------------------------------------- */
+const U = {
+  uMap:      {value: tex},
+  uTime:     {value: 0},
+  uProgress: {value: 0},
+  uScale:    {value: 6.0},
+  uEdge:     {value: 0.09},
+  uSpeed:    {value: 0.35},
+  uCurl:     {value: 0.40},
+  uMode:     {value: 0},
+  uEdgeA:    {value: new THREE.Color("#8E2A0C")},
+  uEdgeB:    {value: new THREE.Color("#F0A62B")},
+  uPaper:    {value: new THREE.Color("#FBFAF4")},
+  uScatter:  {value: 1.0},
+  uSize:     {value: 1.1},
+  uPR:       {value: renderer.getPixelRatio()}
+};
+
+/* ---------------------------------------------------------------
+   card
+--------------------------------------------------------------- */
+const CARD_W = 3.30, CARD_H = 2.27;
+
+const VERT = CURL + `
+uniform float uProgress, uTime, uCurl, uSpeed;
+varying vec2 vUv;
+varying vec3 vNormal;
+
+void main(){
+  vUv = uv;
+  float cp  = clamp(uProgress / 0.75, 0.0, 1.0);
+  float amp = uCurl * (0.055 + 0.30 * cp);
+  float ph  = uTime * 0.55 * (0.3 + uSpeed);
+  vec3 p = curled(position, amp, ph);
+
+  // analytic normal of the curl surface
+  float dzdx = cos(p.x * 2.1 + ph) * 2.1 * amp;
+  float dzdy = cos(p.y * 1.5 - ph * 0.7) * 1.5 * amp * 0.45;
+  vNormal = normalize(normalMatrix * normalize(vec3(-dzdx, -dzdy, 1.0)));
+
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+}`;
+
+const FRAG = SNOISE + FIELD + `
+uniform sampler2D uMap;
+uniform float uProgress, uScale, uEdge, uSpeed, uTime;
+uniform int uMode;
+uniform vec3 uEdgeA, uEdgeB, uPaper;
+varying vec2 vUv;
+varying vec3 vNormal;
+
+void main(){
+  float cp = clamp(uProgress / CARD_END, 0.0, 1.0);
+  if (cp >= 1.0) discard;
+
+  // paper + ink
+  vec4 t4 = texture2D(uMap, vUv);
+  float fib = snoise(vec3(vUv * 380.0, 0.0)) * 0.5 + 0.5;
+  vec3 col = mix(uPaper, uPaper * 0.955, fib * 0.55);
+  col = mix(col, t4.rgb, t4.a);
+
+  vec3 n = normalize(vNormal);
+  float diff = clamp(dot(n, normalize(vec3(-0.30, 0.55, 0.78))), 0.0, 1.0);
+  col *= 0.80 + 0.30 * diff;
+
+  // dissolve
+  float nz = field(vUv, uScale, uSpeed, uTime, uMode);
+  float th = mix(LO, HI, cp);
+  if (nz < th) discard;
+
+  float edge = 1.0 - smoothstep(th, th + uEdge, nz);
+  edge *= smoothstep(0.0, 0.05, cp);
+
+  if (uMode == 0) {
+    vec3 e = mix(uEdgeA, uEdgeB, smoothstep(0.0, 0.55, edge));
+    col = mix(col, e, pow(edge, 0.80));
+    col += uEdgeB * pow(edge, 3.5) * 1.10;
+  } else if (uMode == 1) {
+    col = mix(col, uEdgeA, step(0.30, edge));
+    col = mix(col, uEdgeB, step(0.72, edge));
+  } else {
+    col = mix(col, uEdgeA, pow(edge, 1.35) * 0.98);
+    col = mix(col, uEdgeB, pow(edge, 5.0) * 0.85);
+  }
+
+  gl_FragColor = vec4(col, 1.0);
+}`;
+
+const card = new THREE.Mesh(
+  new THREE.PlaneGeometry(CARD_W, CARD_H, 150, 104),
+  new THREE.ShaderMaterial({uniforms:U, vertexShader:VERT, fragmentShader:FRAG, side:THREE.DoubleSide})
+);
+card.renderOrder = 1;
+group.add(card);
+
+/* ---------------------------------------------------------------
+   particles — released by the same field the card is discarded by
+--------------------------------------------------------------- */
+const COUNT = 46000;
+const pUv   = new Float32Array(COUNT * 2);
+const pRnd  = new Float32Array(COUNT * 3);
+const pCol  = new Float32Array(COUNT * 3);
+
+for(let i=0;i<COUNT;i++){
+  pUv[i*2]   = Math.random();
+  pUv[i*2+1] = Math.random();
+  pRnd[i*3]  = Math.random();
+  pRnd[i*3+1]= Math.random();
+  pRnd[i*3+2]= Math.random();
+}
+
+const PAPER = [0xFB/255, 0xFA/255, 0xF4/255];
+function sampleColors(){
+  const img = nx.getImageData(0,0,TW,TH).data;
+  for(let i=0;i<COUNT;i++){
+    const x = Math.min(TW-1, (pUv[i*2]   * TW) | 0);
+    const y = Math.min(TH-1, ((1 - pUv[i*2+1]) * TH) | 0);
+    const o = (y * TW + x) * 4;
+    const a = img[o+3] / 255;
+    pCol[i*3]   = PAPER[0] * (1-a) + (img[o]  /255) * a;
+    pCol[i*3+1] = PAPER[1] * (1-a) + (img[o+1]/255) * a;
+    pCol[i*3+2] = PAPER[2] * (1-a) + (img[o+2]/255) * a;
+  }
+  if(pGeo) pGeo.attributes.aColor.needsUpdate = true;
+}
+
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(COUNT*3), 3));
+pGeo.setAttribute("aUv",    new THREE.BufferAttribute(pUv, 2));
+pGeo.setAttribute("aRnd",   new THREE.BufferAttribute(pRnd, 3));
+pGeo.setAttribute("aColor", new THREE.BufferAttribute(pCol, 3));
+pGeo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 12);
+sampleColors();
+
+const PVERT = SNOISE + FIELD + CURL + `
+attribute vec2 aUv;
+attribute vec3 aRnd;
+attribute vec3 aColor;
+uniform float uProgress, uScale, uSpeed, uTime, uCurl, uScatter, uSize, uPR;
+uniform int uMode;
+uniform vec3 uEdgeB;
+varying vec3 vCol;
+varying float vLife;
+
+const float CARD_W = ${CARD_W.toFixed(2)};
+const float CARD_H = ${CARD_H.toFixed(2)};
+const float SPAN = 1.0 - CARD_END;   // flight time, so the last grain lands at 1.0
+
+void main(){
+  // the grain is freed at the exact progress where its pixel was discarded
+  float nz  = field(aUv, uScale, uSpeed, uTime, uMode);
+  float rel = (nz - LO) / (HI - LO) * CARD_END;
+  vLife = clamp((uProgress - rel) / SPAN, 0.0, 1.0);
+
+  if (vLife <= 0.0 || vLife >= 1.0) {
+    gl_Position = vec4(2.0, 2.0, 2.0, 1.0);   // cull off-screen
+    gl_PointSize = 0.0;
+    return;
+  }
+
+  float cp  = clamp(uProgress / CARD_END, 0.0, 1.0);
+  float amp = uCurl * (0.055 + 0.30 * cp);
+  float ph  = uTime * 0.55 * (0.3 + uSpeed);
+  vec3 p = curled(vec3((aUv.x - 0.5) * CARD_W, (aUv.y - 0.5) * CARD_H, 0.0), amp, ph);
+
+  // drift: mostly up and outward, with a little sway
+  vec3 dir = normalize(vec3(aRnd.x * 2.0 - 1.0, aRnd.y * 0.7 + 0.45, aRnd.z * 2.0 - 1.0));
+  float e = vLife;
+  p += dir * e * (0.45 + aRnd.x * 0.95) * uScatter;
+  p.y -= e * e * 0.42 * uScatter;
+  p.x += sin(uTime * 1.7 + aRnd.z * 34.0) * e * 0.11 * uScatter;
+  p.z += cos(uTime * 1.3 + aRnd.y * 28.0) * e * 0.09 * uScatter;
+
+  // fresh grains still carry the heat of the edge they came from
+  vCol = mix(uEdgeB, aColor, smoothstep(0.0, 0.30, e));
+
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
+  gl_PointSize = uSize * uPR * (1.0 - e * 0.55) * (150.0 / max(-mv.z, 0.001));
+  gl_Position = projectionMatrix * mv;
+}`;
+
+const PFRAG = `
+varying vec3 vCol;
+varying float vLife;
+void main(){
+  vec2 d = gl_PointCoord - 0.5;
+  float m = 1.0 - smoothstep(0.32, 0.5, length(d));
+  if (m <= 0.001) discard;
+  float a = m * (1.0 - smoothstep(0.45, 1.0, vLife));
+  gl_FragColor = vec4(vCol, a);
+}`;
+
+const points = new THREE.Points(pGeo, new THREE.ShaderMaterial({
+  uniforms: U, vertexShader: PVERT, fragmentShader: PFRAG,
+  transparent: true, depthWrite: false
+}));
+points.renderOrder = 2;
+points.frustumCulled = false;
+group.add(points);
+
+/* ---------------------------------------------------------------
+   contact shadow
+--------------------------------------------------------------- */
+const shadow = new THREE.Mesh(
+  new THREE.PlaneGeometry(CARD_W*1.5, CARD_H*1.5),
+  new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false,
+    uniforms:{ uOpacity:{value:1} },
+    vertexShader:"varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }",
+    fragmentShader:`varying vec2 vUv; uniform float uOpacity;
+      void main(){
+        vec2 d = (vUv - vec2(0.5,0.54)) * vec2(1.35,1.9);
+        float a = 1.0 - smoothstep(0.10,0.50,length(d));
+        gl_FragColor = vec4(0.09,0.10,0.08, a*0.30*uOpacity);
+      }`
+  })
+);
+shadow.position.set(0.10,-0.16,-0.42);
+shadow.renderOrder = 0;
+group.add(shadow);
+
+/* ---------------------------------------------------------------
+   source panel
+--------------------------------------------------------------- */
+const SRC = { frag: FRAG, vert: VERT, pts: PVERT };
+const RE = /(\/\/[^\n]*)|\b(uniform|varying|attribute|const|void|return|if|else|discard|in|out)\b|\b(float|vec2|vec3|vec4|mat3|mat4|int|bool|sampler2D)\b|\b(\d+\.\d+|\d+)\b/g;
+
+function paint(key){
+  const esc = SRC[key].trim()
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  $("code").innerHTML = esc.replace(RE, (m,c,k,t,n) =>
+    c ? '<span class="c">'+c+'</span>' :
+    k ? '<span class="k">'+k+'</span>' :
+    t ? '<span class="t">'+t+'</span>' :
+        '<span class="n">'+n+'</span>');
+  $("code").scrollTop = 0;
+}
+let tab = "frag";
+paint(tab);
+
+document.querySelectorAll(".tab").forEach(b => {
+  b.addEventListener("click", () => {
+    tab = b.dataset.tab; paint(tab);
+    document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === b));
+  });
+});
+
+function panel(open){
+  $("src").classList.toggle("open", open);
+  $("src").setAttribute("aria-hidden", !open);
+  $("masthead").style.opacity = open ? "0" : "1";
+  $("viewsrc").textContent = open ? "Hide GLSL" : "View GLSL";
+}
+$("viewsrc").addEventListener("click", () => panel(!$("src").classList.contains("open")));
+$("close").addEventListener("click", () => panel(false));
+document.addEventListener("keydown", e => { if(e.key === "Escape") panel(false); });
+
+$("copy").addEventListener("click", async () => {
+  const btn = $("copy");
+  try {
+    await navigator.clipboard.writeText(SRC[tab].trim());
+    btn.textContent = "Copied";
+  } catch(_) {
+    const ta = document.createElement("textarea");
+    ta.value = SRC[tab].trim(); document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy"); ta.remove();
+    btn.textContent = "Copied";
+  }
+  setTimeout(() => { btn.textContent = "Copy"; }, 1400);
+});
+
+/* ---------------------------------------------------------------
+   controls
+--------------------------------------------------------------- */
+let target = 0, anim = false, loop = false, holdUntil = 0;
+
+function bind(sid, vid, uni, fmt){
+  const s = $(sid), v = $(vid);
+  const sync = () => { U[uni].value = parseFloat(s.value); v.textContent = fmt(parseFloat(s.value)); };
+  s.addEventListener("input", sync); sync();
+}
+bind("s-scale","v-scale","uScale",   x => x.toFixed(1));
+bind("s-edge","v-edge","uEdge",      x => x.toFixed(3));
+bind("s-speed","v-speed","uSpeed",   x => x.toFixed(2));
+bind("s-curl","v-curl","uCurl",      x => x.toFixed(2));
+bind("s-scatter","v-scatter","uScatter", x => x.toFixed(2));
+bind("s-psize","v-psize","uSize",    x => x.toFixed(2));
+
+const scrub = $("s-p");
+scrub.addEventListener("input", () => {
+  anim = false; loop = false; $("loop").checked = false;
+  U.uProgress.value = target = parseFloat(scrub.value);
+  $("v-p").textContent = target.toFixed(2);
+});
+
+$("go").addEventListener("click",   () => { target = 1; anim = true; });
+$("back").addEventListener("click", () => { target = 0; anim = true; });
+$("loop").addEventListener("change", e => {
+  loop = e.target.checked;
+  if(loop){ target = 1; anim = true; }
+});
+
+$("pts").addEventListener("change", e => {
+  points.visible = e.target.checked;
+  $("w-scatter").classList.toggle("off", !e.target.checked);
+  $("w-psize").classList.toggle("off", !e.target.checked);
+});
+
+const PRESETS = [
+  { a:"#8E2A0C", b:"#F0A62B", scale:6.0, edge:0.09,  speed:0.35, scatter:1.00, size:1.10 },
+  { a:"#4038B5", b:"#16D1B4", scale:9.0, edge:0.055, speed:0.60, scatter:0.55, size:2.10 },
+  { a:"#2A2E9B", b:"#14163F", scale:3.4, edge:0.30,  speed:0.14, scatter:0.35, size:0.80 }
+];
+document.querySelectorAll(".mode").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const p = PRESETS[+btn.dataset.mode];
+    U.uMode.value = +btn.dataset.mode;
+    U.uEdgeA.value.set(p.a); U.uEdgeB.value.set(p.b);
+    const set = (sid,vid,uni,val,fmt) => { $(sid).value = val; U[uni].value = val; $(vid).textContent = fmt(val); };
+    set("s-scale","v-scale","uScale", p.scale, x=>x.toFixed(1));
+    set("s-edge","v-edge","uEdge",    p.edge,  x=>x.toFixed(3));
+    set("s-speed","v-speed","uSpeed", p.speed, x=>x.toFixed(2));
+    set("s-scatter","v-scatter","uScatter", p.scatter, x=>x.toFixed(2));
+    set("s-psize","v-psize","uSize",  p.size,  x=>x.toFixed(2));
+    document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-pressed", b === btn));
+  });
+});
+
+let redraw = 0;
+$("txt").addEventListener("input", () => {
+  drawNote($("txt").value);
+  clearTimeout(redraw);
+  redraw = setTimeout(sampleColors, 180);
+});
+
+/* ---------------------------------------------------------------
+   loop
+--------------------------------------------------------------- */
+let pt = {x:0,y:0}, cur = {x:0,y:0};
+stage.addEventListener("pointermove", e => {
+  const r = stage.getBoundingClientRect();
+  pt.x = (e.clientX - r.left) / r.width * 2 - 1;
+  pt.y = (e.clientY - r.top) / r.height * 2 - 1;
+});
+stage.addEventListener("pointerleave", () => { pt.x = 0; pt.y = 0; });
+
+function resize(){
+  const w = stage.clientWidth, h = stage.clientHeight;
+  if(!w || !h) return;
+  renderer.setSize(w, h, false);
+  U.uPR.value = renderer.getPixelRatio();
+  camera.aspect = w/h;
+  camera.position.z = w/h < 1.1 ? 7.6 : 6.4;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener("resize", resize);
+resize();
+
+let last = performance.now(), acc = 0, frames = 0, t = 0;
+
+function tick(now){
+  requestAnimationFrame(tick);
+  const dt = Math.min((now - last)/1000, 0.05);
+  last = now;
+  if(!reduce) t += dt;
+  U.uTime.value = t;
+
+  if(anim){
+    const p = U.uProgress.value;
+    const next = p + (target - p) * Math.min(dt * 3.0, 1);
+    U.uProgress.value = Math.abs(target - next) < 0.001 ? target : next;
+    if(U.uProgress.value === target){
+      anim = false;
+      if(loop) holdUntil = now + (target === 1 ? 900 : 1600);
+    }
+    scrub.value = U.uProgress.value;
+    $("v-p").textContent = U.uProgress.value.toFixed(2);
+  } else if(loop && now > holdUntil){
+    target = target === 1 ? 0 : 1; anim = true;
+  }
+  $("prog").textContent = U.uProgress.value.toFixed(2);
+
+  const damp = reduce ? 0 : 1;
+  cur.x += (pt.x - cur.x) * 0.05;
+  cur.y += (pt.y - cur.y) * 0.05;
+  group.rotation.y = cur.x * 0.30 * damp;
+  group.rotation.x = cur.y * 0.20 * damp;
+  const cp = Math.min(U.uProgress.value / 0.75, 1);
+  group.position.y = -cp * 0.14;
+  shadow.material.uniforms.uOpacity.value = 1 - cp;
+
+  renderer.render(scene, camera);
+
+  frames++; acc += dt;
+  if(acc >= 0.5){
+    $("fps").textContent = Math.round(frames/acc);
+    const p = U.uProgress.value;
+    // grains alive == those whose release value falls in (p - SPAN, p)
+    const live = Math.max(0, Math.min(p, 0.75) - Math.max(0, p - 0.25)) / 0.75;
+    $("pcount").textContent = points.visible
+      ? Math.round(COUNT * live).toLocaleString()
+      : "0";
+    frames = 0; acc = 0;
+  }
+}
+requestAnimationFrame(tick);
+
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(() => { drawNote($("txt").value); sampleColors(); });
+}
+})();
+</script>
+</body>
+</html>
