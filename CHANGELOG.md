@@ -12,6 +12,9 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Favorites** — star any effect from the catalog; favorites persist in
+  LocalStorage and surface in a "★ Favorites" group pinned to the top of the
+  catalog. The star shows on row hover and stays lit for favorited effects.
 - **Export to CodePen / StackBlitz** — bottom-bar buttons open the current effect
   as a runnable sandbox. Native SVG/CSS/Retro effects export as a static HTML+CSS
   pen (the effect applied to a sample card); WebGL generators export as a React

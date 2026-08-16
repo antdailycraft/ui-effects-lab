@@ -1,5 +1,6 @@
 import { usePlayground } from "../../state/PlaygroundContext";
 import { EFFECTS, groupByCategory } from "../../registry/effects";
+import { useFavorites } from "../../hooks/useFavorites";
 import { SearchBox } from "./SearchBox";
 import { EffectItem } from "./EffectItem";
 
@@ -9,6 +10,7 @@ const PLACEHOLDERS: Record<string, string[]> = {};
 
 export function Catalog() {
   const { state } = usePlayground();
+  const { isFavorite, toggle } = useFavorites();
   const term = state.search.trim().toLowerCase();
   const match = (text: string) => !term || text.toLowerCase().includes(term);
 
@@ -16,6 +18,7 @@ export function Catalog() {
     match(`${e.name} ${e.tags.join(" ")} ${e.tech.join(" ")}`)
   );
   const groups = groupByCategory(filtered);
+  const favorites = filtered.filter((e) => isFavorite(e.id));
 
   const placeholderGroups = Object.entries(PLACEHOLDERS)
     .map(([label, items]) => ({ label, items: items.filter(match) }))
@@ -27,11 +30,24 @@ export function Catalog() {
     <aside className="col col-left">
       <SearchBox />
       <nav className="catalog">
+        {favorites.length > 0 && (
+          <div className="cat-group" key="__favorites">
+            <div className="cat-label">★ Favorites</div>
+            {favorites.map((e) => (
+              <EffectItem
+                effect={e}
+                key={"fav-" + e.id}
+                favorite
+                onToggleFavorite={toggle}
+              />
+            ))}
+          </div>
+        )}
         {groups.map((g) => (
           <div className="cat-group" key={g.label}>
             <div className="cat-label">{g.label}</div>
             {g.effects.map((e) => (
-              <EffectItem effect={e} key={e.id} />
+              <EffectItem effect={e} key={e.id} favorite={isFavorite(e.id)} onToggleFavorite={toggle} />
             ))}
           </div>
         ))}

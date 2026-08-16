@@ -40,10 +40,14 @@ Phase 5 (Sharing) is the main outstanding chunk.
   hash; Share button copies the link; opening it restores the view.
 - ✅ **Export to CodePen / StackBlitz** — native effects → static HTML+CSS pen;
   generators → React (esm.sh on CodePen, Vite project on StackBlitz).
-- ⬜ Favorites _(next up — small P2 win)_
+- ✅ **Favorites** — star effects; a pinned "★ Favorites" group in the catalog.
 - ⬜ Custom HTML preview target
 - ⬜ Effect combination (stacking multiple filters)
 - ⬜ Community presets
+
+The three remaining P2 items are larger and need product decisions (a code-input
+surface, a filter-stacking model, and a hosted preset backend), so they're held
+for a follow-up rather than bundled into the current sharing work.
 
 ## Beyond the PRD — already shipped
 

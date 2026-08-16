@@ -214,9 +214,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .cat-label::after { content: ""; flex: 1; height: 1px; background: var(--border-soft); }
 
+.effect-item-row { display: flex; align-items: center; }
 .effect-item {
   display: flex; align-items: center; gap: 11px;
-  width: 100%;
+  flex: 1; min-width: 0;
   padding: 9px 10px;
   border-radius: 9px;
   text-align: left;
@@ -224,6 +225,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: 1px solid transparent;
   transition: background 0.13s, color 0.13s;
 }
+.effect-fav {
+  flex-shrink: 0;
+  width: 30px; height: 30px; margin-left: 2px;
+  display: grid; place-items: center; border-radius: 8px;
+  color: var(--text-faint); opacity: 0;
+  transition: opacity 0.13s, color 0.13s, background 0.13s;
+}
+.effect-item-row:hover .effect-fav { opacity: 1; }
+.effect-fav:hover { background: var(--panel-2); color: var(--text); }
+.effect-fav.on { opacity: 1; color: var(--accent); }
+.effect-fav svg { width: 15px; height: 15px; fill: currentColor; stroke: none; }
+.effect-fav:not(.on) svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
 .effect-item:hover { background: var(--panel-2); color: var(--text); }
 .effect-item.active { background: var(--accent-soft); color: var(--text); border-color: var(--accent-line); }
 .effect-dot {
