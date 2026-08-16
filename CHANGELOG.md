@@ -12,10 +12,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
-- **Resources menu expanded** (7 → 20) — added Dribbble and Godly to Inspiration,
+- **Resources menu expanded** (7 → 21) — added Dribbble and Godly to Inspiration,
   a **Components** group (shadcn/ui, 21st.dev), a **Learn** group (Laws of UX),
-  and a **Libraries** group of JS-based interactive UI/UX toolkits (Rete.js,
-  React Flow, tldraw, Motion, GSAP, Three.js, p5.js, dnd kit).
+  a **Libraries** group of JS-based interactive UI/UX toolkits (Rete.js,
+  React Flow, tldraw, Motion, GSAP, Three.js, p5.js, dnd kit), and an **Assets**
+  group (Kenney — free CC0 game/UI assets).
 - **Layer inline editing** — click a layer in the Combine panel to edit its
   parameters in place. The Controls panel (plus Reset, Randomize, and the
   generated code) targets that layer, a banner shows which layer is being edited

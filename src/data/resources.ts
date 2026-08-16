@@ -136,4 +136,14 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
       },
     ],
   },
+  {
+    label: "Assets",
+    items: [
+      {
+        name: "Kenney",
+        url: "https://kenney.nl/",
+        desc: "Thousands of free CC0 game & UI assets — sprites, 3D, audio, fonts.",
+      },
+    ],
+  },
 ];
