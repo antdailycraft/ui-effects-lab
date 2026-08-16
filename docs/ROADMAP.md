@@ -6,7 +6,7 @@ in [`CHANGELOG.md`](../CHANGELOG.md) and the *plan* here.
 
 Legend: ✅ done · 🟡 in progress · ⬜ not started
 
-_Last updated: 2026-08-17 (v0.7.0 — Reference tools, Resources expansion, combine follow-ups)_
+_Last updated: 2026-08-17 (v0.8.0 — landing page, effect gallery, Three.js showcase, resource thumbnails)_
 
 ## P0 — Must have · ✅ complete
 
@@ -61,25 +61,40 @@ Design reference utilities beyond the effects playground, each keeping the
 Explore → Copy loop, opened from the top-bar **Reference** menu in a shared
 focus-trapped modal:
 
-- ✅ **UI/UX terminology** — searchable, category-filtered glossary (~45 terms:
-  Layout, Components, Interaction, Motion, UX Laws, Accessibility, Typography).
+- ✅ **UI/UX terminology** — searchable, category-filtered glossary (~52 terms:
+  Layout, Components, Interaction, Motion, UX Laws, Accessibility, Typography),
+  many with live mini-previews. Includes Pagination / Pagination dots (v0.8.0).
 - ✅ **CSS cursor showcase** — every `cursor` keyword with a live hover preview
   and copy-to-clipboard.
 - ✅ **Emoji picker** — all 3,944 Unicode emoji (search + group filter, click to
   copy), generated from `docs/reference/EMOJI.html` and lazy-loaded + virtualized.
+- ✅ **Showcase** (v0.8.0) — a bundled standalone Three.js "Dissolve" demo
+  (`public/showcase/dissolve.html`) linked from the Reference menu (opens in a
+  new tab): a note dissolving into ~46k GPU particles with Burn/Glitch/Ink-bleed
+  variants, live parameters, playback scrub, and a GLSL source viewer.
 
 ## Beyond the PRD — already shipped
 
 Delivered on top of the original spec (see CHANGELOG `[0.1.0]`):
 
 - ✅ **Generators category** — 30 WebGL shaders (`@paper-design/shaders`,
-  Apache-2.0); catalog now totals **50** effects (14 SVG · 4 CSS · 2 Retro · 30
+  Apache-2.0); catalog now totals **56** effects (20 SVG · 4 CSS · 2 Retro · 30
   Generators).
+- ✅ **In-app landing page** (v0.8.0) — hero with a live WebGL mesh-gradient
+  background (static-gradient fallback), the Explore → Tweak → Compare → Copy
+  loop, and a clickable SVG-filter effect marquee that deep-links into an effect.
+  Shown before the workspace; skipped for `#s=` share links. The top-bar brand
+  logo returns to it.
+- ✅ **Effect gallery** (v0.8.0) — a top-bar Gallery opens a paginated grid (dot
+  pagination, no scroll) of all 20 SVG filters plus all 30 live generators, 10
+  tiles/page (bounds live WebGL contexts). Click a tile to open that effect.
+- ✅ **Resource hover thumbnails** (v0.8.0) — Resources-menu previews that follow
+  the pointer (site `og:image`, else a bundled screenshot), loaded on hover.
 - ✅ Built-in presets (each generator's library presets as one-click chips)
 - ✅ Color controls · image-source picker for image-based shaders
 - ✅ Per-effect SPDX license badges
-- ✅ Resources menu · CHANGELOG + release process · deployment config
-  (Vercel + manual GitHub Pages, see `docs/DEPLOY.md`)
+- ✅ Resources menu (26 curated sites) · CHANGELOG + release process · deployment
+  config (Vercel + manual GitHub Pages, see `docs/DEPLOY.md`)
 
 ## Development phases (PRD §31)
 
