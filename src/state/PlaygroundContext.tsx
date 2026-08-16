@@ -4,6 +4,7 @@ import { defaultParams, getEffect, EFFECTS } from "../registry/effects";
 import { randomizeParams } from "../lib/randomize";
 import { loadTheme, loadLastEffectId } from "../lib/storage";
 import { DEFAULT_IMAGE } from "../lib/sampleImage";
+import { decodeShare } from "../lib/share";
 
 export type CompareMode = "off" | "side-by-side" | "slider";
 
@@ -37,19 +38,29 @@ export type Action =
   | { type: "LOAD_PRESET"; effectId: string; params: Params }
   | { type: "SET_IMAGE"; url: string };
 
+// A shared "#s=…" link (if present and valid) wins over the last-used effect.
+const shared = typeof location !== "undefined" ? decodeShare(location.hash) : null;
+const sharedEffect = shared && getEffect(shared.e) ? getEffect(shared.e)! : null;
+
 const savedId = loadLastEffectId();
-const firstId = savedId && getEffect(savedId) ? savedId : EFFECTS[0].id;
+const firstId = sharedEffect
+  ? sharedEffect.id
+  : savedId && getEffect(savedId)
+    ? savedId
+    : EFFECTS[0].id;
 
 export const initialState: PlaygroundState = {
   effectId: firstId,
-  previewType: "card",
+  previewType: sharedEffect && shared?.pv ? shared.pv : "card",
   compareMode: "off",
   fullscreen: false,
   animate: true,
   codeTab: "svg",
   theme: loadTheme(),
   search: "",
-  params: defaultParams(getEffect(firstId)!),
+  params: sharedEffect
+    ? { ...defaultParams(sharedEffect), ...shared!.p }
+    : defaultParams(getEffect(firstId)!),
   imageUrl: DEFAULT_IMAGE,
 };
 

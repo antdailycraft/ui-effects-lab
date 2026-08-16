@@ -36,9 +36,9 @@ five: card, text, image, button, newspaper).
 
 Phase 5 (Sharing) is the main outstanding chunk.
 
-- ⬜ **URL share** — serialize `{ effectId, params, previewType }` to the URL and
-  restore on load; a Share button copies the link. _(next up)_
-- ⬜ Export to CodePen / StackBlitz
+- ✅ **URL share** — `{ effectId, params, previewType }` serialized to a `#s=…`
+  hash; Share button copies the link; opening it restores the view.
+- ⬜ Export to CodePen / StackBlitz _(next up)_
 - ⬜ Custom HTML preview target
 - ⬜ Favorites
 - ⬜ Effect combination (stacking multiple filters)

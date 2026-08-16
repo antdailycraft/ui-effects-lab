@@ -10,7 +10,13 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **URL sharing** — a Share button (bottom bar) encodes the current effect,
+  parameters, and preview type into a `#s=…` hash (base64url JSON), copies the
+  full link to the clipboard, and reflects it in the address bar. Opening a
+  shared link restores that exact view — the hash takes precedence over the
+  last-used effect in LocalStorage.
 
 ## [0.2.0] - 2026-08-16
 

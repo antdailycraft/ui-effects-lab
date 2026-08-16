@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { generateCode, resolveTab } from "../../lib/codegen";
+import { shareUrl } from "../../lib/share";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 export function BottomBar() {
@@ -10,6 +11,7 @@ export function BottomBar() {
   const effect = getEffect(state.effectId)!;
   const animate = state.animate && !reduced && !!effect.animatable;
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const copy = async () => {
     const code = generateCode(effect, state.params, animate, resolveTab(effect, state.codeTab));
@@ -17,6 +19,23 @@ export function BottomBar() {
       await navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
+    } catch {
+      /* clipboard blocked */
+    }
+  };
+
+  const share = async () => {
+    const url = shareUrl({ e: state.effectId, p: state.params, pv: state.previewType });
+    // Reflect the current view in the address bar so a copied link round-trips.
+    try {
+      history.replaceState(null, "", url);
+    } catch {
+      /* ignore */
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setShared(true);
+      setTimeout(() => setShared(false), 1400);
     } catch {
       /* clipboard blocked */
     }
@@ -45,7 +64,16 @@ export function BottomBar() {
       <span className="bar-status">
         {effect.controls.length} parameters · {effect.tech.length} primitives
       </span>
-      <button className={"bar-btn" + (copied ? " " : "")} onClick={copy}>
+      <button className="bar-btn" onClick={share}>
+        <svg className="i i-sm" viewBox="0 0 24 24">
+          <circle cx="18" cy="5" r="3" />
+          <circle cx="6" cy="12" r="3" />
+          <circle cx="18" cy="19" r="3" />
+          <path d="M8.6 10.6l6.8-4M8.6 13.4l6.8 4" />
+        </svg>
+        {shared ? "Link copied" : "Share"}
+      </button>
+      <button className="bar-btn" onClick={copy}>
         <svg className="i i-sm" viewBox="0 0 24 24">
           <rect x="9" y="9" width="12" height="12" rx="2" />
           <path d="M5 15V5a2 2 0 0 1 2-2h10" />
