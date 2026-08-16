@@ -3,6 +3,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { generateCode, resolveTab } from "../../lib/codegen";
 import { shareUrl } from "../../lib/share";
+import { ExportButtons } from "./ExportButtons";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 export function BottomBar() {
@@ -64,6 +65,7 @@ export function BottomBar() {
       <span className="bar-status">
         {effect.controls.length} parameters · {effect.tech.length} primitives
       </span>
+      <ExportButtons />
       <button className="bar-btn" onClick={share}>
         <svg className="i i-sm" viewBox="0 0 24 24">
           <circle cx="18" cy="5" r="3" />

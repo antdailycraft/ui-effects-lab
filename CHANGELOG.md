@@ -12,6 +12,11 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ### Added
 
+- **Export to CodePen / StackBlitz** — bottom-bar buttons open the current effect
+  as a runnable sandbox. Native SVG/CSS/Retro effects export as a static HTML+CSS
+  pen (the effect applied to a sample card); WebGL generators export as a React
+  demo — a Babel + esm.sh pen on CodePen, and a full Vite + React project (with
+  the `@paper-design/shaders-react` dependency) on StackBlitz.
 - **URL sharing** — a Share button (bottom bar) encodes the current effect,
   parameters, and preview type into a `#s=…` hash (base64url JSON), copies the
   full link to the clipboard, and reflects it in the address bar. Opening a

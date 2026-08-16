@@ -38,9 +38,10 @@ Phase 5 (Sharing) is the main outstanding chunk.
 
 - ✅ **URL share** — `{ effectId, params, previewType }` serialized to a `#s=…`
   hash; Share button copies the link; opening it restores the view.
-- ⬜ Export to CodePen / StackBlitz _(next up)_
+- ✅ **Export to CodePen / StackBlitz** — native effects → static HTML+CSS pen;
+  generators → React (esm.sh on CodePen, Vite project on StackBlitz).
+- ⬜ Favorites _(next up — small P2 win)_
 - ⬜ Custom HTML preview target
-- ⬜ Favorites
 - ⬜ Effect combination (stacking multiple filters)
 - ⬜ Community presets
 
