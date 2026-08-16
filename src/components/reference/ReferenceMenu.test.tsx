@@ -28,6 +28,8 @@ test("Reference menu opens the UI/UX Terms glossary with search & category filte
 
   const dialog = screen.getByRole("dialog", { name: /ui\/ux terms/i });
   expect(within(dialog).getByText("Toast")).toBeInTheDocument();
+  // Component terms render a live mini-preview
+  expect(dialog.querySelectorAll(".cp-frame").length).toBeGreaterThan(0);
 
   // search narrows the list
   await userEvent.type(within(dialog).getByLabelText(/search terms/i), "fitts");

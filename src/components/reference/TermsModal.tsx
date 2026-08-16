@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Modal } from "../common/Modal";
 import { TERMS, TERM_CATEGORIES, type TermCategory } from "../../data/terms";
+import { ComponentPreview } from "./ComponentPreview";
 
 export function TermsModal({ onClose }: { onClose: () => void }) {
   const [q, setQ] = useState("");
@@ -66,6 +67,7 @@ export function TermsModal({ onClose }: { onClose: () => void }) {
               </div>
               <p className="term-def">{t.def}</p>
               {t.example && <p className="term-eg">{t.example}</p>}
+              <ComponentPreview term={t.term} />
             </div>
           ))
         )}

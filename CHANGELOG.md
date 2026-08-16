@@ -16,6 +16,9 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
   tools in a shared focus-trapped modal:
   - **UI/UX Terms** — a searchable, category-filtered glossary (~45 terms across
     Layout, Components, Interaction, Motion, UX Laws, Accessibility, Typography).
+    Component terms (Toast, Snackbar, Skeleton, Tooltip, Popover, Modal, Drawer,
+    Accordion, Segmented control, Command palette, Chip/Badge, Breadcrumb,
+    Stepper) each render a live, theme-aware mini-preview of the pattern.
   - **CSS Cursors** — a grid of every cursor keyword, each drawn as an SVG glyph
     so the shape is visible at rest (arrows, hands, I-beam, crosshair, ban,
     hourglass, magnifier, resize arrows, …); hovering still shows the real native
