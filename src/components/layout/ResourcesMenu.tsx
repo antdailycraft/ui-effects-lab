@@ -2,10 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { RESOURCE_GROUPS } from "../../data/resources";
 import { COVERS } from "../../data/covers.generated";
 
+const THUMB_W = 260;
+const THUMB_H = 163;
+const THUMB_GAP = 16;
+
 export function ResourcesMenu() {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [thumbOk, setThumbOk] = useState(false);
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -29,10 +34,24 @@ export function ResourcesMenu() {
   }, [open]);
 
   const preview = (url: string | null) => {
-    setHovered(url);
-    setThumbOk(false); // reset until the new image loads
+    setHovered((prev) => {
+      if (prev !== url) setThumbOk(false); // reset only when the site changes
+      return url;
+    });
   };
   const cover = hovered ? COVERS[hovered] : undefined;
+
+  // Place the thumbnail next to the pointer (to its left; flips right near the
+  // left edge), clamped to the viewport.
+  const thumbStyle = pos
+    ? (() => {
+        const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+        let left = pos.x - THUMB_W - THUMB_GAP;
+        if (left < 8) left = pos.x + THUMB_GAP;
+        const top = Math.max(8, Math.min(pos.y - THUMB_H / 2, vh - THUMB_H - 8));
+        return { top, left };
+      })()
+    : undefined;
 
   return (
     <div className="resources" ref={ref}>
@@ -53,8 +72,8 @@ export function ResourcesMenu() {
 
       {open && (
         <>
-          {cover && (
-            <div className="resource-thumb-pop" aria-hidden="true">
+          {cover && thumbStyle && (
+            <div className="resource-thumb-pop" aria-hidden="true" style={thumbStyle}>
               {!thumbOk && <div className="resource-thumb-sk" />}
               <img
                 key={cover}
@@ -67,7 +86,14 @@ export function ResourcesMenu() {
               />
             </div>
           )}
-          <div className="resources-menu" role="menu" onMouseLeave={() => preview(null)}>
+          <div
+            className="resources-menu"
+            role="menu"
+            onMouseLeave={() => {
+              preview(null);
+              setPos(null);
+            }}
+          >
             {RESOURCE_GROUPS.map((g) => (
               <div className="resources-group" key={g.label}>
                 <div className="resources-label">{g.label}</div>
@@ -79,8 +105,16 @@ export function ResourcesMenu() {
                     href={it.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onMouseEnter={() => preview(it.url)}
-                    onFocus={() => preview(it.url)}
+                    onMouseEnter={(e) => {
+                      preview(it.url);
+                      setPos({ x: e.clientX, y: e.clientY });
+                    }}
+                    onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
+                    onFocus={(e) => {
+                      preview(it.url);
+                      const r = e.currentTarget.getBoundingClientRect();
+                      setPos({ x: r.left, y: r.top + r.height / 2 });
+                    }}
                   >
                     <div className="resource-name">
                       {it.name}
