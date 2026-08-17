@@ -824,6 +824,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .cp-iconbtn:hover { color: var(--text); border-color: var(--accent-line); }
 /* blog-set component previews */
+.cp-form { display: inline-flex; flex-direction: column; gap: 5px; width: 160px; }
+.cp-form .cp-field-label:not(:first-child) { margin-top: 4px; }
+.cp-form-input { height: 26px; border-radius: 7px; background: var(--panel); border: 1px solid var(--border); }
+.cp-form .cp-basicbtn { margin-top: 8px; text-align: center; }
+.cp-divider-demo { display: inline-flex; flex-direction: column; gap: 9px; font-size: 12.5px; color: var(--text-dim); }
+.cp-divider { height: 1px; background: var(--border); }
+.cp-menuicons { display: inline-flex; gap: 8px; }
+.cp-mi { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; color: var(--text-dim); background: var(--panel); border: 1px solid var(--border); }
+.mi-kebab,
+.mi-meatballs { display: flex; gap: 3px; }
+.mi-kebab { flex-direction: column; }
+.mi-kebab i,
+.mi-meatballs i { width: 3.5px; height: 3.5px; border-radius: 50%; background: currentColor; }
+.mi-bento { display: grid; grid-template-columns: repeat(3, 3.5px); gap: 2.5px; }
+.mi-bento i { width: 3.5px; height: 3.5px; border-radius: 50%; background: currentColor; }
+.mi-doner { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+.mi-doner i { height: 2px; border-radius: 2px; background: currentColor; }
+.mi-doner i:nth-child(1) { width: 16px; }
+.mi-doner i:nth-child(2) { width: 11px; }
+.mi-doner i:nth-child(3) { width: 7px; }
+.cp-badges { display: inline-flex; gap: 16px; }
+.cp-badge-ico { position: relative; width: 30px; height: 30px; display: inline-grid; place-items: center; color: var(--text-dim); }
+.cp-bell { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cp-nb-dot { position: absolute; top: 1px; right: 3px; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 0 1.5px var(--panel-2); }
+.cp-nb-count { position: absolute; top: -4px; right: -5px; min-width: 15px; height: 15px; padding: 0 3px; display: grid; place-items: center; font-size: 9px; font-weight: 700; color: #fff; background: #ef4444; border-radius: 999px; box-shadow: 0 0 0 1.5px var(--panel-2); }
+.cp-splash { width: 92px; height: 118px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; color: #fff; background: linear-gradient(160deg, var(--accent), #c0417a); }
+.cp-splash-logo { width: 30px; height: 30px; border-radius: 8px; background: rgba(255, 255, 255, 0.92); }
+.cp-splash-name { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+.cp-launcher { display: grid; grid-template-columns: repeat(3, 26px); gap: 8px; }
+.cp-launcher span { height: 26px; border-radius: 7px; background: linear-gradient(135deg, var(--accent-soft), var(--panel-2)); border: 1px solid var(--border); }
+.cp-mega { display: inline-flex; flex-direction: column; width: 224px; }
+.cp-mega-nav { display: flex; gap: 4px; font-size: 12px; }
+.cp-mega-nav span { padding: 6px 10px; color: var(--text-dim); border-radius: 6px 6px 0 0; }
+.cp-mega-nav span.on { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-bottom: 0; }
+.cp-mega-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 0 8px 8px 8px; }
+.cp-mega-col { display: flex; flex-direction: column; gap: 6px; }
+.cp-mega-col b { font-size: 11px; color: var(--text); }
+.cp-mega-col span { height: 6px; border-radius: 3px; background: var(--border-soft); }
+.cp-mega-col span:nth-child(3) { width: 78%; }
 .cp-btns { display: inline-flex; gap: 8px; }
 .cp-basicbtn { font-size: 12.5px; font-weight: 600; padding: 8px 16px; border-radius: 8px; background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
 .cp-basicbtn.ghost { background: transparent; color: var(--text-dim); border-color: var(--border); }

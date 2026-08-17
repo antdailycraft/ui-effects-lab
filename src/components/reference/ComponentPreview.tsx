@@ -54,6 +54,104 @@ const PREVIEWS: Record<string, JSX.Element> = {
       <button className="cp-basicbtn ghost">Cancel</button>
     </div>
   ),
+  Form: (
+    <div className="cp-form">
+      <span className="cp-field-label">Name</span>
+      <span className="cp-form-input" />
+      <span className="cp-field-label">Email</span>
+      <span className="cp-form-input" />
+      <button className="cp-basicbtn">Submit</button>
+    </div>
+  ),
+  Divider: (
+    <div className="cp-divider-demo">
+      <span>Section A</span>
+      <span className="cp-divider" />
+      <span>Section B</span>
+    </div>
+  ),
+  "Kebab / Meatballs / Bento / Döner menu": (
+    <div className="cp-menuicons">
+      <button className="cp-mi" aria-label="Kebab menu (vertical dots)">
+        <span className="mi-kebab">
+          <i />
+          <i />
+          <i />
+        </span>
+      </button>
+      <button className="cp-mi" aria-label="Meatballs menu (horizontal dots)">
+        <span className="mi-meatballs">
+          <i />
+          <i />
+          <i />
+        </span>
+      </button>
+      <button className="cp-mi" aria-label="Bento menu (3 by 3 dots)">
+        <span className="mi-bento">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <i key={i} />
+          ))}
+        </span>
+      </button>
+      <button className="cp-mi" aria-label="Döner menu (uneven lines)">
+        <span className="mi-doner">
+          <i />
+          <i />
+          <i />
+        </span>
+      </button>
+    </div>
+  ),
+  "Notification badge": (
+    <div className="cp-badges">
+      <span className="cp-badge-ico" aria-label="Notifications, unread">
+        <svg viewBox="0 0 24 24" className="cp-bell" aria-hidden="true">
+          <path d="M6 9a6 6 0 0 1 12 0c0 6 3 6 3 8H3c0-2 3-2 3-8" />
+          <path d="M10 21a2 2 0 0 0 4 0" />
+        </svg>
+        <span className="cp-nb-dot" />
+      </span>
+      <span className="cp-badge-ico" aria-label="Inbox, 3 unread">
+        <svg viewBox="0 0 24 24" className="cp-bell" aria-hidden="true">
+          <path d="M4 6h16v12H4z" />
+          <path d="M4 7l8 6 8-6" />
+        </svg>
+        <span className="cp-nb-count">3</span>
+      </span>
+    </div>
+  ),
+  "Splash screen": (
+    <div className="cp-splash">
+      <span className="cp-splash-logo" />
+      <span className="cp-splash-name">Appname</span>
+    </div>
+  ),
+  "Launcher / Springboard": (
+    <div className="cp-launcher">
+      {Array.from({ length: 9 }).map((_, i) => (
+        <span key={i} />
+      ))}
+    </div>
+  ),
+  "Mega menu": (
+    <div className="cp-mega">
+      <div className="cp-mega-nav">
+        <span>Shop</span>
+        <span className="on">Categories</span>
+        <span>Sale</span>
+      </div>
+      <div className="cp-mega-panel">
+        {["Men", "Women", "Kids"].map((c) => (
+          <div className="cp-mega-col" key={c}>
+            <b>{c}</b>
+            <span />
+            <span />
+            <span />
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
   "Text field / Input": (
     <div className="cp-field">
       <span className="cp-field-label">Email</span>
