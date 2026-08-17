@@ -30,6 +30,7 @@ export const TERMS: Term[] = [
   { term: "Whitespace", category: "Layout", def: "Empty space between elements that creates grouping and breathing room.", example: "Padding inside a card; gaps in a grid." },
   { term: "Gutter", category: "Layout", def: "The consistent space between columns in a grid.", example: "24px gutters in a 12-column layout." },
   { term: "Above the fold", category: "Layout", def: "The area visible before any scrolling.", example: "Hero + primary CTA placed above the fold." },
+  { term: "Hero section", category: "Layout", def: "The large, prominent banner at the top of a page — usually a headline, short subtext, and a primary CTA, often over an image or gradient. The first thing visitors see (above the fold).", example: "This app's landing: the big title + 'Open the Lab' CTA over a live gradient." },
   { term: "Bento grid", category: "Layout", def: "A grid of differently-sized rounded cards, like a bento box.", example: "Feature sections as mixed-size tiles." },
   { term: "Z-index / stacking", category: "Layout", def: "The front-to-back order of overlapping elements.", example: "A modal above a sticky header." },
   { term: "GNB (Global Navigation Bar)", category: "Layout", def: "The top-level menu shown on every page, linking a site's main sections. The parent of LNB/SNB. Common shorthand in Korean/Japanese web design.", example: "The primary menu bar across the top of every page." },
