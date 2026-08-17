@@ -13,6 +13,20 @@ const ITEMS: { id: Exclude<Tool, null>; label: string; desc: string }[] = [
   { id: "emoji", label: "Emoji", desc: "Search 3,900+ emoji, click to copy." },
 ];
 
+// Standalone WebGL demos bundled under public/showcase/, opened in a new tab.
+const SHOWCASE: { file: string; name: string; desc: string }[] = [
+  {
+    file: "dissolve.html",
+    name: "Dissolve — Three.js",
+    desc: "A note dissolving into 46k GPU particles (WebGL).",
+  },
+  {
+    file: "hero.html",
+    name: "Cursor-Reveal Hero — WebGL",
+    desc: "A paper hero that dissolves along the cursor to reveal beneath.",
+  },
+];
+
 export function ReferenceMenu() {
   const [open, setOpen] = useState(false);
   const [tool, setTool] = useState<Tool>(null);
@@ -75,23 +89,26 @@ export function ReferenceMenu() {
           </div>
           <div className="resources-group">
             <div className="resources-label">Showcase</div>
-            <a
-              className="resource-item"
-              role="menuitem"
-              href={`${import.meta.env.BASE_URL}showcase/dissolve.html`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-            >
-              <div className="resource-name">
-                Dissolve — Three.js
-                <svg className="i i-sm ext" viewBox="0 0 24 24">
-                  <path d="M7 17 17 7" />
-                  <path d="M8 7h9v9" />
-                </svg>
-              </div>
-              <div className="resource-desc">A note dissolving into 46k GPU particles (WebGL).</div>
-            </a>
+            {SHOWCASE.map((s) => (
+              <a
+                key={s.file}
+                className="resource-item"
+                role="menuitem"
+                href={`${import.meta.env.BASE_URL}showcase/${s.file}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                <div className="resource-name">
+                  {s.name}
+                  <svg className="i i-sm ext" viewBox="0 0 24 24">
+                    <path d="M7 17 17 7" />
+                    <path d="M8 7h9v9" />
+                  </svg>
+                </div>
+                <div className="resource-desc">{s.desc}</div>
+              </a>
+            ))}
           </div>
         </div>
       )}

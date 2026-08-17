@@ -37,12 +37,17 @@ test("Reference menu opens the UI/UX Terms glossary with search & category filte
   expect(within(dialog).queryByText("Toast")).not.toBeInTheDocument();
 });
 
-test("Reference menu links to the Three.js showcase in a new tab", async () => {
+test("Reference menu links to the bundled WebGL showcases in new tabs", async () => {
   render(<ReferenceMenu />);
   await userEvent.click(screen.getByRole("button", { name: /reference/i }));
-  const link = screen.getByRole("menuitem", { name: /dissolve/i });
-  expect(link).toHaveAttribute("href", expect.stringContaining("showcase/dissolve.html"));
-  expect(link).toHaveAttribute("target", "_blank");
+
+  const dissolve = screen.getByRole("menuitem", { name: /three\.js/i });
+  expect(dissolve).toHaveAttribute("href", expect.stringContaining("showcase/dissolve.html"));
+  expect(dissolve).toHaveAttribute("target", "_blank");
+
+  const hero = screen.getByRole("menuitem", { name: /cursor-reveal hero/i });
+  expect(hero).toHaveAttribute("href", expect.stringContaining("showcase/hero.html"));
+  expect(hero).toHaveAttribute("target", "_blank");
 });
 
 test("clicking a cursor tile copies its declaration", async () => {
