@@ -6,7 +6,7 @@ in [`CHANGELOG.md`](../CHANGELOG.md) and the *plan* here.
 
 Legend: ✅ done · 🟡 in progress · ⬜ not started
 
-_Last updated: 2026-08-17 (v0.8.0 — landing page, effect gallery, Three.js showcase, resource thumbnails)_
+_Last updated: 2026-08-17 (v0.9.0 — glossary expansion + Process category, second WebGL showcase, emoji select-then-copy)_
 
 ## P0 — Must have · ✅ complete
 
@@ -61,9 +61,10 @@ Design reference utilities beyond the effects playground, each keeping the
 Explore → Copy loop, opened from the top-bar **Reference** menu in a shared
 focus-trapped modal:
 
-- ✅ **UI/UX terminology** — searchable, category-filtered glossary (~52 terms:
-  Layout, Components, Interaction, Motion, UX Laws, Accessibility, Typography),
-  many with live mini-previews. Includes Pagination / Pagination dots (v0.8.0).
+- ✅ **UI/UX terminology** — searchable, category-filtered glossary (~150 terms
+  across Layout, Components, Interaction, Motion, UX Laws, Accessibility,
+  Typography, and Process), many with live mini-previews. Greatly expanded in
+  v0.9.0 with a full UX/UI practitioner vocabulary and the new Process category.
 - ✅ **CSS cursor showcase** — every `cursor` keyword with a live hover preview
   and copy-to-clipboard.
 - ✅ **Emoji picker** — all 3,944 Unicode emoji (search + group filter, click to

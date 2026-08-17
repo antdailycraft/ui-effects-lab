@@ -10,6 +10,45 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-08-17
+
+A large UI/UX glossary expansion (~70 new terms), a new Process category, a
+second WebGL showcase, and an improved emoji picker.
+
+### Added
+
+- **UI/UX glossary greatly expanded (~70 new terms)**, most with live,
+  theme-aware mini-previews, drawn from a UX/UI practitioner vocabulary:
+  - **New Process category** — Wireframe, Storyboard, detailed spec, IA, Flow
+    chart, WBS, Funnel, User journey map, Persona, End user, MVP, OKR, A/B test,
+    Agile, Scrum, Sprint, Product backlog, Front-end, Back-end, Native / Web /
+    Hybrid app, Deploy, Responsive web, and QA.
+  - **Components** (live previews) — Toggle / Switch, Checkbox, Radio button,
+    Toggle button (+ group), Leading / Trailing icon, Icon button, Grid, Stack,
+    Table, Dropdown menu, Select, Combobox, Button, Text field / Input, List box,
+    Slider, Dial / Knob, Scrollbar, Tabs, Tree view, Ribbon menu, Carousel,
+    Progress indicator, Loading spinner, Bottom navigation, Hamburger button,
+    Popup, Form, Divider, the Kebab / Meatballs / Bento / Döner icon-menu family,
+    Notification badge, Splash screen, Launcher / Springboard, and Mega menu.
+  - **Layout** — GNB / LNB / SNB / FNB, Hero section, Header, Footer, Status bar.
+  - **Interaction** — Onboarding, Coach marks, Walkthrough, Pull to refresh,
+    Hover, MRU.
+  - Existing terms gained industry aliases and clarifications (Select, Combobox,
+    Table, Stepper, Chip, Drawer / Sheet, Hero section, Empty state).
+- **Cursor-Reveal Hero showcase** — a second bundled standalone WebGL demo
+  (`public/showcase/hero.html`): an interactive paper hero that dissolves along
+  the cursor to reveal the layer beneath, with a CSS fallback where WebGL is
+  unavailable. Listed alongside the Dissolve demo in the Reference → Showcase
+  menu.
+
+### Changed
+
+- **Emoji picker: select-then-copy** — clicking an emoji now selects it
+  (highlighted, `aria-pressed`) instead of copying immediately; a dedicated
+  **Copy** button writes it to the clipboard (disabled until something is
+  picked), with the selected glyph and name shown. Double-click still copies as
+  a shortcut.
+
 ## [0.8.0] - 2026-08-17
 
 An in-app landing page, a paginated effect gallery, a Three.js showcase, and
@@ -399,7 +438,8 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.5.0...v0.6.0
