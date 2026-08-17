@@ -5,10 +5,16 @@ import { EMOJI, EMOJI_GROUPS } from "../../data/emoji.generated";
 const CELL = 46; // px, square emoji cell
 const VIEWPORT = 380; // grid scroll-viewport height
 
+interface Picked {
+  c: string;
+  n: string;
+}
+
 export function EmojiModal({ onClose }: { onClose: () => void }) {
   const [q, setQ] = useState("");
   const [group, setGroup] = useState(-1); // -1 = all groups
-  const [copied, setCopied] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Picked | null>(null);
+  const [copied, setCopied] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const [cols, setCols] = useState(10);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -43,11 +49,18 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
   const endRow = Math.min(rows, Math.ceil((scrollTop + VIEWPORT) / CELL) + 2);
   const visible = items.slice(startRow * cols, Math.min(items.length, endRow * cols));
 
-  const copy = async (c: string) => {
+  // Clicking a cell selects it; the explicit Copy button below does the copy.
+  const pick = (e: Picked) => {
+    setSelected(e);
+    setCopied(false);
+  };
+
+  const copy = async () => {
+    if (!selected) return;
     try {
-      await navigator.clipboard.writeText(c);
-      setCopied(c);
-      setTimeout(() => setCopied(null), 1000);
+      await navigator.clipboard.writeText(selected.c);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
     } catch {
       /* clipboard blocked */
     }
@@ -58,7 +71,7 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
       <div className="ref-head">
         <div>
           <h2 className="ref-title">Emoji</h2>
-          <p className="ref-sub">{EMOJI.length.toLocaleString()} symbols · click to copy.</p>
+          <p className="ref-sub">{EMOJI.length.toLocaleString()} symbols · pick one, then copy.</p>
         </div>
         <button className="ref-close" aria-label="Close" onClick={onClose}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -120,11 +133,13 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
               {visible.map((e) => (
                 <button
                   key={e.c + e.n}
-                  className="emoji-cell"
+                  className={"emoji-cell" + (selected?.c === e.c ? " sel" : "")}
                   style={{ height: CELL }}
                   title={e.n}
                   aria-label={e.n}
-                  onClick={() => copy(e.c)}
+                  aria-pressed={selected?.c === e.c}
+                  onClick={() => pick({ c: e.c, n: e.n })}
+                  onDoubleClick={copy}
                 >
                   {e.c}
                 </button>
@@ -134,8 +149,25 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
         )}
       </div>
 
-      <div className="emoji-status">
-        {copied ? `Copied ${copied}` : `${items.length.toLocaleString()} emoji`}
+      <div className="emoji-foot">
+        {selected ? (
+          <div className="emoji-pick">
+            <span className="emoji-pick-glyph" aria-hidden="true">
+              {selected.c}
+            </span>
+            <span className="emoji-pick-name">{selected.n}</span>
+          </div>
+        ) : (
+          <span className="emoji-hint">{items.length.toLocaleString()} emoji · select one to copy</span>
+        )}
+        <button
+          className="emoji-copy"
+          onClick={copy}
+          disabled={!selected}
+          aria-label={selected ? `Copy ${selected.n}` : "Copy"}
+        >
+          {copied ? "Copied ✓" : "Copy"}
+        </button>
       </div>
     </Modal>
   );
