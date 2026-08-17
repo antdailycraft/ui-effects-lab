@@ -56,6 +56,15 @@
   .badge { width: 40px; height: 40px; border-radius: 9px; display: grid; place-items: center;
     color: #fff; font-weight: 700; font-size: 18px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
   .badge.sm { width: 30px; height: 30px; border-radius: 7px; font-size: 14px; }
+  /* light theme: give color swatches a visible edge on the white cards */
+  body.light .badge { box-shadow: inset 0 0 0 1px rgba(0,0,0,.16); }
+  body.light .dot:not(.hollow) { box-shadow: inset 0 0 0 1px rgba(0,0,0,.16); }
+  .aa { margin-top: 8px; display: flex; align-items: center; gap: 8px; }
+  .aa-ratio { font-family: "Cascadia Code", "SF Mono", ui-monospace, monospace; font-size: 12px; color: var(--text-dim); }
+  .aa-chip { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; letter-spacing: 0.02em; }
+  .aa-chip.pass { color: #fff; background: #16a34a; }
+  .aa-chip.large { color: #1a1a1a; background: #f59e0b; }
+  .aa-chip.fail { color: #fff; background: #dc2626; }
   .meta { padding: 12px 14px 14px; }
   .name { font-size: 14px; font-weight: 600; }
   .name .en { color: var(--text-dim); font-weight: 400; }
@@ -78,9 +87,13 @@
   <p class="note"><b>Tailwind standard values</b> (each named color → its Tailwind&nbsp;500 shade). <b>기본 (Default)</b> is the neutral/no-accent option (slate-500); <b>주황색 (Orange)</b> is selected in the menu.</p>
   <div class="grid" id="accent"></div>
 
-  <h2>Project badges <span class="sub" style="font-weight:400">· each mapped to an accent color</span></h2>
-  <p class="note"><b>Excluded:</b> memo-bin (folder) &amp; port-keep (lightning) — no letter. Each project's first-letter badge is snapped to its nearest Tailwind accent (green-heavy names reuse emerald). Click a card to select it.</p>
+  <h2>Accent colors — badges <span class="sub" style="font-weight:400">· white text · AA scores</span></h2>
+  <p class="note">The 11 accents as letter badges with <b>white</b> text. Each shows the WCAG contrast ratio of the letter vs its background, and the AA verdict. Click a card to select it.</p>
   <div class="grid" id="badges"></div>
+
+  <h2>Accent colors — badges <span class="sub" style="font-weight:400">· black text · AA scores</span></h2>
+  <p class="note">The same badges with <b>black</b> text — compare the AA scores to see which letter color reads better on each accent. AA needs 4.5:1 (normal) or 3:1 (large/bold ≥18px); these letters are large.</p>
+  <div class="grid" id="badgesBlack"></div>
 
   <div class="copied" id="toast">Copied</div>
 
@@ -98,21 +111,6 @@
     { ko: "빨간색", en: "Red",     tw: "red-500",     hex: "#EF4444" },
     { ko: "호박색", en: "Amber",   tw: "amber-500",   hex: "#F59E0B" },
     { ko: "파란색", en: "Blue",    tw: "blue-500",    hex: "#3B82F6" },
-  ];
-
-  // Every project's first-letter badge, each snapped to its nearest Tailwind accent.
-  const BADGES = [
-    { letter: "F", project: "folio_codex",         tw: "purple-500",  hex: "#A855F7" },
-    { letter: "K", project: "keystrike",           tw: "emerald-500", hex: "#10B981" },
-    { letter: "R", project: "rhea",                tw: "teal-500",    hex: "#14B8A6" },
-    { letter: "M", project: "modu-ads",            tw: "emerald-500", hex: "#10B981" },
-    { letter: "U", project: "ui-effects-lab",      tw: "indigo-500",  hex: "#6366F1" },
-    { letter: "M", project: "modoo-adoption",      tw: "sky-500",     hex: "#0EA5E9" },
-    { letter: "T", project: "type-survivor",       tw: "red-500",     hex: "#EF4444" },
-    { letter: "E", project: "epub translator",     tw: "emerald-500", hex: "#10B981" },
-    { letter: "S", project: "social-auth-starter", tw: "emerald-500", hex: "#10B981" },
-    { letter: "B", project: "bithumb-trader",      tw: "purple-500",  hex: "#A855F7" },
-    { letter: "K", project: "kairos",              tw: "teal-500",    hex: "#14B8A6" },
   ];
 
   const toast = document.getElementById("toast");
@@ -145,19 +143,41 @@
     accent.appendChild(card);
   }
 
-  const badges = document.getElementById("badges");
-  for (const c of BADGES) {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML =
-      `<div class="swatch"><span class="badge" style="background:${c.hex}">${c.letter}</span></div>
-       <div class="meta">
-         <div class="name">${c.project}</div>
-         <div class="hex">${c.hex} <span class="en">· ${c.tw}</span></div>
-       </div>`;
-    card.addEventListener("click", () => { copy(c.hex); selectCard(card); });
-    badges.appendChild(card);
+  // WCAG relative luminance + contrast ratio.
+  function relLum(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
+      const s = v / 255;
+      return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
   }
+  function contrast(a, b) {
+    const l1 = relLum(a), l2 = relLum(b);
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  }
+
+  function renderBadges(containerId, textColor) {
+    const el = document.getElementById(containerId);
+    for (const c of ACCENT) {
+      const ratio = contrast(c.hex, textColor);
+      const cls = ratio >= 4.5 ? "pass" : ratio >= 3 ? "large" : "fail";
+      const label = ratio >= 4.5 ? "AA ✓" : ratio >= 3 ? "AA large" : "AA ✗";
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML =
+        `<div class="swatch"><span class="badge" style="background:${c.hex};color:${textColor}">${c.en.charAt(0)}</span></div>
+         <div class="meta">
+           <div class="name">${c.ko} <span class="en">${c.en}</span></div>
+           <div class="hex">${c.hex} <span class="en">· ${c.tw}</span></div>
+           <div class="aa"><span class="aa-ratio">${ratio.toFixed(2)}:1</span><span class="aa-chip ${cls}">${label}</span></div>
+         </div>`;
+      card.addEventListener("click", () => { copy(c.hex); selectCard(card); });
+      el.appendChild(card);
+    }
+  }
+  renderBadges("badges", "#ffffff");
+  renderBadges("badgesBlack", "#000000");
 
   // ---- theme ----
   const btn = document.getElementById("theme");
