@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palette — accent colors & project badges</title>
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    /* dark (default) */
+    --bg: #0d0f12; --card: #16191d; --border: #24282e; --border-hover: #3a3f47;
+    --text: #e8eaed; --text-dim: #9aa0a6; --text-faint: #6b7178;
+    --tag-bg: #22262c; --chip-bg: #2a2f36; --chip-text: #ffffff;
+  }
+  body.light {
+    --bg: #f4f6f9; --card: #ffffff; --border: #e3e6eb; --border-hover: #c6ccd5;
+    --text: #1a1d21; --text-dim: #5a616b; --text-faint: #949aa4;
+    --tag-bg: #eef0f4; --chip-bg: #2a2f36; --chip-text: #ffffff;
+  }
+  html { color-scheme: dark; }
+  body.light { color-scheme: light; }
+  body {
+    margin: 0; padding: 40px 28px 60px;
+    background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    transition: background 0.2s, color 0.2s;
+  }
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 6px; }
+  h2 { font-size: 15px; font-weight: 600; color: var(--text); margin: 34px 0 14px; }
+  .sub { color: var(--text-dim); font-size: 13px; margin: 0 0 8px; line-height: 1.6; font-weight: 400; }
+  .note { color: var(--text-faint); font-size: 12px; margin: 0 0 4px; line-height: 1.6; }
+  .note b { color: var(--text-dim); font-weight: 600; }
+
+  .theme-toggle {
+    position: fixed; top: 20px; right: 22px; z-index: 5;
+    font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 9px;
+    color: var(--text); background: var(--card); border: 1px solid var(--border); cursor: pointer;
+    transition: border-color 0.13s;
+  }
+  .theme-toggle:hover { border-color: var(--border-hover); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    cursor: pointer; transition: border-color 0.13s, transform 0.13s; position: relative;
+  }
+  .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+  .card.sel { border-color: var(--border-hover); }
+  .card.sel::after {
+    content: "✓ selected"; position: absolute; top: 10px; right: 10px;
+    font-size: 10.5px; color: var(--chip-text); background: var(--chip-bg); padding: 2px 7px; border-radius: 5px;
+  }
+  .swatch { height: 92px; display: flex; align-items: center; justify-content: center; gap: 7px; flex-wrap: wrap; padding: 0 10px; }
+  .dot { width: 40px; height: 40px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(127,127,127,.25); }
+  .dot.hollow { background: transparent !important; box-shadow: inset 0 0 0 2px var(--text-faint); }
+  .badge { width: 40px; height: 40px; border-radius: 9px; display: grid; place-items: center;
+    color: #fff; font-weight: 700; font-size: 18px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+  .badge.sm { width: 30px; height: 30px; border-radius: 7px; font-size: 14px; }
+  .meta { padding: 12px 14px 14px; }
+  .name { font-size: 14px; font-weight: 600; }
+  .name .en { color: var(--text-dim); font-weight: 400; }
+  .hex { margin-top: 4px; font-family: "Cascadia Code", "SF Mono", ui-monospace, monospace; font-size: 13px; color: var(--text-dim); letter-spacing: 0.02em; }
+  .projects { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-size: 11.5px; color: var(--text-dim); background: var(--tag-bg); border-radius: 6px; padding: 2px 8px; }
+  .copied { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+    background: var(--chip-bg); color: var(--chip-text); font-size: 13px; padding: 9px 18px; border-radius: 8px;
+    opacity: 0; transition: opacity 0.2s; pointer-events: none; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+  .copied.on { opacity: 1; }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" id="theme" type="button">☀ Light</button>
+
+  <h1>Palette</h1>
+  <p class="sub">Click any card to copy its hex.</p>
+
+  <h2>Accent colors <span class="sub" style="font-weight:400">· the named picker (11) — Tailwind 500</span></h2>
+  <p class="note"><b>Tailwind standard values</b> (each named color → its Tailwind&nbsp;500 shade). <b>기본 (Default)</b> is the neutral/no-accent option (slate-500); <b>주황색 (Orange)</b> is selected in the menu.</p>
+  <div class="grid" id="accent"></div>
+
+  <h2>Project badges <span class="sub" style="font-weight:400">· mapped to the accent palette (6 used)</span></h2>
+  <p class="note"><b>Excluded:</b> memo-bin (folder) &amp; port-keep (lightning) — no letter. Each first-letter badge is snapped to its nearest Tailwind accent, so 11 badges group into 6 colors.</p>
+  <div class="grid" id="badges"></div>
+
+  <div class="copied" id="toast">Copied</div>
+
+<script>
+  // Named accent colors from the picker menu, mapped to Tailwind 500 shades.
+  const ACCENT = [
+    { ko: "기본",   en: "Default", tw: "slate-500",   hex: "#64748B", hollow: true },
+    { ko: "보라색", en: "Purple",  tw: "purple-500",  hex: "#A855F7" },
+    { ko: "하늘",   en: "Sky",     tw: "sky-500",     hex: "#0EA5E9" },
+    { ko: "에메랄드", en: "Emerald", tw: "emerald-500", hex: "#10B981" },
+    { ko: "주황색", en: "Orange",  tw: "orange-500",  hex: "#F97316", sel: true },
+    { ko: "분홍색", en: "Pink",    tw: "pink-500",    hex: "#EC4899" },
+    { ko: "남색",   en: "Indigo",  tw: "indigo-500",  hex: "#6366F1" },
+    { ko: "청록색", en: "Teal",    tw: "teal-500",    hex: "#14B8A6" },
+    { ko: "빨간색", en: "Red",     tw: "red-500",     hex: "#EF4444" },
+    { ko: "호박색", en: "Amber",   tw: "amber-500",   hex: "#F59E0B" },
+    { ko: "파란색", en: "Blue",    tw: "blue-500",    hex: "#3B82F6" },
+  ];
+
+  // Project first-letter badges, each snapped to its nearest Tailwind accent.
+  const BADGES = [
+    { tw: "purple-500",  hex: "#A855F7", items: [["F","folio_codex"], ["B","bithumb-trader"]] },
+    { tw: "indigo-500",  hex: "#6366F1", items: [["U","ui-effects-lab"]] },
+    { tw: "sky-500",     hex: "#0EA5E9", items: [["M","modoo-adoption"]] },
+    { tw: "teal-500",    hex: "#14B8A6", items: [["R","rhea"], ["K","kairos"]] },
+    { tw: "emerald-500", hex: "#10B981", items: [["K","keystrike"], ["E","epub translator"], ["M","modu-ads"], ["S","social-auth-starter"]] },
+    { tw: "red-500",     hex: "#EF4444", items: [["T","type-survivor"]] },
+  ];
+
+  const toast = document.getElementById("toast");
+  let toastTimer;
+  function copy(hex) {
+    navigator.clipboard && navigator.clipboard.writeText(hex);
+    toast.textContent = "Copied " + hex;
+    toast.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("on"), 1100);
+  }
+
+  const accent = document.getElementById("accent");
+  for (const c of ACCENT) {
+    const card = document.createElement("div");
+    card.className = "card" + (c.sel ? " sel" : "");
+    card.innerHTML =
+      `<div class="swatch"><span class="dot${c.hollow ? " hollow" : ""}" style="background:${c.hex}"></span></div>
+       <div class="meta">
+         <div class="name">${c.ko} <span class="en">${c.en}</span></div>
+         <div class="hex">${c.hex} <span class="en">· ${c.tw}</span></div>
+       </div>`;
+    card.addEventListener("click", () => copy(c.hex));
+    accent.appendChild(card);
+  }
+
+  const badges = document.getElementById("badges");
+  for (const c of BADGES) {
+    const card = document.createElement("div");
+    card.className = "card";
+    const dots = c.items.map(([l]) => `<span class="badge sm" style="background:${c.hex}">${l}</span>`).join("");
+    const tags = c.items.map(([, p]) => `<span class="tag">${p}</span>`).join("");
+    card.innerHTML =
+      `<div class="swatch">${dots}</div>
+       <div class="meta">
+         <div class="name">${c.tw}</div>
+         <div class="hex">${c.hex}</div>
+         <div class="projects">${tags}</div>
+       </div>`;
+    card.addEventListener("click", () => copy(c.hex));
+    badges.appendChild(card);
+  }
+
+  // ---- theme ----
+  const btn = document.getElementById("theme");
+  function applyTheme(t) {
+    document.body.classList.toggle("light", t === "light");
+    btn.textContent = t === "light" ? "🌙 Dark" : "☀ Light";
+    try { localStorage.setItem("palette-theme", t); } catch (e) {}
+  }
+  let init = "dark";
+  try { init = localStorage.getItem("palette-theme"); } catch (e) {}
+  if (!init) init = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  applyTheme(init);
+  btn.addEventListener("click", () => applyTheme(document.body.classList.contains("light") ? "dark" : "light"));
+</script>
+</body>
+</html>

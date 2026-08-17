@@ -971,6 +971,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .emoji-copy:hover:not(:disabled) { filter: brightness(1.07); }
 .emoji-copy:disabled { opacity: 0.45; cursor: not-allowed; }
+.emoji-copy.is-copied { background: #16a34a; border-color: #16a34a; color: #fff; }
 
 /* ---------- Effect gallery ---------- */
 .gal-modal { max-width: 900px; }

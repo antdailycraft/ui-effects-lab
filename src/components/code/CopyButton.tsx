@@ -1,15 +1,12 @@
 import { useState } from "react";
+import { copyText } from "../../lib/clipboard";
 
 export function CopyButton({ code }: { code: string }) {
   const [done, setDone] = useState(false);
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setDone(true);
-      setTimeout(() => setDone(false), 1200);
-    } catch {
-      /* clipboard blocked */
-    }
+    if (!(await copyText(code))) return;
+    setDone(true);
+    setTimeout(() => setDone(false), 1200);
   };
   return (
     <button className={"code-copy" + (done ? " done" : "")} onClick={copy}>

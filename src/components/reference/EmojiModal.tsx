@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Modal } from "../common/Modal";
 import { EMOJI, EMOJI_GROUPS } from "../../data/emoji.generated";
+import { copyText } from "../../lib/clipboard";
 
 const CELL = 46; // px, square emoji cell
 const VIEWPORT = 380; // grid scroll-viewport height
@@ -50,6 +51,7 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
   const visible = items.slice(startRow * cols, Math.min(items.length, endRow * cols));
 
   // Clicking a cell selects it; the explicit Copy button below does the copy.
+  // Picking a different emoji reverts the button from its "copied" state.
   const pick = (e: Picked) => {
     setSelected(e);
     setCopied(false);
@@ -57,13 +59,7 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
 
   const copy = async () => {
     if (!selected) return;
-    try {
-      await navigator.clipboard.writeText(selected.c);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {
-      /* clipboard blocked */
-    }
+    if (await copyText(selected.c)) setCopied(true);
   };
 
   return (
@@ -161,12 +157,12 @@ export function EmojiModal({ onClose }: { onClose: () => void }) {
           <span className="emoji-hint">{items.length.toLocaleString()} emoji · select one to copy</span>
         )}
         <button
-          className="emoji-copy"
+          className={"emoji-copy" + (copied ? " is-copied" : "")}
           onClick={copy}
           disabled={!selected}
-          aria-label={selected ? `Copy ${selected.n}` : "Copy"}
+          aria-label={selected ? (copied ? `Copied ${selected.n}` : `Copy ${selected.n}`) : "Copy"}
         >
-          {copied ? "Copied ✓" : "Copy"}
+          {copied ? "✓ Copied" : "Copy"}
         </button>
       </div>
     </Modal>

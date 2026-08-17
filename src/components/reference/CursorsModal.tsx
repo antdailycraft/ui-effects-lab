@@ -2,18 +2,15 @@ import { useState } from "react";
 import { Modal } from "../common/Modal";
 import { CURSORS } from "../../data/cursors";
 import { CursorGlyph } from "./CursorGlyph";
+import { copyText } from "../../lib/clipboard";
 
 export function CursorsModal({ onClose }: { onClose: () => void }) {
   const [copied, setCopied] = useState<string | null>(null);
 
   const copy = async (value: string) => {
-    try {
-      await navigator.clipboard.writeText(`cursor: ${value};`);
-      setCopied(value);
-      setTimeout(() => setCopied(null), 1200);
-    } catch {
-      /* clipboard blocked */
-    }
+    if (!(await copyText(`cursor: ${value};`))) return;
+    setCopied(value);
+    setTimeout(() => setCopied(null), 1200);
   };
 
   return (

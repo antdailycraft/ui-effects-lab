@@ -3,6 +3,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { generateCode, resolveTab } from "../../lib/codegen";
 import { shareUrl } from "../../lib/share";
+import { copyText } from "../../lib/clipboard";
 import {
   appliedChain,
   isStackable,
@@ -33,13 +34,9 @@ export function BottomBar() {
     } else {
       code = generateCode(effect, state.params, animate, resolveTab(effect, state.codeTab));
     }
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {
-      /* clipboard blocked */
-    }
+    if (!(await copyText(code))) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
   };
 
   const share = async () => {
@@ -59,13 +56,9 @@ export function BottomBar() {
     } catch {
       /* ignore */
     }
-    try {
-      await navigator.clipboard.writeText(url);
-      setShared(true);
-      setTimeout(() => setShared(false), 1400);
-    } catch {
-      /* clipboard blocked */
-    }
+    if (!(await copyText(url))) return;
+    setShared(true);
+    setTimeout(() => setShared(false), 1400);
   };
 
   return (
