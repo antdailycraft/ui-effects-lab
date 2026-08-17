@@ -133,6 +133,7 @@ export const TERMS: Term[] = [
   { term: "Skip link", category: "Accessibility", def: "A hidden link that jumps past nav straight to main content.", example: '"Skip to content" on first Tab.' },
   { term: "ARIA live region", category: "Accessibility", def: "A region screen readers announce when its content changes.", example: 'aria-live="polite" for a toast.' },
   { term: "Contrast ratio", category: "Accessibility", def: "Luminance difference of text vs background; AA needs 4.5:1.", example: "Body text passes 4.5:1." },
+  { term: "WCAG conformance (A / AA / AAA)", category: "Accessibility", def: "The three conformance levels of the Web Content Accessibility Guidelines (WCAG): A is the minimum, AA is the common target most products and laws require, and AAA is the strictest. 'AA' means meeting all A and AA success criteria — e.g. 4.5:1 text contrast, keyboard operability, and visible focus.", example: "Aiming for WCAG 2.1 AA compliance." },
   { term: "Reduced motion", category: "Accessibility", def: "Honoring users who request less animation.", example: "prefers-reduced-motion pauses effects." },
 
   // Typography
