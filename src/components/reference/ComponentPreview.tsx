@@ -35,6 +35,39 @@ const PREVIEWS: Record<string, JSX.Element> = {
       </div>
     </div>
   ),
+  Grid: (
+    <div className="cp-grid">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <span key={i} />
+      ))}
+    </div>
+  ),
+  Stack: (
+    <div className="cp-stack">
+      <span />
+      <span />
+      <span />
+    </div>
+  ),
+  Table: (
+    <div className="cp-table">
+      <div className="cp-tr cp-th">
+        <span>Name</span>
+        <span>Role</span>
+        <span>Status</span>
+      </div>
+      <div className="cp-tr">
+        <span>Jane</span>
+        <span>Admin</span>
+        <span>Active</span>
+      </div>
+      <div className="cp-tr">
+        <span>Max</span>
+        <span>Editor</span>
+        <span>Away</span>
+      </div>
+    </div>
+  ),
   "Dropdown menu": (
     <div className="cp-dropdown">
       <span className="cp-dd-trigger">
