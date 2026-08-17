@@ -167,6 +167,16 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
     ],
   },
   {
+    label: "Colors & Themes",
+    items: [
+      {
+        name: "getdesign.kr",
+        url: "https://getdesign.kr/",
+        desc: "Live catalog of Korean brand design systems — real color palettes, typography & themes (behind ko-design-md).",
+      },
+    ],
+  },
+  {
     label: "Assets",
     items: [
       {
