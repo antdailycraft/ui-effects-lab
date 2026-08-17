@@ -35,6 +35,42 @@ const PREVIEWS: Record<string, JSX.Element> = {
       </div>
     </div>
   ),
+  "Dropdown menu": (
+    <div className="cp-dropdown">
+      <span className="cp-dd-trigger">
+        Actions <span className="cp-caret">▾</span>
+      </span>
+      <div className="cp-dd-menu">
+        <span>Rename</span>
+        <span>Duplicate</span>
+        <span className="danger">Delete</span>
+      </div>
+    </div>
+  ),
+  Select: (
+    <div className="cp-select">
+      <span className="cp-select-field">
+        <span>Korea</span>
+        <span className="cp-caret">▾</span>
+      </span>
+    </div>
+  ),
+  Combobox: (
+    <div className="cp-combobox">
+      <span className="cp-combo-input">
+        <span className="cp-combo-typed">San</span>
+        <span className="cp-caret">▾</span>
+      </span>
+      <div className="cp-combo-list">
+        <span className="on">
+          <b>San</b> Francisco
+        </span>
+        <span>
+          <b>San</b> Diego
+        </span>
+      </div>
+    </div>
+  ),
   "Modal / Dialog": (
     <div className="cp-modal">
       <div className="cp-dlg">

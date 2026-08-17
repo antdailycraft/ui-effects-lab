@@ -789,6 +789,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cp-tgroup button { font-size: 12px; font-weight: 600; padding: 6px 13px; color: var(--text-dim); background: var(--panel); border-right: 1px solid var(--border); }
 .cp-tgroup button:last-child { border-right: 0; }
 .cp-tgroup button.on { background: var(--accent); color: var(--accent-ink); }
+.cp-dropdown,
+.cp-combobox { display: inline-flex; flex-direction: column; gap: 6px; align-items: stretch; }
+.cp-dd-trigger,
+.cp-select-field,
+.cp-combo-input {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-width: 150px; font-size: 12.5px; color: var(--text);
+  padding: 7px 11px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+}
+.cp-caret { color: var(--text-faint); font-size: 10px; }
+.cp-combo-typed { border-right: 1.5px solid var(--accent); padding-right: 2px; }
+.cp-dd-menu,
+.cp-combo-list {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow);
+}
+.cp-dd-menu span,
+.cp-combo-list span { font-size: 12.5px; color: var(--text-dim); padding: 7px 11px; }
+.cp-dd-menu span.danger { color: #ef5b6b; }
+.cp-combo-list span.on { background: var(--accent-soft); color: var(--text); }
+.cp-combo-list b { color: var(--accent); font-weight: 700; }
 
 /* Emoji picker */
 .emoji-modal { max-width: 620px; }
