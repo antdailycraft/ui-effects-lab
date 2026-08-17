@@ -758,6 +758,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cp-dots { display: inline-flex; align-items: center; gap: 9px; }
 .cp-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
 .cp-dots i.on { background: var(--accent); transform: scale(1.25); }
+.cp-switch-row { display: inline-flex; align-items: center; gap: 14px; }
+.cp-switch {
+  width: 44px; height: 26px; border-radius: 999px; padding: 3px;
+  display: inline-flex; align-items: center; justify-content: flex-start;
+  background: var(--border); transition: background 0.15s;
+}
+.cp-switch i {
+  width: 20px; height: 20px; border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); transition: transform 0.15s;
+}
+.cp-switch.on { background: var(--accent); justify-content: flex-end; }
 
 /* Emoji picker */
 .emoji-modal { max-width: 620px; }

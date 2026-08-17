@@ -76,6 +76,16 @@ const PREVIEWS: Record<string, JSX.Element> = {
       <button>Month</button>
     </div>
   ),
+  "Toggle / Switch": (
+    <div className="cp-switch-row">
+      <span className="cp-switch on" role="img" aria-label="Switch, on">
+        <i />
+      </span>
+      <span className="cp-switch" role="img" aria-label="Switch, off">
+        <i />
+      </span>
+    </div>
+  ),
   "Command palette": (
     <div className="cp-cmd">
       <div className="cp-cmd-input">

@@ -43,6 +43,7 @@ export const TERMS: Term[] = [
   { term: "Drawer / Sheet", category: "Components", def: "A panel that slides in from an edge; a bottom sheet rises from below.", example: "Mobile nav drawer; filter bottom sheet." },
   { term: "Accordion", category: "Components", def: "Stacked sections that expand/collapse one at a time.", example: "An FAQ list." },
   { term: "Segmented control", category: "Components", def: "A row of mutually-exclusive options styled as one control.", example: "Off / Split / Slider compare toggle." },
+  { term: "Toggle / Switch", category: "Components", def: "A control that flips a single setting on or off, sliding a knob between two states. Use it for instant on/off options — not for choosing among several (that's a segmented control) or for a form you submit (that's a checkbox).", example: "Dark mode on/off; animation enabled." },
   { term: "Command palette", category: "Components", def: "A searchable action launcher, usually opened with ⌘K.", example: "Quickly jump to any command." },
   { term: "Chip / Tag / Badge", category: "Components", def: "A compact pill for a value, filter, or status/count.", example: "Selected filters; a notification count." },
   { term: "Breadcrumb", category: "Components", def: "A trail showing the current location in a hierarchy.", example: "Home / Docs / API." },
