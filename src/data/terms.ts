@@ -32,6 +32,10 @@ export const TERMS: Term[] = [
   { term: "Above the fold", category: "Layout", def: "The area visible before any scrolling.", example: "Hero + primary CTA placed above the fold." },
   { term: "Bento grid", category: "Layout", def: "A grid of differently-sized rounded cards, like a bento box.", example: "Feature sections as mixed-size tiles." },
   { term: "Z-index / stacking", category: "Layout", def: "The front-to-back order of overlapping elements.", example: "A modal above a sticky header." },
+  { term: "GNB (Global Navigation Bar)", category: "Layout", def: "The top-level menu shown on every page, linking a site's main sections. The parent of LNB/SNB. Common shorthand in Korean/Japanese web design.", example: "The primary menu bar across the top of every page." },
+  { term: "LNB (Local Navigation Bar)", category: "Layout", def: "Secondary navigation scoped to one section — the sub-menu that appears only inside a GNB area or a specific page.", example: "A left sub-menu within 'Docs' listing its pages." },
+  { term: "SNB (Side Navigation Bar)", category: "Layout", def: "A supplementary menu pinned to the left or right edge of the screen, often collapsible.", example: "A sidebar of tools, filters, or shortcuts." },
+  { term: "FNB (Footer Navigation Bar)", category: "Layout", def: "Links and info gathered at the very bottom (footer) — company details, terms, and secondary links.", example: "About / Terms / Contact in the page footer." },
 
   // Components
   { term: "Toast", category: "Components", def: "A brief, auto-dismissing message that doesn't block the UI.", example: '"Copied to clipboard" sliding in.' },
