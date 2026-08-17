@@ -13,8 +13,8 @@
     --tag-bg: #22262c; --chip-bg: #2a2f36; --chip-text: #ffffff;
   }
   body.light {
-    --bg: #f4f6f9; --card: #ffffff; --border: #e3e6eb; --border-hover: #c6ccd5;
-    --text: #1a1d21; --text-dim: #5a616b; --text-faint: #949aa4;
+    --bg: #e7ebf1; --card: #ffffff; --border: #cfd6e0; --border-hover: #9aa4b4;
+    --text: #1a1d21; --text-dim: #5a616b; --text-faint: #8a92a0;
     --tag-bg: #eef0f4; --chip-bg: #2a2f36; --chip-text: #ffffff;
   }
   html { color-scheme: dark; }
@@ -45,6 +45,9 @@
     cursor: pointer; transition: border-color 0.13s, transform 0.13s; position: relative;
   }
   .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+  /* light theme: lift the white cards off the light background */
+  body.light .card { box-shadow: 0 1px 2px rgba(16,24,40,.06), 0 2px 6px rgba(16,24,40,.05); }
+  body.light .card:hover { box-shadow: 0 6px 16px rgba(16,24,40,.12); }
   .card.sel { border-color: var(--border-hover); }
   .card.sel::after {
     content: "✓ selected"; position: absolute; top: 10px; right: 10px;
