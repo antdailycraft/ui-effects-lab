@@ -482,17 +482,18 @@ const PREVIEWS: Record<string, JSX.Element> = {
   ),
   "Avatar Chip": (
     <div className="cp-avatar-chip">
-      <span className="cp-avatar">JD</span>
+      <img className="cp-face" src="https://i.pravatar.cc/96?img=47" alt="" width={40} height={40} loading="lazy" />
       <span>Jane Doe</span>
       <span className="cp-x">✕</span>
     </div>
   ),
   "Avatar Stack": (
     <div className="cp-avatar-stack">
-      <span className="cp-avatar">A</span>
-      <span className="cp-avatar">B</span>
-      <span className="cp-avatar">C</span>
-      <span className="cp-avatar cp-avatar-more">+5</span>
+      <img className="cp-face" src="https://i.pravatar.cc/96?img=12" alt="" width={44} height={44} loading="lazy" />
+      <img className="cp-face" src="https://i.pravatar.cc/96?img=32" alt="" width={44} height={44} loading="lazy" />
+      <img className="cp-face" src="https://i.pravatar.cc/96?img=45" alt="" width={44} height={44} loading="lazy" />
+      <img className="cp-face" src="https://i.pravatar.cc/96?img=5" alt="" width={44} height={44} loading="lazy" />
+      <span className="cp-face cp-avatar-more">+5</span>
     </div>
   ),
   "CTA (Call to action)": (
