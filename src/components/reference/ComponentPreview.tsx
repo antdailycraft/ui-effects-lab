@@ -86,6 +86,46 @@ const PREVIEWS: Record<string, JSX.Element> = {
       </span>
     </div>
   ),
+  Checkbox: (
+    <div className="cp-checks">
+      <label className="cp-check on">
+        <span className="cp-box">✓</span>Apples
+      </label>
+      <label className="cp-check ind">
+        <span className="cp-box">–</span>Some selected
+      </label>
+      <label className="cp-check">
+        <span className="cp-box" />Oranges
+      </label>
+    </div>
+  ),
+  "Radio button": (
+    <div className="cp-radios">
+      <label className="cp-radio on">
+        <span className="cp-dot" />Standard
+      </label>
+      <label className="cp-radio">
+        <span className="cp-dot" />Express
+      </label>
+    </div>
+  ),
+  "Toggle button": (
+    <div className="cp-togglebtn">
+      <button className="tbtn on" aria-pressed="true">
+        <b>B</b> Bold
+      </button>
+      <button className="tbtn" aria-pressed="false">
+        <i>I</i> Italic
+      </button>
+    </div>
+  ),
+  "Toggle button group": (
+    <div className="cp-tgroup" role="group" aria-label="Text align">
+      <button aria-pressed="false" aria-label="Align left">L</button>
+      <button className="on" aria-pressed="true" aria-label="Align center">C</button>
+      <button aria-pressed="false" aria-label="Align right">R</button>
+    </div>
+  ),
   "Command palette": (
     <div className="cp-cmd">
       <div className="cp-cmd-input">

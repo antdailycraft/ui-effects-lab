@@ -769,6 +769,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); transition: transform 0.15s;
 }
 .cp-switch.on { background: var(--accent); justify-content: flex-end; }
+.cp-checks,
+.cp-radios { display: inline-flex; flex-direction: column; gap: 9px; font-size: 12.5px; color: var(--text-dim); }
+.cp-check,
+.cp-radio { display: inline-flex; align-items: center; gap: 9px; }
+.cp-check.on,
+.cp-check.ind,
+.cp-radio.on { color: var(--text); }
+.cp-box { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--border); display: grid; place-items: center; font-size: 12px; line-height: 1; color: transparent; }
+.cp-check.on .cp-box,
+.cp-check.ind .cp-box { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.cp-radio .cp-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border); display: grid; place-items: center; }
+.cp-radio.on .cp-dot { border-color: var(--accent); }
+.cp-radio.on .cp-dot::after { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+.cp-togglebtn { display: inline-flex; gap: 6px; }
+.cp-togglebtn .tbtn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 11px; border-radius: 7px; color: var(--text-dim); background: var(--panel); border: 1px solid var(--border); }
+.cp-togglebtn .tbtn.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.cp-tgroup { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.cp-tgroup button { font-size: 12px; font-weight: 600; padding: 6px 13px; color: var(--text-dim); background: var(--panel); border-right: 1px solid var(--border); }
+.cp-tgroup button:last-child { border-right: 0; }
+.cp-tgroup button.on { background: var(--accent); color: var(--accent-ink); }
 
 /* Emoji picker */
 .emoji-modal { max-width: 620px; }
