@@ -155,6 +155,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         desc: "Google Labs spec for describing a visual identity to coding agents (tokens + docs).",
       },
       {
+        name: "ko-design-md",
+        url: "https://github.com/CaesiumY/ko-design-md",
+        desc: "Open catalog of Korean brand design systems in DESIGN.md format — a skill agents can pull tokens from.",
+      },
+      {
         name: "Unicode Emoji List",
         url: "https://unicode.org/emoji/charts/full-emoji-list.html",
         desc: "The official full emoji chart — every codepoint with vendor renderings.",
