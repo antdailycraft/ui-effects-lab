@@ -35,6 +35,19 @@ const PREVIEWS: Record<string, JSX.Element> = {
       </div>
     </div>
   ),
+  "Leading / Trailing icon": (
+    <div className="cp-iconrow">
+      <span className="cp-lead" aria-hidden="true">⌕</span>
+      <span>Search</span>
+      <span className="cp-trail" aria-hidden="true">▾</span>
+    </div>
+  ),
+  "Icon button": (
+    <div className="cp-iconbtn-row">
+      <button className="cp-iconbtn" aria-label="Favorite">★</button>
+      <button className="cp-iconbtn" aria-label="More">⋯</button>
+    </div>
+  ),
   Grid: (
     <div className="cp-grid">
       {Array.from({ length: 6 }).map((_, i) => (
