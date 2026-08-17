@@ -174,6 +174,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://getdesign.kr/",
         desc: "Live catalog of Korean brand design systems — real color palettes, typography & themes (behind ko-design-md).",
       },
+      {
+        name: "Accent Palette",
+        url: `${import.meta.env.BASE_URL}badge-palette.html`,
+        desc: "This project's Tailwind accent swatches & badges with AA contrast scores (dark/light).",
+      },
     ],
   },
   {
