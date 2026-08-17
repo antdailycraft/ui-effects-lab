@@ -78,8 +78,8 @@
   <p class="note"><b>Tailwind standard values</b> (each named color → its Tailwind&nbsp;500 shade). <b>기본 (Default)</b> is the neutral/no-accent option (slate-500); <b>주황색 (Orange)</b> is selected in the menu.</p>
   <div class="grid" id="accent"></div>
 
-  <h2>Project badges <span class="sub" style="font-weight:400">· mapped to the accent palette (6 used)</span></h2>
-  <p class="note"><b>Excluded:</b> memo-bin (folder) &amp; port-keep (lightning) — no letter. Each first-letter badge is snapped to its nearest Tailwind accent, so 11 badges group into 6 colors.</p>
+  <h2>Project badges <span class="sub" style="font-weight:400">· each mapped to an accent color</span></h2>
+  <p class="note"><b>Excluded:</b> memo-bin (folder) &amp; port-keep (lightning) — no letter. Each project's first-letter badge is snapped to its nearest Tailwind accent (green-heavy names reuse emerald). Click a card to select it.</p>
   <div class="grid" id="badges"></div>
 
   <div class="copied" id="toast">Copied</div>
@@ -100,14 +100,19 @@
     { ko: "파란색", en: "Blue",    tw: "blue-500",    hex: "#3B82F6" },
   ];
 
-  // Project first-letter badges, each snapped to its nearest Tailwind accent.
+  // Every project's first-letter badge, each snapped to its nearest Tailwind accent.
   const BADGES = [
-    { tw: "purple-500",  hex: "#A855F7", items: [["F","folio_codex"], ["B","bithumb-trader"]] },
-    { tw: "indigo-500",  hex: "#6366F1", items: [["U","ui-effects-lab"]] },
-    { tw: "sky-500",     hex: "#0EA5E9", items: [["M","modoo-adoption"]] },
-    { tw: "teal-500",    hex: "#14B8A6", items: [["R","rhea"], ["K","kairos"]] },
-    { tw: "emerald-500", hex: "#10B981", items: [["K","keystrike"], ["E","epub translator"], ["M","modu-ads"], ["S","social-auth-starter"]] },
-    { tw: "red-500",     hex: "#EF4444", items: [["T","type-survivor"]] },
+    { letter: "F", project: "folio_codex",         tw: "purple-500",  hex: "#A855F7" },
+    { letter: "K", project: "keystrike",           tw: "emerald-500", hex: "#10B981" },
+    { letter: "R", project: "rhea",                tw: "teal-500",    hex: "#14B8A6" },
+    { letter: "M", project: "modu-ads",            tw: "emerald-500", hex: "#10B981" },
+    { letter: "U", project: "ui-effects-lab",      tw: "indigo-500",  hex: "#6366F1" },
+    { letter: "M", project: "modoo-adoption",      tw: "sky-500",     hex: "#0EA5E9" },
+    { letter: "T", project: "type-survivor",       tw: "red-500",     hex: "#EF4444" },
+    { letter: "E", project: "epub translator",     tw: "emerald-500", hex: "#10B981" },
+    { letter: "S", project: "social-auth-starter", tw: "emerald-500", hex: "#10B981" },
+    { letter: "B", project: "bithumb-trader",      tw: "purple-500",  hex: "#A855F7" },
+    { letter: "K", project: "kairos",              tw: "teal-500",    hex: "#14B8A6" },
   ];
 
   const toast = document.getElementById("toast");
@@ -120,6 +125,12 @@
     toastTimer = setTimeout(() => toast.classList.remove("on"), 1100);
   }
 
+  // Single selection across the whole palette: mark the clicked card selected.
+  function selectCard(el) {
+    document.querySelectorAll(".card.sel").forEach((c) => c.classList.remove("sel"));
+    el.classList.add("sel");
+  }
+
   const accent = document.getElementById("accent");
   for (const c of ACCENT) {
     const card = document.createElement("div");
@@ -130,7 +141,7 @@
          <div class="name">${c.ko} <span class="en">${c.en}</span></div>
          <div class="hex">${c.hex} <span class="en">· ${c.tw}</span></div>
        </div>`;
-    card.addEventListener("click", () => copy(c.hex));
+    card.addEventListener("click", () => { copy(c.hex); selectCard(card); });
     accent.appendChild(card);
   }
 
@@ -138,16 +149,13 @@
   for (const c of BADGES) {
     const card = document.createElement("div");
     card.className = "card";
-    const dots = c.items.map(([l]) => `<span class="badge sm" style="background:${c.hex}">${l}</span>`).join("");
-    const tags = c.items.map(([, p]) => `<span class="tag">${p}</span>`).join("");
     card.innerHTML =
-      `<div class="swatch">${dots}</div>
+      `<div class="swatch"><span class="badge" style="background:${c.hex}">${c.letter}</span></div>
        <div class="meta">
-         <div class="name">${c.tw}</div>
-         <div class="hex">${c.hex}</div>
-         <div class="projects">${tags}</div>
+         <div class="name">${c.project}</div>
+         <div class="hex">${c.hex} <span class="en">· ${c.tw}</span></div>
        </div>`;
-    card.addEventListener("click", () => copy(c.hex));
+    card.addEventListener("click", () => { copy(c.hex); selectCard(card); });
     badges.appendChild(card);
   }
 
