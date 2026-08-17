@@ -3,6 +3,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { EFFECTS, getEffect, defaultParams } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { ErrorBoundary } from "../common/ErrorBoundary";
+import { rotateHueHex } from "../../lib/color";
 
 const lfId = (id: string) => `lf-${id}`;
 
@@ -22,6 +23,27 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
       return false;
     }
   }, []);
+
+  // The mesh-gradient shader has no numeric seed, so we "seed" the hero once per
+  // mount: randomize its shape params within their safe ranges and rotate the
+  // base palette's hue, so the landing opens on a different gradient each visit.
+  const heroProps = useMemo(() => {
+    if (!hero?.buildProps) return {};
+    const params = { ...defaultParams(hero) };
+    for (const id of ["distortion", "swirl", "scale"] as const) {
+      const c = hero.controls.find((x) => x.id === id);
+      if (!c) continue;
+      const [lo, hi] = c.random ?? [c.min ?? 0, c.max ?? 1];
+      params[id] = Number((lo + Math.random() * (hi - lo)).toFixed(c.decimals ?? 2));
+    }
+    const props = hero.buildProps(params, !reduced) as Record<string, unknown>;
+    const hue = Math.floor(Math.random() * 360);
+    if (Array.isArray(props.colors)) {
+      props.colors = props.colors.map((c) => (typeof c === "string" ? rotateHueHex(c, hue) : c));
+    }
+    return props;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hero, reduced]);
 
   const openEffect = (id: string) => {
     dispatch({ type: "SELECT_EFFECT", id });
@@ -56,7 +78,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
           {HeroComp && webglOk ? (
             <ErrorBoundary fallback={<div className="lp-hero-fallback" />}>
               <Suspense fallback={<div className="lp-hero-fallback" />}>
-                <HeroComp {...(hero!.buildProps ? hero!.buildProps(defaultParams(hero!), !reduced) : {})} />
+                <HeroComp {...heroProps} />
               </Suspense>
             </ErrorBoundary>
           ) : (
