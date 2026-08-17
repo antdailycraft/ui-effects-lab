@@ -48,6 +48,143 @@ const PREVIEWS: Record<string, JSX.Element> = {
       <button className="cp-iconbtn" aria-label="More">⋯</button>
     </div>
   ),
+  Button: (
+    <div className="cp-btns">
+      <button className="cp-basicbtn">Button</button>
+      <button className="cp-basicbtn ghost">Cancel</button>
+    </div>
+  ),
+  "Text field / Input": (
+    <div className="cp-field">
+      <span className="cp-field-label">Email</span>
+      <span className="cp-field-box">
+        <span className="cp-field-ph">you@site.com</span>
+        <span className="cp-field-caret" />
+      </span>
+    </div>
+  ),
+  "List box": (
+    <div className="cp-listbox">
+      <span className="on">Apple</span>
+      <span>Banana</span>
+      <span className="on">Cherry</span>
+    </div>
+  ),
+  Slider: (
+    <div className="cp-slider">
+      <div className="cp-slider-fill" />
+      <div className="cp-slider-thumb" />
+    </div>
+  ),
+  "Dial / Knob": (
+    <div className="cp-knob">
+      <i />
+    </div>
+  ),
+  Scrollbar: (
+    <div className="cp-scrolldemo">
+      <div className="cp-scroll-lines">
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="cp-scroll-track">
+        <div className="cp-scroll-thumb" />
+      </div>
+    </div>
+  ),
+  Tabs: (
+    <div className="cp-tabs">
+      <span className="on">Overview</span>
+      <span>Specs</span>
+      <span>Reviews</span>
+    </div>
+  ),
+  "Tree view": (
+    <div className="cp-tree">
+      <span className="cp-tree-row">
+        <span className="cp-tree-tw">▾</span>src
+      </span>
+      <span className="cp-tree-row i1">
+        <span className="cp-tree-tw">▾</span>components
+      </span>
+      <span className="cp-tree-row i2">
+        <span className="cp-tree-tw" />
+        Button.tsx
+      </span>
+      <span className="cp-tree-row i1">
+        <span className="cp-tree-tw" />
+        App.tsx
+      </span>
+    </div>
+  ),
+  "Ribbon menu": (
+    <div className="cp-ribbon">
+      <div className="cp-ribbon-tabs">
+        <span className="on">Home</span>
+        <span>Insert</span>
+        <span>View</span>
+      </div>
+      <div className="cp-ribbon-tools">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
+    </div>
+  ),
+  Carousel: (
+    <div className="cp-carousel">
+      <div className="cp-car-stage">
+        <span className="cp-car-arrow">‹</span>
+        <div className="cp-car-slide">3</div>
+        <span className="cp-car-arrow">›</span>
+      </div>
+      <div className="cp-dots">
+        <i />
+        <i />
+        <i className="on" />
+        <i />
+      </div>
+    </div>
+  ),
+  "Progress indicator": (
+    <div className="cp-progress">
+      <div className="cp-progress-fill" />
+    </div>
+  ),
+  "Loading spinner": <div className="cp-spinner" role="status" aria-label="Loading" />,
+  "Bottom navigation": (
+    <div className="cp-bottomnav">
+      <span className="on">
+        <i>⌂</i>Home
+      </span>
+      <span>
+        <i>⌕</i>Search
+      </span>
+      <span>
+        <i>☰</i>Menu
+      </span>
+    </div>
+  ),
+  "Hamburger button": (
+    <button className="cp-hamburger" aria-label="Open menu">
+      <span />
+      <span />
+      <span />
+    </button>
+  ),
+  Popup: (
+    <div className="cp-popup">
+      <div className="cp-popup-bar">
+        <span>Notice</span>
+        <span className="cp-popup-x">×</span>
+      </div>
+      <div className="cp-popup-body">Save your changes?</div>
+    </div>
+  ),
   Grid: (
     <div className="cp-grid">
       {Array.from({ length: 6 }).map((_, i) => (
