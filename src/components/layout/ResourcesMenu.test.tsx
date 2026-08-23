@@ -28,15 +28,15 @@ test("opening the menu reveals every resource as a new-tab link", async () => {
 });
 
 test("includes all curated sites across every group", () => {
-  expect(ALL).toHaveLength(29);
+  expect(ALL).toHaveLength(44);
   expect(ALL.map((r) => r.name)).toEqual([
-    "MagicPattern", "Variant", "Stitch",
-    "SEESAW", "Refero", "Recent", "Awwwards", "Land-book", "Dribbble", "Godly", "Webzibition",
+    "MagicPattern", "Variant", "Stitch", "Whimsical MCP",
+    "SEESAW", "Refero", "Recent", "Awwwards", "Land-book", "Dribbble", "Godly", "Webzibition", "Sketchbook", "Animagraffs", "Liquid Logo",
     "shadcn/ui", "21st.dev",
-    "Rete.js", "React Flow", "tldraw", "Motion", "GSAP", "Three.js", "p5.js", "dnd kit", "PixiJS",
-    "Laws of UX", "DESIGN.md", "ko-design-md", "Unicode Emoji List",
-    "getdesign.kr", "Accent Palette",
-    "Kenney",
+    "Rete.js", "React Flow", "tldraw", "Motion", "GSAP", "Three.js", "p5.js", "dnd kit", "PixiJS", "Liquid Glass JS",
+    "Laws of UX", "DESIGN.md", "ko-design-md", "Unicode Emoji List", "Diagram Design", "Emil's UI Skills", "Hallmark",
+    "getdesign.kr", "Accent Palette", "Realtime Colors", "Coolors",
+    "Kenney", "Blush", "Open Doodles", "Storyset", "unDraw", "Lucide",
   ]);
   expect(RESOURCE_GROUPS.map((g) => g.label)).toEqual([
     "Tools", "Inspiration", "Components", "Libraries", "Learn", "Colors & Themes", "Assets",

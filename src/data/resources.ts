@@ -29,6 +29,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://stitch.withgoogle.com/docs",
         desc: "Google's AI tool that turns prompts into UI designs & front-end code.",
       },
+      {
+        name: "Whimsical MCP",
+        url: "https://whimsical.com/learn/integrations/mcp",
+        desc: "Connect AI tools to Whimsical for diagrams, mind maps, wireframes & visual planning.",
+      },
     ],
   },
   {
@@ -73,6 +78,21 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         name: "Webzibition",
         url: "https://tympanus.net/codrops/webzibition/",
         desc: "Codrops' curated exhibition of standout creative websites.",
+      },
+      {
+        name: "Sketchbook",
+        url: "https://github.com/MengTo/sketchbook",
+        desc: "Open-source page-turning sketchbook with paper bending, magnification & parallax.",
+      },
+      {
+        name: "Animagraffs",
+        url: "https://animagraffs.com/wankel-rotary-engine/",
+        desc: "A richly animated, interactive explainer showing how a rotary engine works.",
+      },
+      {
+        name: "Liquid Logo",
+        url: "https://github.com/paper-design/liquid-logo",
+        desc: "Paper Shaders experiment that turns a logo into animated liquid metal.",
       },
     ],
   },
@@ -139,6 +159,11 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://pixijs.com/showcase",
         desc: "Fast 2D WebGL renderer for interactive graphics, games & effects.",
       },
+      {
+        name: "Liquid Glass JS",
+        url: "https://github.com/dashersw/liquid-glass-js",
+        desc: "WebGL-powered Apple-style glass effects with refraction, blur & masking.",
+      },
     ],
   },
   {
@@ -164,6 +189,21 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: "https://unicode.org/emoji/charts/full-emoji-list.html",
         desc: "The official full emoji chart — every codepoint with vendor renderings.",
       },
+      {
+        name: "Diagram Design",
+        url: "https://github.com/cathrynlavery/diagram-design",
+        desc: "Agent skill with 38 editorial diagram patterns rendered as self-contained HTML & SVG.",
+      },
+      {
+        name: "Emil's UI Skills",
+        url: "https://emilkowal.ski/skill",
+        desc: "Design-engineering skills for building, reviewing & improving interface animation.",
+      },
+      {
+        name: "Hallmark",
+        url: "https://www.usehallmark.com/",
+        desc: "Opinionated agent skill for building and auditing less generic, more intentional interfaces.",
+      },
     ],
   },
   {
@@ -179,6 +219,16 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         url: `${import.meta.env.BASE_URL}badge-palette.html`,
         desc: "This project's Tailwind accent swatches & badges with AA contrast scores (dark/light).",
       },
+      {
+        name: "Realtime Colors",
+        url: "https://www.realtimecolors.com/",
+        desc: "Preview colors and fonts on a real site, check contrast & export the resulting palette.",
+      },
+      {
+        name: "Coolors",
+        url: "https://coolors.co/",
+        desc: "Fast palette generator with browsing, image extraction & accessibility tools.",
+      },
     ],
   },
   {
@@ -188,6 +238,31 @@ export const RESOURCE_GROUPS: ResourceGroup[] = [
         name: "Kenney",
         url: "https://kenney.nl/",
         desc: "Thousands of free CC0 game & UI assets — sprites, 3D, audio, fonts.",
+      },
+      {
+        name: "Blush",
+        url: "https://blush.design/",
+        desc: "Customizable illustration collections from independent artists.",
+      },
+      {
+        name: "Open Doodles",
+        url: "https://www.opendoodles.com/",
+        desc: "Free open-source illustrations in SVG, PNG & animated GIF formats.",
+      },
+      {
+        name: "Storyset",
+        url: "https://storyset.com/",
+        desc: "Customize, animate & download illustration scenes for products and presentations.",
+      },
+      {
+        name: "unDraw",
+        url: "https://undraw.co/",
+        desc: "Open-source SVG illustrations with live brand-color customization.",
+      },
+      {
+        name: "Lucide",
+        url: "https://lucide.dev/",
+        desc: "Consistent, customizable open-source SVG icons with framework packages.",
       },
     ],
   },
