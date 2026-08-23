@@ -10,6 +10,45 @@ Categories: **Added** (new features), **Changed**, **Deprecated**, **Removed**,
 
 ## [Unreleased]
 
+## [0.9.1] - 2026-08-24
+
+Accessibility & clipboard fixes, a standalone accent-palette reference, more
+resources, and a landing hero that varies each visit.
+
+### Added
+
+- **Accent Palette page** (`public/badge-palette.html`, linked from Resources →
+  Colors & Themes) — the 11 Tailwind accent colors as swatches and letter
+  badges, with dark/light themes, a theme toggle, per-badge WCAG contrast
+  ratios and AA verdicts (white- and black-text rows), and click-to-select.
+- **Resources additions** — **ko-design-md** (Learn), **getdesign.kr** under a
+  new **Colors & Themes** group, and the internal Accent Palette page; 29
+  curated resources total.
+- **Glossary: WCAG conformance (A / AA / AAA)** — a new Accessibility term
+  explaining the three levels and what AA entails.
+- **Seeded landing hero** — the mesh-gradient hero randomizes its shape
+  parameters and rotates the base palette hue on each visit (no fixed numeric
+  seed exists on the shader), so the landing opens on a different gradient every
+  time; unchanged static fallback where WebGL is unavailable.
+
+### Changed
+
+- **Avatar Chip / Avatar Stack previews** — enlarged and now use real face
+  images instead of letter initials.
+- **Emoji picker Copy** — the Copy button turns into a persistent green
+  checkmark on success and reverts to "Copy" only when a different emoji is
+  selected.
+
+### Fixed
+
+- **Copy works over plain HTTP** — `navigator.clipboard` is undefined in an
+  insecure context (a LAN dev host), so every Copy button failed silently. A
+  shared `copyText()` helper now falls back to a textarea + `execCommand`,
+  fixing copy in the emoji picker, code viewer, cursor list, and share/export.
+- **Light-theme palette cards** — the white cards blended into the near-white
+  background; the background, borders, and shadows were adjusted so cards and
+  swatches read clearly.
+
 ## [0.9.0] - 2026-08-17
 
 A large UI/UX glossary expansion (~70 new terms), a new Process category, a
@@ -438,7 +477,8 @@ Initial working build of the UI Effects Lab playground.
   implementation plan, and the library/web-tech research report
   (`docs/research/2026-08-14-css-effects-libraries.md`).
 
-[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.9.1...HEAD
+[0.9.1]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/antdailycraft/ui-effects-lab/compare/v0.6.0...v0.7.0
