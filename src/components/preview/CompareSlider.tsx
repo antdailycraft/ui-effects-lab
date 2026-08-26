@@ -1,4 +1,5 @@
 import { useRef, useState, type ReactNode } from "react";
+import { useLocale } from "../../i18n/LocaleContext";
 
 /**
  * A draggable before/after reveal. The "after" (effect) layer fills the frame;
@@ -6,6 +7,7 @@ import { useRef, useState, type ReactNode } from "react";
  * Drag the divider — or focus it and use ← / → — to change the split.
  */
 export function CompareSlider({ before, after }: { before: ReactNode; after: ReactNode }) {
+  const { locale, t } = useLocale();
   const frame = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
   const [pos, setPos] = useState(50);
@@ -38,17 +40,17 @@ export function CompareSlider({ before, after }: { before: ReactNode; after: Rea
       <div className="cs-layer cs-clip" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
         {before}
       </div>
-      <span className="compare-cap cs-cap-l">Before</span>
-      <span className="compare-cap after cs-cap-r">After</span>
+      <span className="compare-cap cs-cap-l">{t("before", "Before")}</span>
+      <span className="compare-cap after cs-cap-r">{t("after", "After")}</span>
       <div
         className="cs-divider"
         style={{ left: `${pos}%` }}
         role="slider"
-        aria-label="Comparison split"
+        aria-label={locale === "ko" ? "비교 분할 위치" : "Comparison split"}
         aria-valuenow={Math.round(pos)}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuetext={`${Math.round(pos)}% original`}
+        aria-valuetext={locale === "ko" ? `원본 ${Math.round(pos)}%` : `${Math.round(pos)}% original`}
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === "ArrowLeft") setPos((p) => Math.max(0, p - 2));

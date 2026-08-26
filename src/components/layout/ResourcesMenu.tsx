@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { RESOURCE_GROUPS } from "../../data/resources";
 import { COVERS } from "../../data/covers.generated";
+import { localizedGroupLabel, useLocale } from "../../i18n/LocaleContext";
 
 const THUMB_W = 260;
 const THUMB_H = 163;
 const THUMB_GAP = 16;
 
 export function ResourcesMenu() {
+  const { locale, t } = useLocale();
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [thumbOk, setThumbOk] = useState(false);
@@ -67,7 +69,7 @@ export function ResourcesMenu() {
           <path d="M2 17l10 5 10-5" />
           <path d="M2 12l10 5 10-5" />
         </svg>
-        <span className="label">Resources</span>
+        <span className="label">{t("resources", "Resources")}</span>
       </button>
 
       {open && (
@@ -96,7 +98,7 @@ export function ResourcesMenu() {
           >
             {RESOURCE_GROUPS.map((g) => (
               <div className="resources-group" key={g.label}>
-                <div className="resources-label">{g.label}</div>
+                <div className="resources-label">{localizedGroupLabel(g.label, locale)}</div>
                 {g.items.map((it) => (
                   <a
                     className="resource-item"

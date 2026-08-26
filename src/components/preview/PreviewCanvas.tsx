@@ -16,6 +16,7 @@ import { CustomPreview } from "./CustomPreview";
 import { CustomHtmlBar } from "./CustomHtmlBar";
 import { ImagePicker } from "./ImagePicker";
 import { CompareSlider } from "./CompareSlider";
+import { useLocale } from "../../i18n/LocaleContext";
 
 type TargetProps = { className?: string; style?: CSSProperties };
 
@@ -66,14 +67,15 @@ function appliedProps(
 
 /** A button that enters/exits the immersive fullscreen preview. */
 function FullscreenButton() {
+  const { t } = useLocale();
   const { state, dispatch } = usePlayground();
   const on = state.fullscreen;
   return (
     <button
       className={"fs-btn" + (on ? " on" : "")}
       onClick={() => dispatch({ type: "TOGGLE_FULLSCREEN" })}
-      aria-label={on ? "Exit fullscreen" : "Enter fullscreen"}
-      title={on ? "Exit fullscreen (Esc)" : "Fullscreen"}
+      aria-label={on ? t("exitFullscreen", "Exit fullscreen") : t("enterFullscreen", "Enter fullscreen")}
+      title={on ? `${t("exitFullscreen", "Exit fullscreen")} (Esc)` : t("enterFullscreen", "Fullscreen")}
     >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         {on ? (
@@ -87,6 +89,7 @@ function FullscreenButton() {
 }
 
 export function PreviewCanvas() {
+  const { locale, t } = useLocale();
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
   // While editing a layer, the preview reflects the layer's effect (targets,
@@ -126,7 +129,7 @@ export function PreviewCanvas() {
     return (
       <main className={mainClass}>
         <div className="stage-bar">
-          <span className="seg-label">Generator</span>
+          <span className="seg-label">{t("generator", "Generator")}</span>
           {effect.usesImage && <ImagePicker />}
           <div className="stage-bar-spacer" />
           <FullscreenButton />
@@ -136,17 +139,17 @@ export function PreviewCanvas() {
             {/* Unmount the WebGL canvas while the tab is hidden to stop GPU work.
                 The shader library loads lazily, so a Suspense boundary covers it. */}
             {visible && (
-              <Suspense fallback={<div className="pv-loading">Loading shader…</div>}>
+              <Suspense fallback={<div className="pv-loading">{t("loadingShader", "Loading shader…")}</div>}>
                 <Generator {...props} />
               </Suspense>
             )}
           </div>
           <div className="stage-hint">
             {!effect.animatable
-              ? "WebGL generator — tune the parameters"
+              ? locale === "ko" ? "WebGL 생성기 — 매개변수를 조절하세요" : "WebGL generator — tune the parameters"
               : animate
-                ? "Animating — WebGL shader"
-                : "Static — enable Animate in Controls"}
+                ? locale === "ko" ? "애니메이션 실행 중 — WebGL 셰이더" : "Animating — WebGL shader"
+                : locale === "ko" ? "정지 상태 — 조절 패널에서 애니메이션을 켜세요" : "Static — enable Animate in Controls"}
           </div>
         </div>
       </main>
@@ -167,7 +170,7 @@ export function PreviewCanvas() {
     <main className={mainClass}>
       <FilterHost />
       <div className="stage-bar">
-        <span className="seg-label">Preview</span>
+        <span className="seg-label">{t("preview", "Preview")}</span>
         <div className="seg">
           {pvOptions.map((o) => (
             <button
@@ -176,12 +179,12 @@ export function PreviewCanvas() {
               aria-pressed={previewType === o.id}
               onClick={() => dispatch({ type: "SET_PREVIEW", preview: o.id })}
             >
-              {o.label}
+              {locale === "ko" ? ({ Card: "카드", Text: "텍스트", Image: "이미지", Button: "버튼", Newspaper: "신문", Custom: "사용자 정의" } as Record<string, string>)[o.label] : o.label}
             </button>
           ))}
         </div>
         <div className="stage-bar-spacer" />
-        <span className="seg-label">Compare</span>
+        <span className="seg-label">{t("compareLabel", "Compare")}</span>
         <div className="seg">
           {COMPARE_OPTIONS.map((o) => (
             <button
@@ -190,7 +193,7 @@ export function PreviewCanvas() {
               aria-pressed={mode === o.id}
               onClick={() => dispatch({ type: "SET_COMPARE_MODE", mode: o.id })}
             >
-              {o.label}
+              {locale === "ko" ? ({ Off: t("off", "Off"), Split: t("split", "Split"), Slider: t("slider", "Slider") } as Record<string, string>)[o.label] : o.label}
             </button>
           ))}
         </div>
@@ -212,11 +215,11 @@ export function PreviewCanvas() {
             {mode === "side-by-side" ? (
               <>
                 <div className="compare-cell">
-                  <span className="compare-cap">Before</span>
+                  <span className="compare-cap">{t("before", "Before")}</span>
                   <Target />
                 </div>
                 <div className="compare-cell">
-                  <span className="compare-cap after">After</span>
+                  <span className="compare-cap after">{t("after", "After")}</span>
                   <Target className={applied.className} style={applied.style} />
                 </div>
               </>
@@ -227,12 +230,12 @@ export function PreviewCanvas() {
         )}
         <div className="stage-hint">
           {combining
-            ? `${chain.length} SVG ${chain.length === 1 ? "filter" : "filters"} combined`
+            ? locale === "ko" ? `SVG 필터 ${chain.length}개 결합됨` : `${chain.length} SVG ${chain.length === 1 ? "filter" : "filters"} combined`
             : effect.animatable
               ? animate
-                ? "Animating — toggle in Controls"
-                : "Static — enable Animate in Controls"
-              : "Drag the sliders to tune the effect in real time"}
+                ? locale === "ko" ? "애니메이션 실행 중 — 조절 패널에서 전환" : "Animating — toggle in Controls"
+                : locale === "ko" ? "정지 상태 — 조절 패널에서 애니메이션을 켜세요" : "Static — enable Animate in Controls"
+              : t("previewHint", "Drag the sliders to tune the effect in real time")}
         </div>
       </div>
     </main>

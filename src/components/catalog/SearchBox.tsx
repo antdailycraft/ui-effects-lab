@@ -1,6 +1,8 @@
 import { usePlayground } from "../../state/PlaygroundContext";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function SearchBox() {
+  const { t } = useLocale();
   const { state, dispatch } = usePlayground();
   return (
     <div className="search-wrap">
@@ -11,9 +13,9 @@ export function SearchBox() {
         </svg>
         <input
           type="text"
-          placeholder="Search effects, tags, tech…"
+          placeholder={t("searchPlaceholder", "Search effects, tags, tech…")}
           value={state.search}
-          aria-label="Search effects"
+          aria-label={t("searchEffects", "Search effects")}
           onChange={(e) => dispatch({ type: "SET_SEARCH", value: e.target.value })}
         />
       </div>

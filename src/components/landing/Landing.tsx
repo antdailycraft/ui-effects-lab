@@ -4,10 +4,13 @@ import { EFFECTS, getEffect, defaultParams } from "../../registry/effects";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { ErrorBoundary } from "../common/ErrorBoundary";
 import { rotateHueHex } from "../../lib/color";
+import { useLocale } from "../../i18n/LocaleContext";
+import { LanguageToggle } from "../layout/LanguageToggle";
 
 const lfId = (id: string) => `lf-${id}`;
 
 export function Landing({ onEnter }: { onEnter: () => void }) {
+  const { locale, t } = useLocale();
   const { dispatch } = usePlayground();
   const reduced = useReducedMotion();
 
@@ -95,22 +98,34 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
             </svg>
           </span>
           <span className="lp-brand">UI Effects Lab</span>
+          <span className="lp-top-spacer" />
+          <LanguageToggle landing />
         </header>
 
         <div className="lp-hero-inner">
-          <p className="lp-eyebrow">SVG · CSS · WebGL — {EFFECTS.length} live effects</p>
-          <h1 className="lp-title">
-            Explore. Tweak.
-            <br />
-            <em>Compare. Copy.</em>
+          <p className="lp-eyebrow">{t("liveEffects", "SVG · CSS · WebGL — {count} live effects", { count: EFFECTS.length })}</p>
+          <h1 className={"lp-title" + (locale === "ko" ? " ko" : "")}>
+            {locale === "ko" ? (
+              <>
+                <span className="lp-title-line">{t("heroExplore", "Explore.")}</span>
+                <span className="lp-title-line">{t("heroTweak", "Tweak.")}</span>
+                <em className="lp-title-line">{t("heroCompare", "Compare.")}</em>
+                <em className="lp-title-line">{t("heroCopy", "Copy.")}</em>
+              </>
+            ) : (
+              <>
+                <span className="lp-title-line">{t("heroTitleA", "Explore. Tweak.")}</span>
+                <br />
+                <em className="lp-title-line">{t("heroTitleB", "Compare. Copy.")}</em>
+              </>
+            )}
           </h1>
           <p className="lp-sub">
-            An interactive playground for visual effects. Find an effect, tune it live on a real UI,
-            compare before/after, and copy production SVG / CSS / React.
+            {t("heroDescription", "An interactive playground for visual effects. Find an effect, tune it live on a real UI, compare before/after, and copy production SVG / CSS / React.")}
           </p>
           <div className="lp-cta">
             <button className="lp-btn primary" onClick={onEnter}>
-              Open the Lab →
+              {t("openLab", "Open the Lab →")}
             </button>
             <a
               className="lp-btn ghost"
@@ -118,22 +133,22 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              View source
+              {t("viewSource", "View source")}
             </a>
           </div>
         </div>
       </section>
 
       {/* ---------- live effect marquee ---------- */}
-      <section className="lp-marquee" aria-label="Effect gallery">
+      <section className="lp-marquee" aria-label={t("effectGallery", "Effect gallery")}>
         <div className={"lp-track" + (reduced ? " still" : "")}>
           {marquee.map((e, i) => (
             <button
               key={e.id + "-" + i}
               className="lp-chip"
               onClick={() => openEffect(e.id)}
-              title={`Open ${e.name}`}
-              aria-label={`Open ${e.name}`}
+              title={t("openEffect", "Open {name}", { name: e.name })}
+              aria-label={t("openEffect", "Open {name}", { name: e.name })}
               tabIndex={i < filters.length ? 0 : -1}
             >
               <span className="lp-chip-art" style={{ filter: `url(#${lfId(e.id)})` }}>
@@ -148,10 +163,10 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
       {/* ---------- the loop ---------- */}
       <section className="lp-loop">
         {[
-          { n: "01", t: "Explore", d: "Browse 50 effects across SVG filters, CSS, retro & WebGL." },
-          { n: "02", t: "Tweak", d: "Adjust parameters live — randomize, or load a built-in preset." },
-          { n: "03", t: "Compare", d: "Before/after split or a drag slider on a real component." },
-          { n: "04", t: "Copy", d: "Grab the generated SVG, CSS, or React — or share a link." },
+          { n: "01", t: t("explore", "Explore"), d: t("exploreDesc", "Browse 50 effects across SVG filters, CSS, retro & WebGL.") },
+          { n: "02", t: t("tweak", "Tweak"), d: t("tweakDesc", "Adjust parameters live — randomize, or load a built-in preset.") },
+          { n: "03", t: t("compare", "Compare"), d: t("compareDesc", "Before/after split or a drag slider on a real component.") },
+          { n: "04", t: t("copyStep", "Copy"), d: t("copyStepDesc", "Grab the generated SVG, CSS, or React — or share a link.") },
         ].map((s) => (
           <div className="lp-step" key={s.n}>
             <span className="lp-step-n">{s.n}</span>
@@ -163,7 +178,7 @@ export function Landing({ onEnter }: { onEnter: () => void }) {
 
       <section className="lp-foot">
         <button className="lp-btn primary" onClick={onEnter}>
-          Open the Lab →
+          {t("openLab", "Open the Lab →")}
         </button>
       </section>
     </div>

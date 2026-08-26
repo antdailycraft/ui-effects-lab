@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="서로 다른 여덟 가지 시각 언어를 비교하는 디자인 표본 카탈로그">
+<title>여덟 가지 디자인 방향 — 표본 카탈로그</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Archivo+Black&family=Quicksand:wght@400;500;600&family=Cormorant+Garamond:wght@300;400;500&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFBFA;
+  --ink:#16181C;
+  --ash:#6A6F78;
+  --rule:#E2E3E6;
+  --mark:#2438C8;
+  --sans:"IBM Plex Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:400;font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+
+/* ---------- shell type ---------- */
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mark);
+  margin:0 0 18px;
+}
+h1{
+  font-size:clamp(34px,6vw,58px);font-weight:300;line-height:1.08;
+  letter-spacing:-.02em;margin:0 0 24px;
+}
+h1 em{font-family:"Newsreader",serif;font-style:italic;font-weight:400}
+.lede{font-size:17px;color:var(--ash);max-width:52ch;margin:0}
+.lede b{color:var(--ink);font-weight:500}
+
+header.masthead{padding:88px 0 56px}
+.masthead-meta{
+  display:flex;gap:28px;flex-wrap:wrap;margin-top:40px;
+  padding-top:20px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;color:var(--ash);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+
+/* ---------- signature: coordinate map ---------- */
+.mapblock{padding:8px 0 72px}
+.map{
+  position:relative;height:340px;
+  border:1px solid var(--rule);background:#fff;
+}
+.map-grid{position:absolute;inset:0;pointer-events:none}
+.map-grid span{position:absolute;background:var(--rule)}
+.map-grid .v{top:0;bottom:0;width:1px}
+.map-grid .h{left:0;right:0;height:1px}
+.axis{
+  position:absolute;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ash);
+}
+.axis.left{left:12px;top:10px}
+.axis.lbot{left:12px;bottom:8px}
+.axis.bl{left:12px;bottom:-26px}
+.axis.br{right:12px;bottom:-26px}
+.dot{
+  position:absolute;transform:translate(-50%,-50%);
+  display:flex;align-items:center;gap:9px;
+  background:none;border:0;padding:6px;cursor:pointer;
+  font-family:var(--sans);font-size:13px;color:var(--ink);
+  white-space:nowrap;
+}
+.dot i{
+  width:11px;height:11px;border-radius:50%;flex:none;
+  background:var(--c);outline:3px solid var(--paper);
+  transition:transform .18s ease;
+}
+.dot.flip{flex-direction:row-reverse}
+.dot:hover i,.dot:focus-visible i{transform:scale(1.55)}
+.dot:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+
+/* ---------- specimen section ---------- */
+.dir{padding:56px 0;border-top:1px solid var(--rule);scroll-margin-top:24px}
+.dir-head{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.dir-name{font-size:26px;font-weight:500;letter-spacing:-.01em;margin:0}
+.dir-en{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:.12em;text-transform:uppercase;margin:6px 0 0}
+.dir-def{font-size:16px;color:var(--ash);margin:14px 0 0;max-width:46ch}
+
+/* 4-axis meters */
+.axes{display:grid;grid-template-columns:auto auto;gap:4px 14px;font-family:var(--mono);font-size:10px;color:var(--ash)}
+.axes b{font-weight:400;letter-spacing:.08em}
+.meter{display:flex;gap:3px;align-items:center;height:16px}
+.meter s{width:14px;height:3px;background:var(--rule);text-decoration:none}
+.meter s.on{background:var(--ink)}
+
+.dir-body{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:32px;align-items:start}
+@media(max-width:760px){.dir-body{grid-template-columns:1fr}}
+
+.stage{
+  border:1px solid var(--rule);padding:28px;
+  display:flex;align-items:center;justify-content:center;min-height:250px;
+}
+.stage-tag{
+  font-family:var(--mono);font-size:10px;color:var(--ash);
+  letter-spacing:.1em;text-transform:uppercase;margin:0 0 10px;
+}
+dl.spec{margin:0;font-size:14px}
+dl.spec div{display:grid;grid-template-columns:76px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--rule)}
+dl.spec dt{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:.06em;padding-top:3px}
+dl.spec dd{margin:0;line-height:1.6}
+.usecase{margin:16px 0 0;font-size:13px;color:var(--ash)}
+.usecase b{color:var(--ink);font-weight:500}
+
+/* ---------- SPECIMENS: shared skeleton ---------- */
+.card{width:100%;max-width:300px}
+.card .k{display:block}
+
+/* 1. editorial */
+.s-edi{background:#FCFBF7;padding:26px 24px;border-top:2px solid #16181C}
+.s-edi .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#B02A1C;margin-bottom:14px}
+.s-edi h4{font-family:"Newsreader",serif;font-weight:400;font-size:31px;line-height:1.14;letter-spacing:-.01em;margin:0 0 12px;color:#16181C}
+.s-edi p{font-family:var(--sans);font-size:13px;line-height:1.75;color:#4A4E55;margin:0 0 20px}
+.s-edi hr{border:0;border-top:1px solid #DDD9CE;margin:0 0 14px}
+.s-edi a{font-family:var(--sans);font-size:12.5px;color:#B02A1C;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+
+/* 2. brutalist */
+.s-bru{background:#FFE800;padding:22px;border:3px solid #000;box-shadow:8px 8px 0 #000}
+.s-bru .k{font-family:"Archivo Black",sans-serif;font-size:10px;letter-spacing:.06em;color:#000;margin-bottom:10px}
+.s-bru h4{font-family:"Archivo Black",sans-serif;font-size:27px;line-height:.98;letter-spacing:-.02em;margin:0 0 12px;color:#000;text-transform:uppercase}
+.s-bru p{font-family:var(--mono);font-size:12px;line-height:1.5;color:#000;margin:0 0 18px}
+.s-bru button{font-family:"Archivo Black",sans-serif;font-size:12px;background:#000;color:#FFE800;border:3px solid #000;padding:11px 16px;width:100%;cursor:pointer}
+.s-bru button:hover{background:#FFE800;color:#000}
+
+/* 3. soft */
+.s-sof{background:#F2F4FC;padding:26px;border-radius:22px;box-shadow:0 10px 30px -12px rgba(70,88,150,.28)}
+.s-sof .k{font-family:"Quicksand",sans-serif;font-weight:600;font-size:11px;color:#8E9BC4;margin-bottom:12px}
+.s-sof h4{font-family:"Quicksand",sans-serif;font-weight:600;font-size:21px;line-height:1.35;margin:0 0 8px;color:#39406B}
+.s-sof p{font-family:"Quicksand",sans-serif;font-weight:500;font-size:13.5px;line-height:1.7;color:#7C86AD;margin:0 0 20px}
+.s-sof button{font-family:"Quicksand",sans-serif;font-weight:600;font-size:14px;background:#7C8FD4;color:#fff;border:0;border-radius:14px;padding:14px 18px;width:100%;cursor:pointer}
+.s-sof button:hover{background:#6B7EC6}
+
+/* 4. utilitarian */
+.s-uti{background:#fff;border:1px solid #D4D7DC;border-radius:3px;font-family:var(--sans);max-width:320px}
+.s-uti .k{font-size:11px;font-weight:500;color:#5C636E;padding:8px 12px;border-bottom:1px solid #D4D7DC;background:#F7F8F9;letter-spacing:.02em}
+.s-uti table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.s-uti td{padding:6px 12px;border-bottom:1px solid #EDEFF1;line-height:1.45}
+.s-uti td:last-child{text-align:right;font-weight:500}
+.s-uti .ok{color:#1B7A4B}
+.s-uti .warn{color:#B4690E}
+.s-uti footer{display:flex;gap:6px;padding:8px 12px}
+.s-uti button{font-size:12px;font-family:var(--sans);padding:5px 10px;border:1px solid #C6CAD1;border-radius:3px;background:#fff;cursor:pointer;color:#2A2E35}
+.s-uti button.pri{background:#2563AC;border-color:#2563AC;color:#fff}
+.s-uti button:hover{border-color:#8E949E}
+
+/* 5. luxury */
+.s-lux{background:#12100D;padding:46px 34px;text-align:center}
+.s-lux .k{font-family:var(--sans);font-weight:300;font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:#9A8C63;margin-bottom:26px}
+.s-lux h4{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:34px;line-height:1.2;margin:0 0 22px;color:#F2EEE4;letter-spacing:.01em}
+.s-lux hr{border:0;border-top:1px solid #40382A;width:34px;margin:0 auto 22px}
+.s-lux p{font-family:var(--sans);font-weight:300;font-size:12px;line-height:2;color:#8E8672;margin:0 0 30px;letter-spacing:.03em}
+.s-lux a{font-family:var(--sans);font-weight:300;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#C8B78A;text-decoration:none;border-bottom:1px solid #4A4130;padding-bottom:7px;transition:border-color .5s cubic-bezier(.2,.7,.2,1)}
+.s-lux a:hover{border-color:#C8B78A}
+
+/* 6. playful */
+.s-pla{background:#FFF3F7;padding:24px;border-radius:26px;border:3px solid #16181C;transform:rotate(-1.6deg)}
+.s-pla .k{font-family:"Baloo 2",cursive;font-weight:700;font-size:12px;color:#FF4D8D;margin-bottom:6px}
+.s-pla h4{font-family:"Baloo 2",cursive;font-weight:700;font-size:27px;line-height:1.15;margin:0 0 8px;color:#16181C}
+.s-pla p{font-family:"Baloo 2",cursive;font-weight:500;font-size:14px;line-height:1.5;color:#6D5C68;margin:0 0 18px}
+.s-pla .chips{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.s-pla .chips b{font-family:"Baloo 2",cursive;font-weight:700;font-size:11px;padding:3px 11px;border-radius:20px;border:2px solid #16181C}
+.s-pla button{font-family:"Baloo 2",cursive;font-weight:700;font-size:15px;background:#FFD93D;color:#16181C;border:3px solid #16181C;border-radius:18px;padding:12px 18px;width:100%;cursor:pointer;transition:transform .16s cubic-bezier(.34,1.7,.5,1)}
+.s-pla button:hover{transform:translateY(-3px) rotate(1deg)}
+
+/* 7. technical */
+.s-tec{background:#0D1116;border:1px solid #232A33;font-family:var(--mono);font-size:12px;color:#8B97A6;max-width:320px}
+.s-tec .k{display:flex;justify-content:space-between;padding:7px 11px;border-bottom:1px solid #232A33;font-size:10px;letter-spacing:.1em;color:#5E6A78}
+.s-tec .k em{font-style:normal;color:#00C08B}
+.s-tec .rows{padding:11px}
+.s-tec .rows div{display:flex;justify-content:space-between;padding:3px 0;font-variant-numeric:tabular-nums}
+.s-tec .rows i{font-style:normal;color:#5E6A78}
+.s-tec .rows b{font-weight:400;color:#D3DBE4}
+.s-tec .bars{display:flex;gap:2px;padding:0 11px 11px}
+.s-tec .bars s{flex:1;height:22px;background:#1A222B;text-decoration:none}
+.s-tec .bars s.a{background:#00C08B}
+.s-tec .bars s.b{background:#12594A}
+.s-tec footer{border-top:1px solid #232A33;padding:7px 11px;font-size:10px;letter-spacing:.06em;color:#5E6A78}
+
+/* 8. austere */
+.s-aus{background:#fff;padding:44px 30px;border:1px solid #16181C}
+.s-aus .k{font-family:var(--sans);font-weight:400;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#16181C;margin-bottom:52px}
+.s-aus h4{font-family:var(--sans);font-weight:300;font-size:28px;line-height:1.3;margin:0 0 52px;color:#16181C;letter-spacing:-.01em}
+.s-aus p{font-family:var(--sans);font-weight:400;font-size:12px;line-height:1.9;color:#16181C;margin:0;border-top:1px solid #16181C;padding-top:14px}
+
+/* ---------- closing tables ---------- */
+.close{padding:64px 0 96px;border-top:1px solid var(--rule)}
+h2{font-size:22px;font-weight:500;letter-spacing:-.01em;margin:0 0 8px}
+.close p{color:var(--ash);max-width:56ch;margin:0 0 26px}
+table.cmp{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:48px}
+table.cmp th,table.cmp td{text-align:left;padding:11px 14px 11px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.cmp th{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ash)}
+table.cmp td b{font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;padding:0;list-style:none}
+.tags li{font-family:var(--mono);font-size:11.5px;border:1px solid var(--rule);padding:6px 11px;color:var(--ash)}
+.tags li b{color:var(--mark);font-weight:500}
+footer.foot{padding:26px 0 64px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="eyebrow">Design directions · 08 specimens</p>
+  <h1>여덟 가지 방향,<br><em>같은 카드</em> 여덟 번</h1>
+  <p class="lede">모든 표본은 <b>같은 내용</b>을 담습니다 — 라벨 하나, 제목 하나, 설명 한 줄, 액션 하나. 달라지는 것은 타이포·컬러·곡률·여백뿐입니다. 방향의 차이는 설명보다 <b>같은 것을 나란히 놓았을 때</b> 읽힙니다.</p>
+  <div class="masthead-meta">
+    <span>축 4개 · 밀도 / 채도 / 곡률 / 모션</span>
+    <span>표본 8개</span>
+    <span>공통 컴포넌트 1개</span>
+  </div>
+</header>
+
+<section class="mapblock reveal">
+  <div class="map">
+    <div class="map-grid">
+      <span class="v" style="left:25%"></span><span class="v" style="left:50%"></span><span class="v" style="left:75%"></span>
+      <span class="h" style="top:33.3%"></span><span class="h" style="top:66.6%"></span>
+    </div>
+    <span class="axis left">둥근 형태 ↑</span>
+    <span class="axis lbot">각진 형태 ↓</span>
+    <span class="axis bl">← 밀도 높음</span>
+    <span class="axis br">여백 많음 →</span>
+
+    <button class="dot" style="--c:#2563AC;left:10%;top:72%" data-go="uti"><i></i>유틸리티 지향</button>
+    <button class="dot" style="--c:#00C08B;left:16%;top:50%" data-go="tec"><i></i>테크니컬</button>
+    <button class="dot" style="--c:#FFE800;left:36%;top:90%" data-go="bru"><i></i>브루탈리스트</button>
+    <button class="dot" style="--c:#FF4D8D;left:30%;top:12%" data-go="pla"><i></i>플레이풀</button>
+    <button class="dot" style="--c:#7C8FD4;left:62%;top:8%" data-go="sof"><i></i>소프트</button>
+    <button class="dot" style="--c:#B02A1C;left:52%;top:60%" data-go="edi"><i></i>에디토리얼</button>
+    <button class="dot flip" style="--c:#9A8C63;left:90%;top:30%" data-go="lux"><i></i>럭셔리</button>
+    <button class="dot flip" style="--c:#16181C;left:84%;top:78%" data-go="aus"><i></i>오스틴</button>
+  </div>
+</section>
+</div>
+
+<div class="wrap">
+
+<!-- ===== 1 유틸리티 ===== -->
+<section class="dir reveal" id="uti">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">유틸리티 지향</h3>
+      <p class="dir-en">Utilitarian</p>
+      <p class="dir-def">픽셀은 정보에 쓰고 장식에 쓰지 않는다. 하루 8시간 보는 화면이라는 전제가 모든 결정을 지배합니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>곡률</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-uti">
+          <span class="k">주간 처리 요약</span>
+          <table>
+            <tr><td>판독 완료</td><td>1,284</td></tr>
+            <tr><td>재확인 필요</td><td class="warn">37</td></tr>
+            <tr><td>실패</td><td class="ok">0</td></tr>
+            <tr><td>평균 소요</td><td>0.8s</td></tr>
+          </table>
+          <footer><button class="pri">리포트 열기</button><button>내보내기</button></footer>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>단일 산세리프, 본문 13px, 행간 1.45, 숫자 <code>tabular-nums</code></dd></div>
+        <div><dt>컬러</dt><dd>뉴트럴 그레이 90% + 상태색(성공·경고·위험)만. 액센트 1개</dd></div>
+        <div><dt>형태</dt><dd>radius 3px, 헤어라인 1px, 행 높이 28/32px 고정, 4·8px 그리드</dd></div>
+        <div><dt>모션</dt><dd>100~150ms. 그 이상은 반복 작업에서 지연으로 체감</dd></div>
+        <div><dt>금기</dt><dd>밀집 리스트에 카드 사용. 패딩·섀도·radius가 세 배로 낭비됨</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 어드민, 대시보드, B2B 내부 툴 · <b>참조</b> Linear, Datadog, Sentry</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2 테크니컬 ===== -->
+<section class="dir reveal" id="tec">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">테크니컬</h3>
+      <p class="dir-en">Technical</p>
+      <p class="dir-def">계측기의 미학. 정밀함을 시각적으로 주장합니다. 눈금과 좌표를 숨기지 않고 드러냅니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+      <b>곡률</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-tec">
+          <span class="k"><span>batch/weekly · 07</span><em>● live</em></span>
+          <div class="rows">
+            <div><i>processed</i><b>1284</b></div>
+            <div><i>review_queue</i><b>37</b></div>
+            <div><i>p95_latency</i><b>812ms</b></div>
+            <div><i>confidence</i><b>0.974</b></div>
+          </div>
+          <div class="bars"><s class="a"></s><s class="a"></s><s class="a"></s><s class="b"></s><s class="a"></s><s class="a"></s><s class="b"></s><s class="a"></s><s class="a"></s><s class="a"></s><s class="a"></s><s class="b"></s></div>
+          <footer>updated 2026-08-25 09:14:02 kst</footer>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>모노스페이스 비중 높음. 라벨은 소문자 + 트래킹 0.1em</dd></div>
+        <div><dt>컬러</dt><dd>다크 배경 기본. 액센트는 시그널 컬러(터미널 그린, 사이언)</dd></div>
+        <div><dt>형태</dt><dd>그리드선·눈금 노출, radius 0~2px, 스파크라인·바 차트 내장</dd></div>
+        <div><dt>구조</dt><dd>버전·타임스탬프·좌표를 화면에 표기. 은유는 블루프린트와 터미널</dd></div>
+        <div><dt>구분점</dt><dd>유틸리티와 달리 정밀함 자체를 <em>표현</em>함. 밀도는 결과이지 목적이 아님</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 개발자 도구, 인프라 콘솔, 관측 대시보드</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 에디토리얼 ===== -->
+<section class="dir reveal" id="edi">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">에디토리얼</h3>
+      <p class="dir-en">Editorial</p>
+      <p class="dir-def">잡지 지면의 미학. 콘텐츠가 주인공이고 UI는 한 발 물러섭니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>곡률</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-edi">
+          <span class="k">주간 요약</span>
+          <h4>1,284건을 읽고<br>37건을 남겼다</h4>
+          <p>판독기가 확신하지 못한 건들만 사람에게 넘어옵니다. 이번 주에 남은 몫은 전체의 3%였습니다.</p>
+          <hr>
+          <a href="#edi">리포트 열기</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>세리프 헤드라인 + 산세리프 본문. 스케일 대비 크게(31px ↔ 13px)</dd></div>
+        <div><dt>컬러</dt><dd>잉크 블랙 / 종이 화이트 + 액센트 1개</dd></div>
+        <div><dt>형태</dt><dd>컬럼 그리드 의식, radius 최소, 헤어라인 룰(rule)로 구획</dd></div>
+        <div><dt>장치</dt><dd>아이브로(eyebrow) 라벨, 캡션, 드롭캡. 순서가 정보일 때만 번호</dd></div>
+        <div><dt>주의</dt><dd>크림 배경 + 세리프 + 테라코타는 흔한 기본값. 액센트를 다르게 잡을 것</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 블로그, 롱폼 콘텐츠, 브랜드 스토리 페이지</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 오스틴 ===== -->
+<section class="dir reveal" id="aus">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">오스틴</h3>
+      <p class="dir-en">Austere</p>
+      <p class="dir-def">요소를 더하지 않고 빼서 완성합니다. 여백이 구분선을 대신합니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>채도</b><span class="meter"><s></s><s></s><s></s><s></s></span>
+      <b>곡률</b><span class="meter"><s></s><s></s><s></s><s></s></span>
+      <b>모션</b><span class="meter"><s></s><s></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-aus">
+          <span class="k">주간 요약</span>
+          <h4>1,284건 판독<br>37건 확인 대기</h4>
+          <p>리포트 열기</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>단일 패밀리, 웨이트 2개 이하. 위계는 크기로만</dd></div>
+        <div><dt>컬러</dt><dd>흑백. 액센트 거의 없음</dd></div>
+        <div><dt>형태</dt><dd>radius 0, 엄격한 대칭·정렬, 보더보다 여백으로 구분</dd></div>
+        <div><dt>모션</dt><dd>없음에 가깝게</dd></div>
+        <div><dt>구분점</dt><dd>유틸리티와 정반대로 여백이 <em>많음</em>. 동기는 효율이 아니라 절제</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 아카이브, 연구소, 문서 사이트, 미니멀 브랜드</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 럭셔리 ===== -->
+<section class="dir reveal" id="lux">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">럭셔리</h3>
+      <p class="dir-en">Luxury</p>
+      <p class="dir-def">여백이 곧 가격표. 서두르지 않는 태도로 희소성을 표현합니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s></s><s></s><s></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>곡률</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-lux">
+          <span class="k">Weekly</span>
+          <h4>1,284</h4>
+          <hr>
+          <p>이번 주 판독 완료</p>
+          <a href="#lux">리포트 열기</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>디스플레이 세리프, 또는 자간 0.26em의 대문자 산세리프. 라이트 웨이트</dd></div>
+        <div><dt>컬러</dt><dd>뉴트럴 + 금속·딥톤 1개(샴페인, 버건디, 미드나잇)</dd></div>
+        <div><dt>형태</dt><dd>극단적 화이트스페이스, 헤어라인 1px, 중앙 정렬, 이미지 대형</dd></div>
+        <div><dt>모션</dt><dd>500~800ms, 강한 이징. 느림이 곧 여유의 신호</dd></div>
+        <div><dt>금기</dt><dd>정보를 많이 넣는 것. 밀도가 올라가면 즉시 무너집니다</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 패션, 호텔, 주얼리, 프리미엄 SaaS</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 소프트 ===== -->
+<section class="dir reveal" id="sof">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">소프트</h3>
+      <p class="dir-en">Soft</p>
+      <p class="dir-def">경계를 낮춰 친근함을 만듭니다. 콘트라스트를 일부러 낮춥니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s></s><s></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+      <b>곡률</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-sof">
+          <span class="k">이번 주 요약</span>
+          <h4>1,284건 다 읽었어요</h4>
+          <p>확인이 필요한 건 37개예요. 천천히 보셔도 괜찮습니다.</p>
+          <button>리포트 보기</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>둥근 산세리프(Quicksand, Nunito). 행간 1.7</dd></div>
+        <div><dt>컬러</dt><dd>저채도 파스텔, 낮은 콘트라스트</dd></div>
+        <div><dt>형태</dt><dd>radius 14~22px, 부드럽게 확산된 섀도, 넉넉한 패딩</dd></div>
+        <div><dt>모션</dt><dd>250~400ms 이즈아웃. 스프링은 플레이풀 영역</dd></div>
+        <div><dt>주의</dt><dd>낮은 콘트라스트가 접근성과 충돌. 본문은 4.5:1 확보 필요</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 웰니스, 교육, 가족·어린이 대상 소비자 앱</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7 브루탈리스트 ===== -->
+<section class="dir reveal" id="bru">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">브루탈리스트</h3>
+      <p class="dir-en">Brutalist</p>
+      <p class="dir-def">웹의 재료를 숨기지 않음. "꾸미지 않았다"를 꾸민 스타일입니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s></s></span>
+      <b>곡률</b><span class="meter"><s></s><s></s><s></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-bru">
+          <span class="k">WEEKLY / 07</span>
+          <h4>1284건<br>판독완료</h4>
+          <p>review_queue = 37<br>failed = 0</p>
+          <button>리포트 열기</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>굵은 그로테스크(Archivo Black, Helvetica). 크게, 대문자</dd></div>
+        <div><dt>컬러</dt><dd>고채도 원색 + 검정. 중간톤 없음</dd></div>
+        <div><dt>형태</dt><dd>radius 0, 보더 3px 검정, 하드 오프셋 섀도 <code>8px 8px 0 #000</code></dd></div>
+        <div><dt>모션</dt><dd>이징 없는 즉각 전환, 반전(invert) 호버</dd></div>
+        <div><dt>구분점</dt><dd>플레이풀과 고채도를 공유하지만 곡률 0으로 갈립니다</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 개인 포트폴리오, 실험적 사이트, 개발자 툴 랜딩</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8 플레이풀 ===== -->
+<section class="dir reveal" id="pla">
+  <div class="dir-head">
+    <div>
+      <h3 class="dir-name">플레이풀</h3>
+      <p class="dir-en">Playful</p>
+      <p class="dir-def">에너지와 예측 불가능성. 정렬을 일부러 어긋냅니다.</p>
+    </div>
+    <div class="axes">
+      <b>밀도</b><span class="meter"><s class="on"></s><s class="on"></s><s></s><s></s></span>
+      <b>채도</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s></s></span>
+      <b>곡률</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s></s></span>
+      <b>모션</b><span class="meter"><s class="on"></s><s class="on"></s><s class="on"></s><s class="on"></s></span>
+    </div>
+  </div>
+  <div class="dir-body">
+    <div>
+      <p class="stage-tag">표본</p>
+      <div class="stage">
+        <div class="card s-pla">
+          <span class="k">이번 주!</span>
+          <h4>1,284건 클리어</h4>
+          <p>남은 건 37개. 금방 끝나요</p>
+          <div class="chips"><b style="background:#FFD93D">완료 1284</b><b style="background:#A8E6CF">대기 37</b></div>
+          <button>리포트 열기 →</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="stage-tag">사양</p>
+      <dl class="spec">
+        <div><dt>타이포</dt><dd>개성 있는 디스플레이 폰트(Baloo, Fredoka). 굵고 크게</dd></div>
+        <div><dt>컬러</dt><dd>고채도 다색. 3색 이상 공존 허용</dd></div>
+        <div><dt>형태</dt><dd>radius 18~26px, 회전 1~2도, 굵은 아웃라인, 칩·스티커</dd></div>
+        <div><dt>모션</dt><dd>스프링 이징 <code>cubic-bezier(.34,1.7,.5,1)</code>, 호버 시 들어올림</dd></div>
+        <div><dt>주의</dt><dd>업무용 화면에서는 반복 노출 시 피로도가 급격히 상승</dd></div>
+      </dl>
+      <p class="usecase"><b>용도</b> 캐주얼 게임, 커뮤니티, 캠페인 페이지</p>
+    </div>
+  </div>
+</section>
+
+<section class="close reveal">
+  <h2>혼동하기 쉬운 세 방향</h2>
+  <p>유틸리티·테크니컬·오스틴은 모두 "장식이 적다"는 점에서 겹쳐 보입니다. 갈라지는 지점은 <b>동기</b>입니다.</p>
+  <table class="cmp">
+    <tr><th>방향</th><th>동기</th><th>여백</th><th>인상</th></tr>
+    <tr><td><b>유틸리티 지향</b></td><td>효율 — 작업 속도와 정보량</td><td>적음</td><td>실용적, 빽빽함</td></tr>
+    <tr><td><b>테크니컬</b></td><td>정밀함의 표현</td><td>적음</td><td>계측적, 전문가용</td></tr>
+    <tr><td><b>오스틴</b></td><td>미학적 절제 그 자체</td><td>많음</td><td>고요함, 여백 위주</td></tr>
+  </table>
+
+  <h2>이름 대신 좌표로 태깅하기</h2>
+  <p>방향 이름 하나를 붙이는 것보다 축으로 분해해두면 검색·필터·비교가 가능해집니다. 위 8가지가 전부 아래 4축의 좌표로 표현됩니다.</p>
+  <ul class="tags">
+    <li><b>density</b> dense ↔ airy</li>
+    <li><b>saturation</b> muted ↔ vivid</li>
+    <li><b>curvature</b> sharp ↔ round</li>
+    <li><b>motion</b> static ↔ springy</li>
+  </ul>
+  <p>이렇게 두면 브루탈리스트와 플레이풀이 <em>채도는 함께 높고 곡률에서 갈린다</em>는 사실이 데이터로 드러납니다. 이름만 붙였을 때는 보이지 않는 관계입니다.</p>
+</section>
+
+<footer class="foot">
+  <span>표본 8 · 축 4 · 공통 컴포넌트 1</span>
+  <span>2026</span>
+</footer>
+</div>
+
+<script>
+document.querySelectorAll('.dot').forEach(function(d){
+  d.addEventListener('click',function(){
+    var el=document.getElementById(d.dataset.go);
+    if(el) el.scrollIntoView({block:'start'});
+  });
+});
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(n){ io.observe(n); });
+}else{
+  document.querySelectorAll('.reveal').forEach(function(n){ n.classList.add('in'); });
+}
+</script>
+</body>
+</html>

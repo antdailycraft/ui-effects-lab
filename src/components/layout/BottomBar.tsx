@@ -13,8 +13,10 @@ import {
 import type { EffectDefinition } from "../../types/effects";
 import { ExportButtons } from "./ExportButtons";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function BottomBar() {
+  const { t } = useLocale();
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
   const effect = getEffect(state.effectId)!;
@@ -71,18 +73,18 @@ export function BottomBar() {
           <path d="M15 15l6 6" />
           <path d="M18 21h3v-3" />
         </svg>
-        Randomize
+        {t("randomize", "Randomize")}
       </button>
       <button className="bar-btn" onClick={() => dispatch({ type: "RESET" })}>
         <svg className="i i-sm" viewBox="0 0 24 24">
           <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
           <path d="M3 3v5h5" />
         </svg>
-        Reset
+        {t("reset", "Reset")}
       </button>
       <div className="bar-spacer" />
       <span className="bar-status">
-        {effect.controls.length} parameters · {effect.tech.length} primitives
+        {t("parametersPrimitives", "{parameters} parameters · {primitives} primitives", { parameters: effect.controls.length, primitives: effect.tech.length })}
       </span>
       <ExportButtons />
       <button className="bar-btn" onClick={share}>
@@ -92,14 +94,14 @@ export function BottomBar() {
           <circle cx="18" cy="19" r="3" />
           <path d="M8.6 10.6l6.8-4M8.6 13.4l6.8 4" />
         </svg>
-        {shared ? "Link copied" : "Share"}
+        {shared ? t("linkCopied", "Link copied") : t("share", "Share")}
       </button>
       <button className="bar-btn" onClick={copy}>
         <svg className="i i-sm" viewBox="0 0 24 24">
           <rect x="9" y="9" width="12" height="12" rx="2" />
           <path d="M5 15V5a2 2 0 0 1 2-2h10" />
         </svg>
-        {copied ? "Copied" : "Copy code"}
+        {copied ? t("copied", "Copied") : t("copyCode", "Copy code")}
       </button>
     </footer>
   );

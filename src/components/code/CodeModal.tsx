@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { CodeLang } from "../../lib/codegen";
 import { CopyButton } from "./CopyButton";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function CodeModal({
   lang,
@@ -13,6 +14,7 @@ export function CodeModal({
   html: string;
   onClose: () => void;
 }) {
+  const { t } = useLocale();
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,10 +68,10 @@ export function CodeModal({
     >
       <div className="code-modal" ref={modalRef} onClick={(e) => e.stopPropagation()}>
         <div className="code-modal-head">
-          <span className="code-modal-title">{lang.toUpperCase()} — full code</span>
+          <span className="code-modal-title">{lang.toUpperCase()} — {t("fullCode", "full code")}</span>
           <div className="code-modal-actions">
             <CopyButton code={code} />
-            <button className="code-modal-close" aria-label="Close" onClick={onClose}>
+            <button className="code-modal-close" aria-label={t("close", "Close")} onClick={onClose}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>

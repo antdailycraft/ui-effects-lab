@@ -4,6 +4,8 @@ import { useViewNav } from "../../state/ViewContext";
 import { ResourcesMenu } from "./ResourcesMenu";
 import { ReferenceMenu } from "../reference/ReferenceMenu";
 import { FilterGallery } from "../gallery/FilterGallery";
+import { LanguageToggle } from "./LanguageToggle";
+import { useLocale } from "../../i18n/LocaleContext";
 
 function MoonIcon() {
   return (
@@ -22,6 +24,7 @@ function SunIcon() {
 }
 
 export function TopBar() {
+  const { t } = useLocale();
   const { state, dispatch } = usePlayground();
   const { goHome } = useViewNav();
   const [gallery, setGallery] = useState(false);
@@ -29,7 +32,7 @@ export function TopBar() {
   return (
     <header className="topbar" role="banner">
       <h1 className="sr-only">UI Effects Lab</h1>
-      <button className="brand" onClick={goHome} title="Back to landing" aria-label="Back to landing">
+      <button className="brand" onClick={goHome} title={t("backToLanding", "Back to landing")} aria-label={t("backToLanding", "Back to landing")}>
         <span className="brand-mark">
           <svg className="i i-sm" viewBox="0 0 24 24">
             <path d="M4 16c2-6 4-9 8-9s6 3 8 9" />
@@ -48,14 +51,15 @@ export function TopBar() {
           <rect x="3" y="14" width="7" height="7" rx="1" />
           <rect x="14" y="14" width="7" height="7" rx="1" />
         </svg>
-        <span className="label">Gallery</span>
+        <span className="label">{t("gallery", "Gallery")}</span>
       </button>
       {gallery && <FilterGallery onClose={() => setGallery(false)} />}
       <ReferenceMenu />
       <ResourcesMenu />
+      <LanguageToggle />
       <button
         className="icon-btn"
-        aria-label="Toggle theme"
+        aria-label={t("toggleTheme", "Toggle theme")}
         onClick={() => dispatch({ type: "SET_THEME", theme: next })}
       >
         {state.theme === "dark" ? <MoonIcon /> : <SunIcon />}
@@ -65,8 +69,8 @@ export function TopBar() {
         href="https://github.com/antdailycraft/ui-effects-lab"
         target="_blank"
         rel="noreferrer noopener"
-        aria-label="GitHub repository"
-        title="View source on GitHub"
+        aria-label={t("githubRepository", "GitHub repository")}
+        title={t("viewSourceGithub", "View source on GitHub")}
       >
         <svg className="i" viewBox="0 0 24 24">
           <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />

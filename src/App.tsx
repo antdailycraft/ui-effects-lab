@@ -6,6 +6,7 @@ import { Catalog } from "./components/catalog/Catalog";
 import { PreviewCanvas } from "./components/preview/PreviewCanvas";
 import { ControlsPanel } from "./components/controls/ControlsPanel";
 import { Landing } from "./components/landing/Landing";
+import { LocaleProvider } from "./i18n/LocaleContext";
 
 function Workspace({ onHome }: { onHome: () => void }) {
   return (
@@ -33,8 +34,10 @@ function Root() {
 
 export default function App() {
   return (
-    <PlaygroundProvider>
-      <Root />
-    </PlaygroundProvider>
+    <LocaleProvider>
+      <PlaygroundProvider>
+        <Root />
+      </PlaygroundProvider>
+    </LocaleProvider>
   );
 }

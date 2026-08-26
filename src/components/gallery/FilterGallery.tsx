@@ -4,6 +4,7 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { EFFECTS, defaultParams } from "../../registry/effects";
 import type { EffectDefinition } from "../../types/effects";
 import { DEFAULT_IMAGE } from "../../lib/sampleImage";
+import { useLocale } from "../../i18n/LocaleContext";
 
 const galFilterId = (id: string) => `gal-${id}`;
 const PAGE = 10; // items per page (also caps live WebGL generators per page)
@@ -31,6 +32,7 @@ function GeneratorTile({ effect, onOpen }: { effect: EffectDefinition; onOpen: (
 }
 
 export function FilterGallery({ onClose }: { onClose: () => void }) {
+  const { locale, t } = useLocale();
   const { dispatch } = usePlayground();
   const [page, setPage] = useState(0);
 
@@ -40,7 +42,9 @@ export function FilterGallery({ onClose }: { onClose: () => void }) {
   const pageCount = Math.ceil(items.length / PAGE);
   const current = items.slice(page * PAGE, page * PAGE + PAGE);
   // Pages split cleanly (20 filters, 30 generators, page 10), so a page is homogeneous.
-  const section = current[0]?.category === "svg-filter" ? "SVG Filters" : "Generators";
+  const section = current[0]?.category === "svg-filter"
+    ? locale === "ko" ? "SVG 필터" : "SVG Filters"
+    : locale === "ko" ? "생성기" : "Generators";
 
   const open = (id: string) => {
     dispatch({ type: "SELECT_EFFECT", id });
@@ -49,16 +53,17 @@ export function FilterGallery({ onClose }: { onClose: () => void }) {
   const go = (p: number) => setPage(Math.max(0, Math.min(pageCount - 1, p)));
 
   return (
-    <Modal label="Effect gallery" className="gal-modal" onClose={onClose}>
+    <Modal label={t("effectGallery", "Effect gallery")} className="gal-modal" onClose={onClose}>
       <div className="ref-head">
         <div>
-          <h2 className="ref-title">Gallery</h2>
+          <h2 className="ref-title">{t("gallery", "Gallery")}</h2>
           <p className="ref-sub">
-            {filters.length} SVG filters &amp; {generators.length} generators at their defaults —
-            click one to open it.
+            {locale === "ko"
+              ? `기본값으로 표시한 SVG 필터 ${filters.length}개와 생성기 ${generators.length}개입니다. 클릭하면 열립니다.`
+              : <>{filters.length} SVG filters &amp; {generators.length} generators at their defaults — click one to open it.</>}
           </p>
         </div>
-        <button className="ref-close" aria-label="Close" onClick={onClose}>
+        <button className="ref-close" aria-label={t("close", "Close")} onClick={onClose}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -105,27 +110,27 @@ export function FilterGallery({ onClose }: { onClose: () => void }) {
       <div className="gal-pager">
         <button
           className="gal-pager-arrow"
-          aria-label="Previous page"
+          aria-label={locale === "ko" ? "이전 페이지" : "Previous page"}
           disabled={page === 0}
           onClick={() => go(page - 1)}
         >
           ‹
         </button>
-        <div className="gal-dots" role="tablist" aria-label="Gallery pages">
+        <div className="gal-dots" role="tablist" aria-label={locale === "ko" ? "갤러리 페이지" : "Gallery pages"}>
           {Array.from({ length: pageCount }, (_, i) => (
             <button
               key={i}
               className={"gal-dot" + (i === page ? " on" : "")}
               role="tab"
               aria-selected={i === page}
-              aria-label={`Page ${i + 1}`}
+              aria-label={locale === "ko" ? `${i + 1}페이지` : `Page ${i + 1}`}
               onClick={() => go(i)}
             />
           ))}
         </div>
         <button
           className="gal-pager-arrow"
-          aria-label="Next page"
+          aria-label={locale === "ko" ? "다음 페이지" : "Next page"}
           disabled={page === pageCount - 1}
           onClick={() => go(page + 1)}
         >

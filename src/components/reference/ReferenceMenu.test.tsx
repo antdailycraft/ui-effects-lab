@@ -48,6 +48,13 @@ test("Reference menu links to the bundled WebGL showcases in new tabs", async ()
   const hero = screen.getByRole("menuitem", { name: /cursor-reveal hero/i });
   expect(hero).toHaveAttribute("href", expect.stringContaining("showcase/hero.html"));
   expect(hero).toHaveAttribute("target", "_blank");
+
+  const directions = screen.getByRole("menuitem", { name: /여덟 가지 디자인 방향/i });
+  expect(directions).toHaveAttribute(
+    "href",
+    expect.stringContaining("showcase/design-directions.html")
+  );
+  expect(directions).toHaveAttribute("target", "_blank");
 });
 
 test("clicking a cursor tile copies its declaration", async () => {

@@ -9,8 +9,10 @@ import { LicenseBadge } from "./LicenseBadge";
 import { StackPanel } from "../combine/StackPanel";
 import { PresetsPanel } from "../presets/PresetsPanel";
 import { CodeViewer } from "../code/CodeViewer";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function ControlsPanel() {
+  const { t } = useLocale();
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
   const { effect, editing } = useEditTarget();
@@ -22,10 +24,10 @@ export function ControlsPanel() {
         {editing && (
           <div className="editing-banner">
             <span>
-              Editing layer {(state.editingLayer ?? 0) + 1}: <strong>{effect.name}</strong>
+              {t("editingLayer", "Editing layer {number}:", { number: (state.editingLayer ?? 0) + 1 })} <strong>{effect.name}</strong>
             </span>
             <button onClick={() => dispatch({ type: "SET_EDITING_LAYER", index: null })}>
-              Done
+              {t("done", "Done")}
             </button>
           </div>
         )}
@@ -43,7 +45,7 @@ export function ControlsPanel() {
         </div>
 
         <div className="panel-head">
-          <h2>Controls</h2>
+          <h2>{t("controls", "Controls")}</h2>
         </div>
 
         <div className="controls">
@@ -58,12 +60,12 @@ export function ControlsPanel() {
           )}
           {effect.animatable && (
             <ToggleControl
-              label="Animate"
+              label={t("animate", "Animate")}
               checked={animateActive}
               disabled={reduced}
               note={
                 reduced
-                  ? "Reduced-motion is on — animation is paused to respect your system setting."
+                  ? t("reducedMotion", "Reduced-motion is on — animation is paused to respect your system setting.")
                   : undefined
               }
               onToggle={() => dispatch({ type: "SET_ANIMATE", value: !state.animate })}

@@ -3,8 +3,10 @@ import { usePlayground } from "../../state/PlaygroundContext";
 import { getEffect } from "../../registry/effects";
 import { usePresets } from "../../hooks/usePresets";
 import { presetsForEffect } from "../../lib/presets";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function PresetsPanel() {
+  const { locale, t } = useLocale();
   const { state, dispatch } = usePlayground();
   const { presets, add, remove } = usePresets();
   const [name, setName] = useState("");
@@ -21,12 +23,12 @@ export function PresetsPanel() {
   return (
     <>
       <div className="panel-head">
-        <h2>Presets</h2>
+        <h2>{t("presets", "Presets")}</h2>
       </div>
       <div className="presets">
         {builtIn.length > 0 && (
           <div className="preset-builtin">
-            <div className="preset-builtin-label">Built-in</div>
+            <div className="preset-builtin-label">{t("builtIn", "Built-in")}</div>
             <div className="preset-chips">
               {builtIn.map((p) => (
                 <button
@@ -46,21 +48,21 @@ export function PresetsPanel() {
         <div className="preset-save">
           <input
             type="text"
-            placeholder="Preset name…"
+            placeholder={t("presetName", "Preset name…")}
             value={name}
-            aria-label="Preset name"
+            aria-label={t("presetNameLabel", "Preset name")}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") save();
             }}
           />
           <button className="preset-save-btn" onClick={save}>
-            Save
+            {t("save", "Save")}
           </button>
         </div>
 
         {list.length === 0 ? (
-          <div className="preset-empty">No presets for this effect yet — tune it, then Save.</div>
+          <div className="preset-empty">{t("noPresets", "No presets for this effect yet — tune it, then Save.")}</div>
         ) : (
           <div className="preset-list">
             {list.map((p) => (
@@ -75,7 +77,7 @@ export function PresetsPanel() {
                 </button>
                 <button
                   className="preset-del"
-                  aria-label={`Delete preset ${p.name}`}
+                  aria-label={locale === "ko" ? `${p.name} 프리셋 삭제` : `Delete preset ${p.name}`}
                   onClick={() => remove(p.id)}
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true">

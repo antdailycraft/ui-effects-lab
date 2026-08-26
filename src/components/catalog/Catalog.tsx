@@ -4,8 +4,10 @@ import { EFFECTS, groupByCategory } from "../../registry/effects";
 import { useFavorites } from "../../hooks/useFavorites";
 import { SearchBox } from "./SearchBox";
 import { EffectItem } from "./EffectItem";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function Catalog() {
+  const { locale, t } = useLocale();
   const { state } = usePlayground();
   const { favorites: favoriteIds, isFavorite, toggle } = useFavorites();
   const term = state.search.trim().toLowerCase();
@@ -30,7 +32,7 @@ export function Catalog() {
       <nav className="catalog">
         {favorites.length > 0 && (
           <div className="cat-group" key="__favorites">
-            <div className="cat-label">★ Favorites</div>
+            <div className="cat-label">★ {t("favorites", "Favorites")}</div>
             {favorites.map((e) => (
               <EffectItem
                 effect={e}
@@ -43,13 +45,13 @@ export function Catalog() {
         )}
         {groups.map((g) => (
           <div className="cat-group" key={g.label}>
-            <div className="cat-label">{g.label}</div>
+            <div className="cat-label">{locale === "ko" ? ({ "SVG Filters": "SVG 필터", "CSS Effects": "CSS 효과", "Retro": "레트로", "Experimental WebGL": "실험적 WebGL" } as Record<string, string>)[g.label] ?? g.label : g.label}</div>
             {g.effects.map((e) => (
               <EffectItem effect={e} key={e.id} favorite={isFavorite(e.id)} onToggleFavorite={toggle} />
             ))}
           </div>
         ))}
-        {empty && <div className="catalog-empty">No effects match “{term}”.</div>}
+        {empty && <div className="catalog-empty">{t("noEffects", "No effects match “{term}”.", { term })}</div>}
       </nav>
     </aside>
   );

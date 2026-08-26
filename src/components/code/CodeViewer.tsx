@@ -8,8 +8,10 @@ import { highlightSvg, highlightCss } from "../../lib/highlight";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { CopyButton } from "./CopyButton";
 import { CodeModal } from "./CodeModal";
+import { useLocale } from "../../i18n/LocaleContext";
 
 export function CodeViewer() {
+  const { t } = useLocale();
   const { state, dispatch } = usePlayground();
   const reduced = useReducedMotion();
   const [expanded, setExpanded] = useState(false);
@@ -52,14 +54,14 @@ export function CodeViewer() {
           </button>
         ))}
         <div className="code-tab-actions">
-          <button className="code-copy" aria-label="Expand code" onClick={() => setExpanded(true)}>
+          <button className="code-copy" aria-label={t("expandCode", "Expand code")} onClick={() => setExpanded(true)}>
             <svg className="i i-sm" viewBox="0 0 24 24">
               <path d="M8 3H5a2 2 0 0 0-2 2v3" />
               <path d="M16 3h3a2 2 0 0 1 2 2v3" />
               <path d="M8 21H5a2 2 0 0 1-2-2v-3" />
               <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
             </svg>
-            Expand
+            {t("expand", "Expand")}
           </button>
           <CopyButton code={code} />
         </div>
