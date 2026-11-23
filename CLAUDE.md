@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-This is a **greenfield project**: as of writing there is no application code, no `package.json`, and no git history — only planning docs. Before implementing, read `docs/PRD.md` (the full product spec, in Korean) and `docs/effects/feTurbulence.md` (technical reference for the core SVG filter primitive). The scaffolding decisions below come from the PRD; treat them as the intended design, not existing code.
+This is an implemented Vite application with a tested catalog of interactive SVG, CSS, WebGL, and canvas effects. Before making architectural changes, read `docs/PRD.md` (the product spec, in Korean), `docs/effects/feTurbulence.md` (the core SVG filter reference), and the existing registry and tests. Treat the architecture below as guidance for extending the current codebase.
 
 ## Product in one line
 
 UI Effects Lab is an interactive playground for SVG/CSS visual effects. The entire product is organized around a single loop: **Explore → Tweak → Compare → Copy** — find an effect, adjust its parameters live, compare before/after on a real UI component, then copy generated SVG/CSS/React code. Keep this loop central when making product decisions.
 
-## Planned tech stack
+## Tech stack
 
 - **Vite + React + TypeScript** (web only)
 - State: plain React state + Context initially; introduce Zustand only if global state grows (per PRD §26). Do not add Zustand preemptively.
@@ -86,4 +86,9 @@ Phase order: Playground core (layout, registry, preview, controls, code viewer) 
 
 ## Commands
 
-No build tooling is scaffolded yet. Once initialized with Vite, the standard scripts will apply (`npm run dev` / `build` / `preview` and whatever test runner is chosen). Update this section with the actual scripts and single-test invocation after `package.json` exists.
+- `npm run dev` — start the Vite development server.
+- `npm test` — run the Vitest suite once.
+- `npm run test:watch` — run Vitest in watch mode.
+- `npm run build` — type-check and create the production build.
+- `npm run preview` — serve the production build locally.
+- `npx vitest run path/to/file.test.ts` — run one test file.

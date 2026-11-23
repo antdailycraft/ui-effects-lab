@@ -27,14 +27,11 @@ export default defineConfig({
     host: true,
     port: 5180,
     strictPort: true,
-    // Vite blocks unknown Host headers; permit access through known LAN hosts.
-    allowedHosts: ["atlas", "metis"],
   },
   preview: {
     host: true,
     port: 5180,
     strictPort: true,
-    allowedHosts: ["atlas"],
   },
   test: {
     globals: true,

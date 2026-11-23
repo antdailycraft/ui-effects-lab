@@ -2,8 +2,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ResourcesMenu } from "./ResourcesMenu";
 import { RESOURCE_GROUPS } from "../../data/resources";
+import { COVERS } from "../../data/covers.generated";
 
 const ALL = RESOURCE_GROUPS.flatMap((g) => g.items);
+
+test("uses externally hosted social images instead of bundled site captures", () => {
+  expect(Object.values(COVERS).every((cover) => cover.startsWith("https://"))).toBe(true);
+});
 
 test("menu is closed until the trigger is clicked", () => {
   render(<ResourcesMenu />);
