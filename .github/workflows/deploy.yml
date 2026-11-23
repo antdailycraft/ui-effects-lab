@@ -1,14 +1,12 @@
 name: Deploy to GitHub Pages
 
-# Build the Vite app and publish it to GitHub Pages.
-#
-# Runs on demand only (Actions tab → "Run workflow"), NOT on every push, because
-# GitHub Pages requires the repo to be public or on a plan that includes private
-# Pages. Until then this would fail on every push and redden main. To switch to
-# automatic deploys once Pages is available, add a `push: { branches: [main] }`
-# trigger below and enable Pages under Settings → Pages → Source: GitHub Actions.
+# Build the Vite app and publish it to GitHub Pages at the custom domain
+# https://effects.aidaon.com (served from the root, so Vite's base is "/").
+# Runs on every push to main, and can also be started from the Actions tab.
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 # Allow the workflow to publish a Pages deployment.
@@ -36,8 +34,6 @@ jobs:
       - run: npm ci
 
       - run: npm run build
-        env:
-          DEPLOY_TARGET: gh-pages
 
       - uses: actions/configure-pages@v5
 
